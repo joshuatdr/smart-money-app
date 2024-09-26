@@ -1,9 +1,9 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
-import 'package:namer_app/budget_page.dart';
-import 'package:namer_app/goals_page.dart';
-import 'package:namer_app/spending_page.dart';
-import 'package:namer_app/history_page.dart';
+import 'package:smart_money_app/budget_page.dart';
+import 'package:smart_money_app/goals_page.dart';
+import 'package:smart_money_app/spending_page.dart';
+import 'package:smart_money_app/history_page.dart';
 import 'package:provider/provider.dart';
 
 void main() {
