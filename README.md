@@ -1,4 +1,4 @@
-# namer_app
+# smart-money-app
 
 A new Flutter project.
 
