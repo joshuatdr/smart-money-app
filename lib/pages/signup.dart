@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:smart_money_app/pages/signup.dart';
+import 'package:smart_money_app/pages/login.dart';
 import '../common/styles/spacing_styles.dart';
 import '../common/image_strings.dart';
 import '../common/sizes.dart';
 import '../common/ttexts.dart';
 
-class LoginScreen extends StatefulWidget {
+class SignupScreen extends StatefulWidget {
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   //const LoginScreen({super.key});
   bool isChecked = false;
 
@@ -35,12 +35,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       image: AssetImage(dark ? JImages.flag : JImages.flag),
                     ),
                   ),
-                  Text(TTexts.loginTitle,
+                  Text(TTexts.createAccount,
                       style: Theme.of(context).textTheme.headlineMedium),
                   const SizedBox(
                     height: JSizes.sm,
                   ),
-                  Text(TTexts.loginSubTitle,
+                  Text(TTexts.signUp,
                       style: Theme.of(context).textTheme.bodyMedium),
                 ],
               ),
@@ -59,21 +59,38 @@ class _LoginScreenState extends State<LoginScreen> {
                           labelText: TTexts.email,
                         ),
                       ),
+
                       const SizedBox(height: JSizes.spaceBtwItems),
 
                       /// Password
                       TextFormField(
-                        obscureText: true,
+                        obscureText: false,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.login),
                           labelText: TTexts.password,
                         ),
                       ),
                       const SizedBox(height: JSizes.spaceBtwItems),
+                      TextFormField(
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.login),
+                          labelText: "confirm password",
+                        ),
+                      ),
+                      const SizedBox(height: JSizes.spaceBtwItems),
+
+                      TextFormField(
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.alternate_email),
+                          labelText: TTexts.friendlyName,
+                        ),
+                      ),
 
                       /// remember me and forget password
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           // Remember Me
                           Row(
@@ -85,14 +102,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                       isChecked = value!;
                                     });
                                   }),
-                              const Text(TTexts.rememberMe),
                             ],
                           ),
 
                           // Forgot Password
                           TextButton(
                               onPressed: () {},
-                              child: const Text(TTexts.forgotPassword)),
+                              child: const Text(TTexts.terms)),
                         ],
                       ),
                       const SizedBox(height: JSizes.spaceBtwItems),
@@ -113,34 +129,21 @@ class _LoginScreenState extends State<LoginScreen> {
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
                                 onPressed: () {},
-                                child: Text(TTexts.signIn))),
+                                child: Text(TTexts.signUp))),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                            width: double.infinity,
-                            child: OutlinedButton(
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.orange,
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 50, vertical: 20),
-                                    textStyle: TextStyle(
-                                        foreground: Paint()
-                                          ..color = Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold)),
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => SignupScreen()),
-                                  );
-                                },
-                                child: Text(TTexts.createAccount))),
+                        padding: const EdgeInsets.all(60),
+                        child: TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginScreen()),
+                              );
+                            },
+                            child: const Text("Already have an account?")),
                       ),
-                      
                     ],
-                    
                   ),
                 ),
               ), //
