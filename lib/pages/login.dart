@@ -4,8 +4,14 @@ import '../common/image_strings.dart';
 import '../common/sizes.dart';
 import '../common/ttexts.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   //const LoginScreen({super.key});
+   bool isChecked = false;
 
 var dark = false;
 
@@ -20,10 +26,14 @@ var dark = false;
               /// Logo, Title & Sub Title
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                
                 children: [
-                  Image(
-                    height:150,
-                    image:AssetImage(dark ? JImages.flag : JImages.flag),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 50, right: 50, top: 10, bottom: 50),
+                    child: Image(
+
+                      image:AssetImage(dark ? JImages.flag : JImages.flag),
+                    ),
                   ),
                   Text(TTexts.loginTitle, style: Theme.of(context).textTheme.headlineMedium),
                   const SizedBox(height: JSizes.sm,),
@@ -40,28 +50,33 @@ var dark = false;
                   /// Email
                   TextFormField(
                     decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.insert_comment),
+                      prefixIcon: Icon(Icons.email),
                       labelText: TTexts.email,),
                   ),
                   const SizedBox(height: JSizes.spaceBtwItems),
 
-                    /// Email
+                    /// Password
                   TextFormField(
+                     obscureText:true,
                     decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.settings_input_composite),
+                      prefixIcon: Icon(Icons.login),
                       labelText: TTexts.password,
-                      suffixIcon: Icon(Icons.settings_input_composite),
                       ),
                   ),
                   const SizedBox(height: JSizes.spaceBtwItems),  
                
                   /// remember me and forget password
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       // Remember Me
                       Row(
                         children: [
-                          Checkbox(value: true, onChanged: (value){}),
+                          Checkbox(value: isChecked, onChanged: (bool? value){
+                            setState(() {
+                              isChecked = value!;
+                            });
+                          }),
                           const Text(TTexts.rememberMe),
                         ],
                       ),
@@ -73,8 +88,24 @@ var dark = false;
                   const SizedBox(height: JSizes.spaceBtwItems),
                
                 /// sign in button
-                SizedBox(width: double.infinity, child: ElevatedButton(onPressed: (){}, child: Text(TTexts.signin))),
-                SizedBox(width: double.infinity, child: OutlinedButton(onPressed: (){}, child: Text(TTexts.createAccount))),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(width: double.infinity,
+                  child: ElevatedButton(style: ElevatedButton.styleFrom(
+                             backgroundColor: Colors.orange, padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20), 
+                             textStyle: TextStyle(foreground: Paint()..color = Colors.white, fontSize: 20,fontWeight: FontWeight.bold)
+                             ), 
+                             onPressed: (){}, child: Text(TTexts.signin))),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(width: double.infinity, 
+                  child: OutlinedButton(style: ElevatedButton.styleFrom(
+                             backgroundColor: Colors.orange, padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20), 
+                             textStyle: TextStyle(foreground: Paint()..color = Colors.white, fontSize: 20,fontWeight: FontWeight.bold)
+                             ), 
+                            onPressed: (){}, child: Text(TTexts.createAccount))),
+                ),
                 ],
               ),
               ),
