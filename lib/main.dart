@@ -141,6 +141,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         icon: Icon(Icons.insights),
                         label: 'History',
                       ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.insights),
+                        label: 'Login',
+                      ),
                     ],
                     currentIndex: selectedIndex,
                     onTap: (value) {
