@@ -5,6 +5,7 @@ import 'package:smart_money_app/goals_page.dart';
 import 'package:smart_money_app/spending_page.dart';
 import 'package:smart_money_app/history_page.dart';
 import 'package:provider/provider.dart';
+import './pages/login.dart';
 
 void main() {
   runApp(MyApp());
@@ -90,6 +91,9 @@ class _MyHomePageState extends State<MyHomePage> {
         page = SpendingPage();
       case 4:
         page = HistoryPage();
+      case 5:
+        page = LoginScreen();
+
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -174,6 +178,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       NavigationRailDestination(
                         icon: Icon(Icons.insights),
                         label: Text('History'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.insights),
+                        label: Text('Login'),
                       ),
                     ],
                     selectedIndex: selectedIndex,
