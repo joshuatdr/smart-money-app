@@ -31,6 +31,7 @@ class _SignupScreenState extends State<SignupScreen> {
           r'[0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\'
           r'x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])';
       final regex = RegExp(pattern);
+      
 
       if (value!.isEmpty) {
         return 'Enter a valid email address';
@@ -46,6 +47,7 @@ class _SignupScreenState extends State<SignupScreen> {
         child: Padding(
           padding: JSpacingStyle.paddingWithAppBarHeight,
           child: Column(
+            
             children: [
               /// Logo, Title & Sub Title
               Column(
@@ -212,7 +214,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         padding: const EdgeInsets.all(60),
                         child: TextButton(
                             onPressed: () {
-                              Navigator.push(
+                              Navigator.pop(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => LoginScreen()),
