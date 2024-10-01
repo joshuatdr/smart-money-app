@@ -19,7 +19,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final emailController = TextEditingController();
   final nickNameController = TextEditingController();
   var dark = false;
-
+  
   @override
   Widget build(BuildContext context) {
     String? validateEmail(String? value) {
@@ -117,7 +117,9 @@ class _SignupScreenState extends State<SignupScreen> {
                           labelText: "confirm password",
                         ),
                         validator: (value) {
-                          if (value != passController.text) {
+                            if (value!.isEmpty) {
+                            return "please enter password";
+                          } else if (value != confirmPassController.text) {
                             return "passwords don't match";
                           } else {
                             return null;
@@ -142,29 +144,37 @@ class _SignupScreenState extends State<SignupScreen> {
                           return null;
                         },
                       ),
-
-                      /// checkbox
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          // Remember Me
-                          Row(
-                            children: [
-                              Checkbox(
-                                  value: isChecked,
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      isChecked = value!;
-                                    });
-                                  }),
-                            ],
-                          ),
-
-                          // Terms and conditions
-                          TextButton(
-                              onPressed: () {},
-                              child: const Text(TTexts.terms)),
-                        ],
+                      FormField(
+                        autovalidateMode: AutovalidateMode.always,
+                        initialValue: false,
+                        validator: (value) {
+                          if (value != true) {
+                            return "You need to accept terms!";
+                          }
+                          return null;
+                        },
+                        builder: (FormFieldState<bool> state) {
+                          return SizedBox(
+                            width: 300,
+                            child: CheckboxListTile(
+                                title: const Text("Agree Terms of Service"),
+                                subtitle: state.hasError
+                                    ? Text(
+                                        state.errorText!,
+                                        style: const TextStyle(color: Colors.red),
+                                      )
+                                    : null,
+                                value: state.value,
+                                onChanged: (val) { 
+                                  if (val == true) {
+                                    isChecked = true;
+                                  } else {
+                                    isChecked = false;
+                                  }
+                                  state.didChange(val);
+                                }),
+                          );
+                        }
                       ),
                       const SizedBox(height: JSizes.spaceBtwItems),
 
