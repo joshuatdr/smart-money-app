@@ -19,7 +19,11 @@ class _SignupScreenState extends State<SignupScreen> {
   final emailController = TextEditingController();
   final nickNameController = TextEditingController();
   var dark = false;
-  
+  List<String> str = ['A password must be at least 8 characters long.',
+        'Must contain an uppercase',
+        'lowercase letter',
+        'A number',
+        'A special character'];
   @override
   Widget build(BuildContext context) {
     String? validatePass(String? value) {
@@ -28,15 +32,11 @@ class _SignupScreenState extends State<SignupScreen> {
       
 
       if (value!.isEmpty) {
-        return Column(
-          children: [
-            Text("A password must be at least 8 characters long.",),
-          Text("A password must be at least 8 characters long.",),
-          Text("A password must be at least 8 characters long.",),
-          Text("A password must be at least 8 characters long.",),
-          ]
-        )
-
+        return 'A password must be at least 8 characters long.'
+        ' must contain an uppercase'
+        'lowercase letter'
+        'A number'
+        'A special character';
       } else {
         return value.isNotEmpty && !regex.hasMatch(value)
             ? 'A password must be at least 8 characters long, must contain an uppercase, lowercase letter, a number and a special character'
@@ -216,17 +216,27 @@ class _SignupScreenState extends State<SignupScreen> {
                                 },
                                 child: Text(TTexts.signUp))),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(60),
-                        child: TextButton(
-                            onPressed: () {
-                              Navigator.pop(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LoginScreen()),
-                              );
-                            },
-                            child: const Text("Already have an account?")),
+                      Column(crossAxisAlignment: CrossAxisAlignment.start ,
+                        children: [
+                          Text('\u2022 A password must be at least 8 characters long.'),
+                          Text('\u2022 A password must contain at least a number.'),
+                          Text('\u2022 A password must contain an uppercase letter'),
+                          Text('\u2022 A password must contain a lowercase letter'),
+                          Text('\u2022 A password must contain a special character.'),
+                          Padding(
+                            padding: const EdgeInsets.all(60),
+                            child: 
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginScreen()),
+                                  );
+                                },
+                                child: const Text("Already have an account?")),
+                          ),
+                        ],
                       ),
                     ],
                   ),
