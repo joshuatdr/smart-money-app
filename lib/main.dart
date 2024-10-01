@@ -151,7 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       BottomNavigationBarItem(
                         icon: Icon(Icons.insights),
-                        label: 'UserScreen',
+                        label: 'Profile',
                       ),
                     ],
                     currentIndex: selectedIndex,
@@ -194,6 +194,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       NavigationRailDestination(
                         icon: Icon(Icons.insights),
                         label: Text('Login'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.insights),
+                        label: Text('Profile'),
                       ),
                     ],
                     selectedIndex: selectedIndex,

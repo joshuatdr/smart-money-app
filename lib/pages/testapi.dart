@@ -9,19 +9,13 @@ class UserScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("User Data"),
-        actions: [
-          IconButton(
-              onPressed: () {
-                print(UserServices().getAllUserData());
-              },
-              icon: Icon(Icons.refresh))
-        ],
+        backgroundColor: Colors.orange,
+        title: Center(
+            child: Text("My profile", style: TextStyle(color: Colors.white))),
       ),
       body: FutureBuilder(
           future: UserServices().getAllUserData(),
           builder: (context, snapshot) {
-           
             if (snapshot.hasError) {
               return Center(
                 child: Text("Error fecthing user data"),
@@ -35,14 +29,31 @@ class UserScreen extends StatelessWidget {
               return ListView.builder(
                   itemCount: data.length,
                   itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: CircleAvatar(
-                          //backgroundImage: NetworkImage(data[index].avatar!),
+                    return Column(
+                      children: [
+                        Text(
+                          "${data[index].nickName}",
+                          style: TextStyle(
+                              fontSize: 50, fontWeight: FontWeight.bold),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(40),
+                          child: CircleAvatar(
+                              //backgroundImage: NetworkImage(data[index].avatar!),
+                              radius: 120),
+                        ),
+                        Text(
+                          "Email: ${data[index].email}",
+                          style: TextStyle(
+                            fontSize: 20,
                           ),
-                      title:
-                          Text("${data[index].email} ${data[index].password}"),
-                      subtitle: Text("${data[index].nickName}"),
-                    );
+                        ),
+                      ],
+                    )
+
+                        //
+
+                        ;
                   });
             } else {
               return Center(
