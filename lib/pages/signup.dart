@@ -22,6 +22,28 @@ class _SignupScreenState extends State<SignupScreen> {
   
   @override
   Widget build(BuildContext context) {
+    String? validatePass(String? value) {
+      const patternPass = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
+      final regex = RegExp(patternPass);
+      
+
+      if (value!.isEmpty) {
+        return Column(
+          children: [
+            Text("A password must be at least 8 characters long.",),
+          Text("A password must be at least 8 characters long.",),
+          Text("A password must be at least 8 characters long.",),
+          Text("A password must be at least 8 characters long.",),
+          ]
+        )
+
+      } else {
+        return value.isNotEmpty && !regex.hasMatch(value)
+            ? 'A password must be at least 8 characters long, must contain an uppercase, lowercase letter, a number and a special character'
+            : null;
+      }
+    }
+
     String? validateEmail(String? value) {
       const pattern = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
           r'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-'
@@ -97,15 +119,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           prefixIcon: Icon(Icons.login),
                           labelText: TTexts.password,
                         ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "please enter password";
-                          } else if (value != confirmPassController.text) {
-                            return "passwords don't match";
-                          } else {
-                            return null;
-                          }
-                        },
+                        validator: validatePass
                       ),
 
                       const SizedBox(height: JSizes.spaceBtwItems),
@@ -118,15 +132,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           prefixIcon: Icon(Icons.login),
                           labelText: "confirm password",
                         ),
-                        validator: (value) {
-                            if (value!.isEmpty) {
-                            return "please enter password";
-                          } else if (value != confirmPassController.text) {
-                            return "passwords don't match";
-                          } else {
-                            return null;
-                          }
-                        },
+                        validator: validatePass
                       ),
 
                       const SizedBox(height: JSizes.spaceBtwItems),
