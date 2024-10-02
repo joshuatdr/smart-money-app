@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import '../model/transactions.dart';
 import '../services/api.dart';
@@ -10,75 +12,14 @@ HistoryScreen({super.key});
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
- /*List<Map> _books = [
-    {
-      'id': 100,
-      'title': 'Flutter Basics',
-      'author': 'David John'
-    },
-    {
-      'id': 102,
-      'title': 'Git and GitHub',
-      'author': 'Merlin Nick'
-    },
-    {
-      'id': 101,
-      'title': 'Flutter Basics',
-      'author': 'David John'
-    },
-     {
-      'id': 100,
-      'title': 'Flutter Basics',
-      'author': 'David John'
-    },
-    {
-      'id': 102,
-      'title': 'Git and GitHub',
-      'author': 'Merlin Nick'
-    },
-    {
-      'id': 101,
-      'title': 'Flutter Basics',
-      'author': 'David John'
-    },
-     {
-      'id': 100,
-      'title': 'Flutter Basics',
-      'author': 'David John'
-    },
-    {
-      'id': 102,
-      'title': 'Git and GitHub',
-      'author': 'Merlin Nick'
-    },
-    {
-      'id': 101,
-      'title': 'Flutter Basics',
-      'author': 'David John'
-    },
-     {
-      'id': 100,
-      'title': 'Flutter Basics',
-      'author': 'David John'
-    },
-    {
-      'id': 102,
-      'title': 'Git and GitHub',
-      'author': 'Merlin Nick'
-    },
-    {
-      'id': 101,
-      'title': 'Flutter Basics',
-      'author': 'David John'
-    },
-  ];*/
-
  List results = [];
   DataRow _getDataRow(index, data) {
     return DataRow(
       cells: <DataCell>[
         DataCell(Text(data.name)),//add name of your columns here
-        DataCell(Text(data.cost.toString())),
+        DataCell(Text('£'+ data.cost.toString())),
+        DataCell(Text(data.createdAt)),
+        DataCell(Icon(Icons.picture_in_picture, color: Colors.red[500])),
       ],
     );
   }
@@ -113,16 +54,21 @@ class _HistoryScreenState extends State<HistoryScreen> {
               if (results.length != 0) {
                 return Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
+                    border: Border.all(color: Colors.orange),
                   ),
                   child: DataTable(
+          dataRowMaxHeight: double.infinity,       // Code to be changed.
+          dataRowMinHeight: 80,                    // Set the min required height.
+          dividerThickness: 1,
                     headingRowColor: WidgetStateColor.resolveWith(
-                      (states) => Colors.blue,
+                      (states) => const Color.fromARGB(255, 255, 201, 139),
                     ),
                     columnSpacing: 30,
                     columns: [
-                      DataColumn(label: Text('Campaigns')),
-                      DataColumn(label: Text('Leads')),
+                      DataColumn(label: Text('Name')),
+                      DataColumn(label: Text('Cost')),
+                      DataColumn(label: Text('Date')),
+                      DataColumn(label: Text('Image')),
                     ],
                     rows: List.generate(
                       results.length,
@@ -161,7 +107,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   ),
                   Padding(
                     padding: EdgeInsets.all(40),
-                    child: Text('No Data Found...'),
+                    child: Text('Looking up your transactions...'),
                   ),
                 ],
               );
