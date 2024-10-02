@@ -79,7 +79,7 @@ class UserServices {
 //User newUser = User.fromJson(users);
 //allUsers.add(newUser);
 
-        print(transactions);
+     //   print(transactions);
        // print(users['email']);
         // User newUser = User.fromJson(users);
 //print(allUsers);
@@ -92,10 +92,14 @@ class UserServices {
           Transactions newTransaction = Transactions.fromJson(
              transaction); // The Employee.fromJson is a method from the Class Employee in employee.dart is used to create a Dart object from a JSON data structure
           allTransactions.add(newTransaction);
-
+         }
+          
           print(allTransactions);
          return allTransactions;
-         }
+   
+
+
+         
 
 /*
         User newUser = User.fromJson(
