@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../model/user.dart';
+import '../model/transactions.dart';
 
 // This class sends the get request from the endpoint
 
@@ -55,4 +56,61 @@ class UserServices {
       throw Exception(e.toString()); // if error convert error to a string.
     }
   }
+
+  getAllUserTransactions() async {
+
+ String baseUrl =
+      "https://smart-money-backend.onrender.com/api/user/1/transactions"; 
+
+    // create an asynchronous function
+    List<Transactions> allTransactions =
+        []; // create an array of type <Employee> from employee.dart called allEmployees
+    try {
+      // try, catch - error handling, very similar to then and catch in JavaScript
+      var response = await http.get(Uri.parse(
+          baseUrl)); // You can use the await keyword to get the completed result of an asynchronous expression. The await keyword only works within an async function.
+      if (response.statusCode == 200) {
+        var data = response.body;
+        var decodedData = jsonDecode(
+            data); // jsonDecode Parses the string and returns the resulting Json object.
+        var transactions =
+            decodedData['transactions']; // employees is an array of objects [{}{}{}]
+
+//User newUser = User.fromJson(users);
+//allUsers.add(newUser);
+
+        print(transactions);
+       // print(users['email']);
+        // User newUser = User.fromJson(users);
+//print(allUsers);
+
+        // prints data to console
+// return users;
+
+         for (var transaction in transactions) {
+          // iterate through employees
+          Transactions newTransaction = Transactions.fromJson(
+             transaction); // The Employee.fromJson is a method from the Class Employee in employee.dart is used to create a Dart object from a JSON data structure
+          allTransactions.add(newTransaction);
+
+          print(allTransactions);
+         return allTransactions;
+         }
+
+/*
+        User newUser = User.fromJson(
+            users); // The Employee.fromJson is a method from the Class Employee in employee.dart is used to create a Dart object from a JSON data structure
+        allUsers.add(newUser);
+
+        print(allUsers);
+        return allUsers;*/
+      }
+    } catch (e) {
+      print(e);
+      throw Exception(e.toString()); // if error convert error to a string.
+    }
+  }
+
+
+
 }

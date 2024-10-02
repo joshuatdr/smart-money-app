@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_money_app/budget_page.dart';
 import 'package:smart_money_app/goals_page.dart';
 import 'package:smart_money_app/spending_page.dart';
-import 'package:smart_money_app/history_page.dart';
+import 'package:smart_money_app/pages/history.dart';
 import 'package:provider/provider.dart';
 import './pages/login.dart';
 import './pages/testapi.dart';
@@ -92,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
       case 3:
         page = SpendingPage();
       case 4:
-        page = HistoryPage();
+        page = HistoryScreen();
       case 5:
         page = LoginScreen();
       case 6:
