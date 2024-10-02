@@ -1,8 +1,9 @@
+
 class Transactions {
   // Create a class Transactions
   int? transactionId;
   String? name; 
-  int? cost;
+  num? cost;
   String? imgUrl;
   String? createdAt;
   int? userId;
