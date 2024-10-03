@@ -116,5 +116,30 @@ class UserServices {
   }
 
 
+ postUserTransaction(data, apiUrl) async {
+ 
+    String baseUrl = "https://smart-money-backend.onrender.com/api/user/1/transactions"; 
+
+    return await http.post(
+      Uri.parse(baseUrl),
+      body: jsonEncode(data),
+      headers: _setHeaders(),
+    );
+ }
+
+ /*
+    } catch (e) {
+      print(e);
+      throw Exception(e.toString()); // if error convert error to a string.
+    }
+  }*/
+
+_setHeaders()=>{
+  'Content-type':'application/json',
+  'Accept':'application/json',
+};
+
+
+
 
 }

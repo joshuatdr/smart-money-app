@@ -1,4 +1,4 @@
-import 'dart:io';
+//import 'dart:io';
 
 import 'package:flutter/material.dart';
 import '../model/transactions.dart';
@@ -23,11 +23,24 @@ class _HistoryScreenState extends State<HistoryScreen> {
       ],
     );
   }
+/*
+bool sort = true;
+List<data>? = filterData; 
 
-
+onsortColumn(int columnIndex, bool ascending){
+  if (columnIndex == 0){
+    if(ascending){
+      filterData!.sort((a,b)=>a.name!.compareTo(b.name!));
+    } else {
+      filterData!.sort((a,b)=>b.name!.compareTo(a.name!));
+    }
+  }
+}*/
 
 
   @override
+  //filterData = myData
+
   Widget build(BuildContext context) {
       return Scaffold(
         appBar: AppBar(
