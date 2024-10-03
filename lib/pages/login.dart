@@ -4,6 +4,9 @@ import '../common/styles/spacing_styles.dart';
 import '../common/image_strings.dart';
 import '../common/sizes.dart';
 import '../common/ttexts.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import './config.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -17,6 +20,20 @@ class _LoginScreenState extends State<LoginScreen> {
   final passController = TextEditingController();
   final emailController = TextEditingController();
   var dark = false;
+
+  void loginUser() async {
+    var reqBody = {
+      "email": emailController.text,
+      "password": passController.text,
+    };
+
+    var response = await http.post(Uri.parse(login),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(reqBody));
+
+    var jsonResponse = jsonDecode(response.body);
+    print(jsonResponse);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,10 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                           // Forgot Password
                           TextButton(
-                              onPressed: () {
-                                _formfield.currentState!.validate();
-                                //loginUser()
-                              },
+                              onPressed: () {},
                               child: const Text(TTexts.forgotPassword)),
                         ],
                       ),
@@ -148,7 +162,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                           ..color = Colors.white,
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
-                                onPressed: () {},
+                                onPressed: () {
+                                  _formfield.currentState!.validate();
+                                  loginUser();
+                                },
                                 child: Text(TTexts.signIn))),
                       ),
                       Padding(
