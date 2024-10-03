@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../model/user.dart';
 import '../services/api.dart';
+import 'package:http/http.dart' as http;
 
 class UserScreen extends StatefulWidget {
   const UserScreen({super.key});
@@ -11,6 +12,36 @@ class UserScreen extends StatefulWidget {
 
 class _UserScreenState extends State<UserScreen> {
   bool isReadOnly = true;
+  Future<void> deleteUser(int userId) async {
+    final response = await http.delete(
+        Uri.parse("https://smart-money-backend.onrender.com/api/user/$userId"));
+
+    if (response.statusCode == 200) {
+      // If the server returns a 200 OK response, user is successfully deleted.
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Success"),
+            content: Text("user has been deleted successfully."),
+            actions: [
+              MaterialButton(
+                child: Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // If the server did not return a 200 OK response,
+      // throw an exception.
+      throw Exception('Failed to delete User');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +69,14 @@ class _UserScreenState extends State<UserScreen> {
               ),
             ],
           )),
+      floatingActionButton: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color.fromARGB(255, 59, 17, 107),
+        ),
+        onPressed: () =>
+            ({deleteUser(1)}), // Assuming you want to delete the User with ID 1
+        child: Text("DELETE ACOUNT", style: TextStyle(color: Colors.white)),
+      ),
       body: FutureBuilder(
           future: UserServices().getAllUserData(),
           builder: (context, snapshot) {

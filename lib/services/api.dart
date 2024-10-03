@@ -101,9 +101,8 @@ class UserServices {
   }
 
   getAllUserTransactions() async {
-
- String baseUrl =
-      "https://smart-money-backend.onrender.com/api/user/1/transactions"; 
+    String baseUrl =
+        "https://smart-money-backend.onrender.com/api/user/1/transactions";
 
     // create an asynchronous function
     List<Transactions> allTransactions =
@@ -116,33 +115,29 @@ class UserServices {
         var data = response.body;
         var decodedData = jsonDecode(
             data); // jsonDecode Parses the string and returns the resulting Json object.
-        var transactions =
-            decodedData['transactions']; // employees is an array of objects [{}{}{}]
+        var transactions = decodedData[
+            'transactions']; // employees is an array of objects [{}{}{}]
 
 //User newUser = User.fromJson(users);
 //allUsers.add(newUser);
 
-     //   print(transactions);
-       // print(users['email']);
+        //   print(transactions);
+        // print(users['email']);
         // User newUser = User.fromJson(users);
 //print(allUsers);
 
         // prints data to console
 // return users;
 
-         for (var transaction in transactions) {
+        for (var transaction in transactions) {
           // iterate through employees
           Transactions newTransaction = Transactions.fromJson(
-             transaction); // The Employee.fromJson is a method from the Class Employee in employee.dart is used to create a Dart object from a JSON data structure
+              transaction); // The Employee.fromJson is a method from the Class Employee in employee.dart is used to create a Dart object from a JSON data structure
           allTransactions.add(newTransaction);
-         }
-          
-          print(allTransactions);
-         return allTransactions;
-   
+        }
 
-
-         
+        print(allTransactions);
+        return allTransactions;
 
 /*
         User newUser = User.fromJson(
@@ -158,31 +153,26 @@ class UserServices {
     }
   }
 
-
- postUserTransaction(data, apiUrl) async {
- 
-    String baseUrl = "https://smart-money-backend.onrender.com/api/user/1/transactions"; 
+  postUserTransaction(data, apiUrl) async {
+    String baseUrl =
+        "https://smart-money-backend.onrender.com/api/user/1/transactions";
 
     return await http.post(
       Uri.parse(baseUrl),
       body: jsonEncode(data),
       headers: _setHeaders(),
     );
- }
+  }
 
- /*
+  /*
     } catch (e) {
       print(e);
       throw Exception(e.toString()); // if error convert error to a string.
     }
   }*/
 
-_setHeaders()=>{
-  'Content-type':'application/json',
-  'Accept':'application/json',
-};
-
-
-
-
+  _setHeaders() => {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+      };
 }
