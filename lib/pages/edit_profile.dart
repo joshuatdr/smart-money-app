@@ -4,7 +4,7 @@ import 'package:smart_money_app/pages/testapi.dart';
 import '../common/styles/spacing_styles.dart';
 import '../common/image_strings.dart';
 import '../common/sizes.dart';
-import '../common/ttexts.dart';
+
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import './config.dart';
@@ -16,27 +16,50 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-   Future<void> updateUser(String body) async {
-  final response = await http.put(
-    Uri.parse("https://smart-money-backend.onrender.com/api/user/1/"),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(<String, String>{
-      'Email': "JimTest@gmail.com",
-    }),
-  );
-
-  if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-    return Album.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
-  } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to update album.');
+  Future<void> updateUser(
+    int userId,
+    String fname,
+    String email,
+    String password,
+  ) async {
+    final response = await http.patch(
+      Uri.parse("https://smart-money-backend.onrender.com/api/user/$userId"),
+      headers: <String, String>{
+        "Content-Type": "application/json; charset=UTF-8",
+      },
+      body: jsonEncode(<String, String>{
+        "email": email,
+        "password": password,
+        "fname": fname,
+      }),
+    );
+    if (response.statusCode == 201) {
+      // If the server returns a 200 OK response, then the user was successfully updated.
+      final responseBody = jsonDecode(response.body);
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("User Updated"),
+            content: Text("user updated successfully."),
+            actions: [
+              MaterialButton(
+                child: Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // If the server did not return a 201 OK response,
+      // then throw an exception.
+      throw Exception("Failed to update user");
+    }
   }
-}
+
   bool isChecked = false;
   final _formfield = GlobalKey<FormState>();
   final nickNameController = TextEditingController();
@@ -52,34 +75,6 @@ class _EditProfileState extends State<EditProfile> {
     'A number',
     'A special character'
   ];
-
-  void registerUser() async {
-    var reqBody = {
-      "email": emailController.text,
-      "password": passController.text,
-      "fname": nickNameController.text,
-    };
-    var response = await http.post(
-      Uri.parse(postUser),
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode(reqBody),
-    );
-    var jsonResponse = jsonDecode(response.body);
-    if (response.statusCode == 201) {
-      // print("got status 201");
-      // print(jsonResponse);
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => LoginScreen()));
-    } else {
-      StatusAlert.show(
-        context,
-        duration: Duration(seconds: 2),
-        title: 'Error',
-        subtitle: 'A user already exists with that email.',
-        configuration: IconConfiguration(icon: Icons.error),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -154,12 +149,12 @@ class _EditProfileState extends State<EditProfile> {
                   child: Column(
                     children: [
                       TextFormField(
-                          controller: nickNameController,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.email),
-                            labelText: "Name",
-                          ),
-                          validator: validateEmail),
+                        controller: nickNameController,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.email),
+                          labelText: "Name",
+                        ),
+                      ),
 
                       const SizedBox(height: JSizes.spaceBtwItems),
 
@@ -169,7 +164,9 @@ class _EditProfileState extends State<EditProfile> {
                             prefixIcon: Icon(Icons.login),
                             labelText: "Email",
                           ),
-                          validator: validatePass),
+                          validator: emailController.text.isNotEmpty
+                              ? validateEmail
+                              : null),
 
                       const SizedBox(height: JSizes.spaceBtwItems),
 
@@ -180,7 +177,9 @@ class _EditProfileState extends State<EditProfile> {
                             prefixIcon: Icon(Icons.login),
                             labelText: "Password",
                           ),
-                          validator: validatePass),
+                          validator: passController.text.isNotEmpty
+                              ? validatePass
+                              : null),
 
                       const SizedBox(height: JSizes.spaceBtwItems),
 
@@ -191,12 +190,6 @@ class _EditProfileState extends State<EditProfile> {
                           prefixIcon: Icon(Icons.alternate_email),
                           labelText: "Income",
                         ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "please enter a nick name";
-                          }
-                          return null;
-                        },
                       ),
                       const SizedBox(height: JSizes.spaceBtwItems),
                       TextFormField(
@@ -206,12 +199,6 @@ class _EditProfileState extends State<EditProfile> {
                           prefixIcon: Icon(Icons.alternate_email),
                           labelText: "Savings target",
                         ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "please enter a nick name";
-                          }
-                          return null;
-                        },
                       ),
 
                       const SizedBox(height: JSizes.spaceBtwItems),
@@ -232,14 +219,11 @@ class _EditProfileState extends State<EditProfile> {
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
                                 onPressed: () {
-                                  if (_formfield.currentState!.validate() &&
-                                      isChecked) {
-                                    registerUser();
-                                    print("success");
-                                  }
-                                  isChecked == false
-                                      ? print("please accept")
-                                      : isChecked == false;
+                                  updateUser(
+                                      1,
+                                      nickNameController.text,
+                                      emailController.text,
+                                      passController.text);
                                 },
                                 child: Text("Submit changes"))),
                       ),
