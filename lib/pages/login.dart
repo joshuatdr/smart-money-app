@@ -13,11 +13,38 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   //const LoginScreen({super.key});
   bool isChecked = false;
-
+  final _formfield = GlobalKey<FormState>();
+  final passController = TextEditingController();
+  final emailController = TextEditingController();
   var dark = false;
 
   @override
   Widget build(BuildContext context) {
+    String? validatePass(String? value) {
+      if (value!.isEmpty) {
+        return 'Please enter a password.';
+      }
+    }
+
+    String? validateEmail(String? value) {
+      const pattern = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
+          r'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-'
+          r'\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*'
+          r'[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4]'
+          r'[0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9]'
+          r'[0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\'
+          r'x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])';
+      final regex = RegExp(pattern);
+
+      if (value!.isEmpty) {
+        return 'Enter a valid email address';
+      } else {
+        return value.isNotEmpty && !regex.hasMatch(value)
+            ? 'Enter a valid email address'
+            : null;
+      }
+    }
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -47,6 +74,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
               /// Form
               Form(
+                autovalidateMode: AutovalidateMode.always,
+                key: _formfield,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: JSizes.spaceBtwItems),
@@ -54,20 +83,24 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       /// Email
                       TextFormField(
+                        controller: emailController,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.email),
                           labelText: TTexts.email,
                         ),
+                        validator: validateEmail,
                       ),
                       const SizedBox(height: JSizes.spaceBtwItems),
 
                       /// Password
                       TextFormField(
                         obscureText: true,
+                        controller: passController,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.login),
                           labelText: TTexts.password,
                         ),
+                        validator: validatePass,
                       ),
                       const SizedBox(height: JSizes.spaceBtwItems),
 
@@ -91,7 +124,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
                           // Forgot Password
                           TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                _formfield.currentState!.validate();
+                                //loginUser()
+                              },
                               child: const Text(TTexts.forgotPassword)),
                         ],
                       ),
@@ -138,9 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 },
                                 child: Text(TTexts.createAccount))),
                       ),
-                      
                     ],
-                    
                   ),
                 ),
               ), //
