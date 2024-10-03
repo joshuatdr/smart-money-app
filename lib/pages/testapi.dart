@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_money_app/pages/edit_profile.dart';
 import '../model/user.dart';
 import '../services/api.dart';
 import 'package:http/http.dart' as http;
@@ -12,6 +13,7 @@ class UserScreen extends StatefulWidget {
 
 class _UserScreenState extends State<UserScreen> {
   bool isReadOnly = true;
+
   Future<void> deleteUser(int userId) async {
     final response = await http.delete(
         Uri.parse("https://smart-money-backend.onrender.com/api/user/$userId"));
@@ -51,23 +53,6 @@ class _UserScreenState extends State<UserScreen> {
             backgroundColor: Colors.orange,
             title: Center(
                 child: Text("Profile", style: TextStyle(color: Colors.white))),
-            actions: <Widget>[
-              Row(
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 59, 17, 107),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        isReadOnly = false;
-                      });
-                    },
-                    child: Text("Edit", style: TextStyle(color: Colors.white)),
-                  )
-                ],
-              ),
-            ],
           )),
       floatingActionButton: ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -89,6 +74,7 @@ class _UserScreenState extends State<UserScreen> {
             if (snapshot.hasData) {
               //var data = snapshot .data;
               var data = snapshot.data as List<User>;
+              print(data);
 
               return ListView.builder(
                   itemCount: data.length,
@@ -140,6 +126,58 @@ class _UserScreenState extends State<UserScreen> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
+                            child: TextFormField(
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                labelText: "Password",
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      const BorderSide(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              initialValue: "${data[index].password}",
+                              readOnly: isReadOnly,
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                labelText: "Income",
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      const BorderSide(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              initialValue: "£${data[index].income}",
+                              readOnly: isReadOnly,
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                labelText: "Savings target",
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      const BorderSide(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              initialValue: "£${data[index].savingsTarget}",
+                              readOnly: isReadOnly,
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
                             child: OutlinedButton(
                                 style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.orange,
@@ -151,11 +189,13 @@ class _UserScreenState extends State<UserScreen> {
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
                                 onPressed: () {
-                                  setState(() {
-                                    isReadOnly = true;
-                                  });
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => EditProfile()),
+                                  );
                                 },
-                                child: Text("Submit")),
+                                child: Text("Edit")),
                           ),
                         ],
                       ),
