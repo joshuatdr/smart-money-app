@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_money_app/pages/signup.dart';
+import 'package:smart_money_app/pages/testapi.dart';
 import '../common/styles/spacing_styles.dart';
 import '../common/image_strings.dart';
 import '../common/sizes.dart';
@@ -7,6 +8,8 @@ import '../common/ttexts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import './config.dart';
+import 'package:status_alert/status_alert.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -20,6 +23,13 @@ class _LoginScreenState extends State<LoginScreen> {
   final passController = TextEditingController();
   final emailController = TextEditingController();
   var dark = false;
+  late SharedPreferences prefs;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   void loginUser() async {
     var reqBody = {
@@ -32,7 +42,21 @@ class _LoginScreenState extends State<LoginScreen> {
         body: jsonEncode(reqBody));
 
     var jsonResponse = jsonDecode(response.body);
-    print(jsonResponse);
+
+    if (response.statusCode == 200) {
+      var userID = jsonResponse['user_id'];
+      prefs.setString('user_id', userID);
+      // Navigator.push(
+      //     context, MaterialPageRoute(builder: (context) => UserScreen()));
+    } else {
+      StatusAlert.show(
+        context,
+        duration: Duration(seconds: 2),
+        title: 'Error',
+        subtitle: 'Incorrect login',
+        configuration: IconConfiguration(icon: Icons.error),
+      );
+    }
   }
 
   @override

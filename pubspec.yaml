@@ -1,7 +1,7 @@
 name: smart_money_app
 description: A new Flutter project.
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 version: 0.0.1+1
 
@@ -9,6 +9,7 @@ environment:
   sdk: ^3.1.1
 
 dependencies:
+  shared_preferences:
   flutter:
     sdk: flutter
 
