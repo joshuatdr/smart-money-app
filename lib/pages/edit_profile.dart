@@ -21,8 +21,8 @@ class _EditProfileState extends State<EditProfile> {
     String fname,
     String email,
     String password,
-    int income,
-    int savingsTarget,
+    String income,
+    String savingsTarget,
   ) async {
     final response = await http.patch(
       Uri.parse("https://smart-money-backend.onrender.com/api/user/$userId"),
@@ -229,8 +229,8 @@ class _EditProfileState extends State<EditProfile> {
                                       nickNameController.text,
                                       emailController.text,
                                       passController.text,
-                                      incomeController.hashCode,
-                                      savingsController.hashCode);
+                                      incomeController.text,
+                                      savingsController.text);
                                 },
                                 child: Text("Submit changes"))),
                       ),
