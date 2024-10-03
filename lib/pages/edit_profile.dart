@@ -4,11 +4,13 @@ import 'package:smart_money_app/pages/testapi.dart';
 import '../common/styles/spacing_styles.dart';
 import '../common/image_strings.dart';
 import '../common/sizes.dart';
-
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import './config.dart';
 import 'package:status_alert/status_alert.dart';
+import 'package:smart_money_app/globals.dart' as globals;
+
+var userId = globals.userId;
 
 class EditProfile extends StatefulWidget {
   @override
@@ -38,6 +40,7 @@ class _EditProfileState extends State<EditProfile> {
       }),
     );
     if (response.statusCode == 201) {
+      print(userId.runtimeType);
       // If the server returns a 200 OK response, then the user was successfully updated.
       final responseBody = jsonDecode(response.body);
       showDialog(
@@ -58,6 +61,7 @@ class _EditProfileState extends State<EditProfile> {
         },
       );
     } else {
+      print(userId.runtimeType);
       // If the server did not return a 201 OK response,
       // then throw an exception.
       throw Exception("Failed to update user");
@@ -225,7 +229,7 @@ class _EditProfileState extends State<EditProfile> {
                                         fontWeight: FontWeight.bold)),
                                 onPressed: () {
                                   updateUser(
-                                      1,
+                                      userId,
                                       nickNameController.text,
                                       emailController.text,
                                       passController.text,
