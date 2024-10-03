@@ -21,16 +21,20 @@ class _EditProfileState extends State<EditProfile> {
     String fname,
     String email,
     String password,
+    int income,
+    int savingsTarget,
   ) async {
     final response = await http.patch(
       Uri.parse("https://smart-money-backend.onrender.com/api/user/$userId"),
       headers: <String, String>{
         "Content-Type": "application/json; charset=UTF-8",
       },
-      body: jsonEncode(<String, String>{
+      body: jsonEncode(<String, dynamic>{
         "email": email,
         "password": password,
         "fname": fname,
+        "income": income,
+        "savings_target": savingsTarget
       }),
     );
     if (response.statusCode == 201) {
@@ -159,6 +163,7 @@ class _EditProfileState extends State<EditProfile> {
                       const SizedBox(height: JSizes.spaceBtwItems),
 
                       TextFormField(
+                          keyboardType: TextInputType.numberWithOptions(),
                           controller: emailController,
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.login),
@@ -223,7 +228,9 @@ class _EditProfileState extends State<EditProfile> {
                                       1,
                                       nickNameController.text,
                                       emailController.text,
-                                      passController.text);
+                                      passController.text,
+                                      incomeController.hashCode,
+                                      savingsController.hashCode);
                                 },
                                 child: Text("Submit changes"))),
                       ),
