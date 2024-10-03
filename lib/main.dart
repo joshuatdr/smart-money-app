@@ -2,6 +2,7 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_money_app/budget_page.dart';
 import 'package:smart_money_app/goals_page.dart';
+import 'package:smart_money_app/pages/add_transaction.dart';
 import 'package:smart_money_app/spending_page.dart';
 import 'package:smart_money_app/pages/history.dart';
 import 'package:provider/provider.dart';
@@ -97,6 +98,8 @@ class _MyHomePageState extends State<MyHomePage> {
         page = LoginScreen();
       case 6:
         page = UserScreen();
+      case 7:
+        page = AddTransactionScreen();
 
       default:
         throw UnimplementedError('no widget for $selectedIndex');
@@ -152,6 +155,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       BottomNavigationBarItem(
                         icon: Icon(Icons.insights),
                         label: 'Profile',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.insights),
+                        label: 'Add Trans',
                       ),
                     ],
                     currentIndex: selectedIndex,
