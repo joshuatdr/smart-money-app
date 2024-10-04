@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:smart_money_app/main.dart';
 import 'package:smart_money_app/spending_page.dart';
 import 'package:smart_money_app/pages/history.dart';
@@ -7,6 +6,8 @@ import 'package:smart_money_app/budget_page.dart';
 import 'package:smart_money_app/goals_page.dart';
 import 'package:smart_money_app/pages/add_transaction.dart';
 import 'package:provider/provider.dart';
+import '../providers/user_provider.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:english_words/english_words.dart';
 import './testapi.dart';
 
@@ -24,8 +25,8 @@ class _DashboardState extends State<Dashboard> {
   void initState() {
     super.initState();
     Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
-
     userID = jwtDecodedToken['user_id'];
+    context.read<UserProvider>().changeUserID(newUserID: userID);
   }
 
   @override
@@ -221,7 +222,7 @@ class HomePage extends StatelessWidget {
                   appState.toggleFavorite();
                 },
                 icon: Icon(icon),
-                label: Text('Like'),
+                label: Text('UserID: ${context.watch<UserProvider>().userID}'),
               ),
               SizedBox(width: 10),
               ElevatedButton(

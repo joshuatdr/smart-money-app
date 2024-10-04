@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_money_app/pages/signup.dart';
+import 'package:smart_money_app/providers/user_provider.dart';
 import './pages/dashboard.dart';
 import 'package:provider/provider.dart';
 import 'package:english_words/english_words.dart';
@@ -25,8 +26,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => MyAppState(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => UserProvider(),
+        ),
+        ChangeNotifierProvider(create: (context) => MyAppState()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Smart Money',
