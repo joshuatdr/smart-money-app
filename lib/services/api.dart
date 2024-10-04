@@ -11,6 +11,10 @@ class UserServices {
 
   getUserId() async {
     // create an asynchronous function
+    
+    List<User> allUsers =
+        []; // create an array of type <Employee> from employee.dart called allEmployees
+
     try {
       // try, catch - error handling, very similar to then and catch in JavaScript
       var response = await http.get(Uri.parse(
@@ -62,8 +66,8 @@ class UserServices {
 //User newUser = User.fromJson(users);
 //allUsers.add(newUser);
 
-        print(users);
-        print(users['email']);
+        // print(users);
+        // print(users['email']);
         // User newUser = User.fromJson(users);
 //print(allUsers);
 

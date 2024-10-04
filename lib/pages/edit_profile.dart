@@ -5,8 +5,12 @@ import '../common/image_strings.dart';
 import '../common/sizes.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import './config.dart';
+import 'package:status_alert/status_alert.dart';
+import '../services/api.dart';
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
+
 
 class EditProfile extends StatefulWidget {
   @override
@@ -16,9 +20,9 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
   Future<void> updateUser(
     int userId,
-    String fname,
     String email,
     String password,
+    String fname,
     String income,
     String savingsTarget,
   ) async {
@@ -37,6 +41,7 @@ class _EditProfileState extends State<EditProfile> {
     );
     if (response.statusCode == 201) {
       print(userId.runtimeType);
+      print('SUCCESS');
       // If the server returns a 200 OK response, then the user was successfully updated.
       showDialog(
         context: context,
@@ -57,6 +62,7 @@ class _EditProfileState extends State<EditProfile> {
       );
     } else {
       print(userId.runtimeType);
+      print('FAIL');
       // If the server did not return a 201 OK response,
       // then throw an exception.
       throw Exception("Failed to update user");
@@ -224,14 +230,49 @@ class _EditProfileState extends State<EditProfile> {
                                           ..color = Colors.white,
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
+
                                 onPressed: () async {
-                                  updateUser(
-                                      userId,
-                                      nickNameController.text,
-                                      emailController.text,
-                                      passController.text,
-                                      incomeController.text,
-                                      savingsController.text);
+//                                   List<String> arguments = [];
+//                                   if (nickNameController.text.isEmpty) {
+//                                     arguments.add(globals.fname);
+//                                   } else {
+//                                     arguments.add(nickNameController.text);
+//                                   }
+//                                   if (emailController.text.isEmpty) {
+//                                     arguments.add(globals.email);
+//                                   } else {
+//                                     arguments.add(emailController.text);
+//                                   }
+//                                   if (passController.text.isEmpty) {
+//                                     arguments.add(globals.password);
+//                                   } else {
+//                                     arguments.add(passController.text);
+//                                   }
+//                                   if (incomeController.text.isEmpty) {
+//                                     arguments.add(globals.income);
+//                                   } else {
+//                                     arguments.add(incomeController.text);
+//                                   }
+//                                   if (savingsController.text.isEmpty) {
+//                                     arguments.add(globals.savingsTarget);
+//                                     print(userId);
+//                                     print(arguments);
+//                                     print(arguments[0]);
+//                                   } else {
+//                                     arguments.add(savingsController.text);
+//                                   }
+                                  updateUser(1, 'bob', 'jimmy4000@gmail.com',
+                                      'pasword%!S', '4000', '2000');
+
+//                                 onPressed: () async {
+//                                   updateUser(
+//                                       userId,
+//                                       nickNameController.text,
+//                                       emailController.text,
+//                                       passController.text,
+//                                       incomeController.text,
+//                                       savingsController.text);
+
                                 },
                                 child: Text("Submit changes"))),
                       ),
