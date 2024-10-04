@@ -3,13 +3,13 @@ import 'package:smart_money_app/main.dart';
 import 'package:smart_money_app/spending_page.dart';
 import 'package:smart_money_app/pages/history.dart';
 import 'package:smart_money_app/budget_page.dart';
-import 'package:smart_money_app/goals_page.dart';
+import 'package:smart_money_app/pages/goals.dart';
 import 'package:smart_money_app/pages/add_transaction.dart';
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:english_words/english_words.dart';
-import './testapi.dart';
+import 'profile.dart';
 
 class Dashboard extends StatefulWidget {
   final token;
@@ -24,25 +24,36 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     super.initState();
-    Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
-    userID = jwtDecodedToken['user_id'];
-    context.read<UserProvider>().changeUserID(newUserID: userID);
+    parseToken();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: MyHomePage()),
-    );
+  void parseToken() async {
+    Map<String, dynamic> jwtDecodedToken =
+        await JwtDecoder.decode(widget.token);
+
+      context
+          .read<UserProvider>()
+          .changeUserID(newUserID: jwtDecodedToken['user']['user_id']);
+      context
+          .read<UserProvider>()
+          .changeEmail(newEmail: jwtDecodedToken['user']['email']);
+      context
+          .read<UserProvider>()
+          .changeAvatarURL(newAvatarURL: jwtDecodedToken['user']['avatar_url']);
+      context
+          .read<UserProvider>()
+          .changeFName(newFName: jwtDecodedToken['user']['fname']);
+      context
+          .read<UserProvider>()
+          .changeIncome(newIncome: jwtDecodedToken['user']['income']);
+      context
+          .read<UserProvider>()
+          .changeSavingsTarget(newSavingsTarget: jwtDecodedToken['user']['savings_target']);
+      context
+          .read<UserProvider>()
+          .changeCreatedAt(newCreatedAt: jwtDecodedToken['user']['created_at']);
   }
-}
 
-class MyHomePage extends StatefulWidget {
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
   var selectedIndex = 0;
 
   @override
@@ -114,11 +125,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         label: 'History',
                       ),
                       BottomNavigationBarItem(
-                        icon: Icon(Icons.insights),
+                        icon: Icon(Icons.account_circle),
                         label: 'Profile',
                       ),
                       BottomNavigationBarItem(
-                        icon: Icon(Icons.insights),
+                        icon: Icon(Icons.add),
                         label: 'Add Trans',
                       ),
                     ],
@@ -160,12 +171,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         label: Text('History'),
                       ),
                       NavigationRailDestination(
-                        icon: Icon(Icons.insights),
-                        label: Text('Login'),
+                        icon: Icon(Icons.account_circle),
+                        label: Text('Profile'),
                       ),
                       NavigationRailDestination(
-                        icon: Icon(Icons.insights),
-                        label: Text('Profile'),
+                        icon: Icon(Icons.add),
+                        label: Text('Add Transaction'),
                       ),
                     ],
                     selectedIndex: selectedIndex,

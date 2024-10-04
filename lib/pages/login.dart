@@ -9,7 +9,6 @@ import 'dart:convert';
 import './config.dart';
 import 'package:status_alert/status_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smart_money_app/globals.dart' as globals;
 import './dashboard.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -50,17 +49,6 @@ class _LoginScreenState extends State<LoginScreen> {
       var jsonResponse = jsonDecode(response.body);
       var myToken = jsonResponse['token'];
       prefs.setString('token', myToken);
-      // globals.userId = userID;
-      // AlertDialog(
-      //     title: Text("logged in"),
-      //     content: Text('$fname logged in successfully.'),
-      //     actions: [
-      //       MaterialButton(
-      //           child: Text("OK"),
-      //           onPressed: () {
-      //             Navigator.of(context).pop();
-      //           })
-      //     ]);
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => Dashboard(token: myToken)));
     } else {
