@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_money_app/pages/login.dart';
-import 'package:smart_money_app/pages/testapi.dart';
+import 'package:smart_money_app/pages/profile.dart';
 import '../common/styles/spacing_styles.dart';
 import '../common/image_strings.dart';
 import '../common/sizes.dart';
@@ -8,10 +7,10 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import './config.dart';
 import 'package:status_alert/status_alert.dart';
-import 'package:smart_money_app/globals.dart' as globals;
 import '../services/api.dart';
+import 'package:provider/provider.dart';
+import '../providers/user_provider.dart';
 
-var userId = globals.userId;
 
 class EditProfile extends StatefulWidget {
   @override
@@ -44,7 +43,6 @@ class _EditProfileState extends State<EditProfile> {
       print(userId.runtimeType);
       print('SUCCESS');
       // If the server returns a 200 OK response, then the user was successfully updated.
-      final responseBody = jsonDecode(response.body);
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -89,6 +87,8 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    AsyncSnapshot.waiting();
+    var userId = context.watch<UserProvider>().userID;
     String? validatePass(String? value) {
       const patternPass =
           r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
@@ -230,38 +230,49 @@ class _EditProfileState extends State<EditProfile> {
                                           ..color = Colors.white,
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
-                                onPressed: () {
-                                  List<String> arguments = [];
-                                  if (nickNameController.text.isEmpty) {
-                                    arguments.add(globals.fname);
-                                  } else {
-                                    arguments.add(nickNameController.text);
-                                  }
-                                  if (emailController.text.isEmpty) {
-                                    arguments.add(globals.email);
-                                  } else {
-                                    arguments.add(emailController.text);
-                                  }
-                                  if (passController.text.isEmpty) {
-                                    arguments.add(globals.password);
-                                  } else {
-                                    arguments.add(passController.text);
-                                  }
-                                  if (incomeController.text.isEmpty) {
-                                    arguments.add(globals.income);
-                                  } else {
-                                    arguments.add(incomeController.text);
-                                  }
-                                  if (savingsController.text.isEmpty) {
-                                    arguments.add(globals.savingsTarget);
-                                    print(userId);
-                                    print(arguments);
-                                    print(arguments[0]);
-                                  } else {
-                                    arguments.add(savingsController.text);
-                                  }
+
+                                onPressed: () async {
+//                                   List<String> arguments = [];
+//                                   if (nickNameController.text.isEmpty) {
+//                                     arguments.add(globals.fname);
+//                                   } else {
+//                                     arguments.add(nickNameController.text);
+//                                   }
+//                                   if (emailController.text.isEmpty) {
+//                                     arguments.add(globals.email);
+//                                   } else {
+//                                     arguments.add(emailController.text);
+//                                   }
+//                                   if (passController.text.isEmpty) {
+//                                     arguments.add(globals.password);
+//                                   } else {
+//                                     arguments.add(passController.text);
+//                                   }
+//                                   if (incomeController.text.isEmpty) {
+//                                     arguments.add(globals.income);
+//                                   } else {
+//                                     arguments.add(incomeController.text);
+//                                   }
+//                                   if (savingsController.text.isEmpty) {
+//                                     arguments.add(globals.savingsTarget);
+//                                     print(userId);
+//                                     print(arguments);
+//                                     print(arguments[0]);
+//                                   } else {
+//                                     arguments.add(savingsController.text);
+//                                   }
                                   updateUser(1, 'bob', 'jimmy4000@gmail.com',
                                       'pasword%!S', '4000', '2000');
+
+//                                 onPressed: () async {
+//                                   updateUser(
+//                                       userId,
+//                                       nickNameController.text,
+//                                       emailController.text,
+//                                       passController.text,
+//                                       incomeController.text,
+//                                       savingsController.text);
+
                                 },
                                 child: Text("Submit changes"))),
                       ),

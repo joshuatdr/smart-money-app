@@ -9,9 +9,7 @@ import 'dart:convert';
 import './config.dart';
 import 'package:status_alert/status_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smart_money_app/globals.dart' as globals;
-
-var fname = globals.fname;
+import './dashboard.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -29,8 +27,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    initSharedPref();
+  }
+
+  void initSharedPref() async {
+    prefs = await SharedPreferences.getInstance();
   }
 
   void loginUser() async {
@@ -43,24 +45,12 @@ class _LoginScreenState extends State<LoginScreen> {
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(reqBody));
 
-    var jsonResponse = jsonDecode(response.body);
-
     if (response.statusCode == 200) {
-      var userID = jsonResponse['user_id'];
-      prefs.setString('user_id', userID);
-      globals.userId = userID;
-      AlertDialog(
-          title: Text("logged in"),
-          content: Text('$fname logged in successfully.'),
-          actions: [
-            MaterialButton(
-                child: Text("OK"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                })
-          ]);
-      // Navigator.push(
-      //     context, MaterialPageRoute(builder: (context) => UserScreen()));
+      var jsonResponse = jsonDecode(response.body);
+      var myToken = jsonResponse['token'];
+      prefs.setString('token', myToken);
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => Dashboard(token: myToken)));
     } else {
       StatusAlert.show(
         context,
@@ -78,6 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (value!.isEmpty) {
         return 'Please enter a password.';
       }
+      return null;
     }
 
     String? validateEmail(String? value) {

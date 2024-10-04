@@ -11,8 +11,10 @@ class UserServices {
 
   getUserId() async {
     // create an asynchronous function
+    
     List<User> allUsers =
         []; // create an array of type <Employee> from employee.dart called allEmployees
+
     try {
       // try, catch - error handling, very similar to then and catch in JavaScript
       var response = await http.get(Uri.parse(
@@ -44,10 +46,9 @@ class UserServices {
     }
   }
 
-  String baseUrl =
-      "https://smart-money-backend.onrender.com/api/user/1"; // create a variable String to store the API Base URL
-
-  getAllUserData() async {
+  getAllUserData(userID) async {
+    String baseUrl =
+        "https://smart-money-backend.onrender.com/api/user/$userID"; // create a variable String to store the API Base URL
     // create an asynchronous function
     List<User> allUsers =
         []; // create an array of type <Employee> from employee.dart called allEmployees

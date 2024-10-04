@@ -42,7 +42,6 @@ class _SignupScreenState extends State<SignupScreen> {
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(reqBody),
     );
-    var jsonResponse = jsonDecode(response.body);
     if (response.statusCode == 201) {
       // print("got status 201");
       // print(jsonResponse);
@@ -265,11 +264,10 @@ class _SignupScreenState extends State<SignupScreen> {
                             padding: const EdgeInsets.all(60),
                             child: TextButton(
                                 onPressed: () {
-                                  Navigator.pop(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LoginScreen()),
-                                  );
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LoginScreen()));
                                 },
                                 child: const Text("Already have an account?")),
                           ),
