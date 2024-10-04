@@ -9,98 +9,93 @@ class SpendingPage extends StatefulWidget {
   State<SpendingPage> createState() => _SpendingPageState();
 }
 
-
 Widget bottomTitleWidgets(double value, TitleMeta meta) {
-    const style = TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 16,
-    );
-    Widget text;
-    switch (value.toInt()) {
-      case 2:
-        text = const Text('MAR', style: style);
-        
-      case 5:
-        text = const Text('JUN', style: style);
-        
-      case 8:
-        text = const Text('SEP', style: style);
+  const style = TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: 16,
+  );
+  Widget text;
+  switch (value.toInt()) {
+    case 2:
+      text = const Text('MAR', style: style);
 
-      case 11:
-        text = const Text('DEC', style: style);
-        
-      default:
-        text = const Text('', style: style);
-        
-    }
+    case 5:
+      text = const Text('JUN', style: style);
 
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      child: text,
-    );
+    case 8:
+      text = const Text('SEP', style: style);
+
+    case 11:
+      text = const Text('DEC', style: style);
+
+    default:
+      text = const Text('', style: style);
   }
 
-  Widget leftTitleWidgets(double value, TitleMeta meta) {
-    const style = TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 15,
-    );
-    String text;
-    switch (value.toInt()) {
-      case 1:
-        text = '10K';
-       
-      case 3:
-        text = '30k';
-        
-      case 5:
-        text = '50k';
-        
-      default:
-        return Container();
-    }
+  return SideTitleWidget(
+    axisSide: meta.axisSide,
+    child: text,
+  );
+}
 
-    return Text(text, style: style, textAlign: TextAlign.left);
+Widget leftTitleWidgets(double value, TitleMeta meta) {
+  const style = TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: 15,
+  );
+  String text;
+  switch (value.toInt()) {
+    case 1:
+      text = '10K';
+
+    case 3:
+      text = '30k';
+
+    case 5:
+      text = '50k';
+
+    default:
+      return Container();
   }
+
+  return Text(text, style: style, textAlign: TextAlign.left);
+}
 
 class _SpendingPageState extends State<SpendingPage> {
-
-String _user = 'nobody';
-_testlogin(){
-   setState(() {
-      _user='justin';
+  String _user = 'nobody';
+  _testlogin() {
+    setState(() {
+      _user = 'justin';
     });
-}
+  }
 
-createNewSpots(){
+  createNewSpots() {
+    List<dynamic> testObj = [
+      {
+        "cost": "13.99",
+        "created_at": "2024-09-30 10:34:00+01",
+      },
+      {
+        "cost": "113.99",
+        "created_at": "2024-08-30 10:34:00+01",
+      }
+    ];
 
+    // Using forEach
+    // testObj.forEach((key, value) {
+    //   print('$key is $value years old');
+    // });
 
-  List<dynamic> testObj = [
-{
-  "cost": "13.99", 
-  "created_at": "2024-09-30 10:34:00+01",
-},
-{
-  "cost": "113.99", 
-  "created_at": "2024-08-30 10:34:00+01",
-}
-  ];
+    var newNewSpots = [];
 
-  // Using forEach
- // testObj.forEach((key, value) {
- //   print('$key is $value years old');
- // });
+    //   double xValue = 1.99;
+    //   double yValue = 0;
 
- var newNewSpots = [];
-
- //   double xValue = 1.99;
- //   double yValue = 0;
-
-var createArrayValues = [];
+    var createArrayValues = [];
 //for (var keys in testObj) {
-for (var i = 0; i < testObj.length-1; i++) {
- //  double xValue = double.parse(keys);
- // print(testObj[i]['cost']); 
+    for (var i = 0; i < testObj.length - 1; i++) {
+      //  double xValue = double.parse(keys);
+      // print(testObj[i]['cost']);
 /*
 createArrayValues.add(
       FlSpot(i.toDouble(), 
@@ -110,9 +105,7 @@ createArrayValues.add(
 newNewSpots.add(FlSpot(createArrayValues[0]));
 
 print(newNewSpots);*/
-
-
-}
+    }
 
 // final newSpots = [
 //                         // (Month, value)
@@ -128,22 +121,18 @@ print(newNewSpots);*/
 //                         // FlSpot(9,1),
 //                   ];
 
+//  List<FlSpot> getAccData(String acc) {
+//     List<FlSpot> newSpots = [];
+//     for (int i = 0; i <= 50; i++) {
+//       newSpots.add(FlSpot((i * 1.00), dataAcc[i][acc] / 1.00));
+//     }
+//     return newSpots;
+//   }
 
- List<FlSpot> getAccData(String acc) {
-    List<FlSpot> newSpots = [];
-    for (int i = 0; i <= 50; i++) {
-      newSpots.add(FlSpot((i * 1.00), dataAcc[i][acc] / 1.00)); 
-    }
-    return newSpots;
+// return newSpots;
   }
 
-return newSpots;
-
-}
-
-
   @override
-  
   Widget build(BuildContext context) {
     // var theme = Theme.of(context);
     // var appState = context.watch<MyAppState>();
@@ -164,82 +153,76 @@ return newSpots;
     //   }
     // }
 
-    
-
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: AppBar(
             backgroundColor: Colors.orange,
             title: Center(
-                child: Text('$_user', style: TextStyle(color: Colors.white))),
-           
+                child: Text(_user, style: TextStyle(color: Colors.white))),
           )),
       floatingActionButton: FloatingActionButton(
         onPressed: _testlogin,
         child: Icon(Icons.add),
       ),
-    
       body: Center(
-    
         child: AspectRatio(
-          aspectRatio: 2.0,
-          // child: Container(
-          //   color:Colors.green,
-          // ),
-          child: SizedBox(
-   /*         width: 580,
+            aspectRatio: 2.0,
+            // child: Container(
+            //   color:Colors.green,
+            // ),
+            child: SizedBox(
+              /*         width: 580,
                                                       height: 270,*/
-            child: Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: LineChart(
-                
-                LineChartData(
-                /* minX: 0,
+              child: Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: LineChart(
+                  LineChartData(
+                      /* minX: 0,
                     maxX: 12,
                     minY: 0,
                     maxY: 6,*/
-              
-                  titlesData: FlTitlesData(
-                      show: true,
-                      rightTitles: const AxisTitles(
-              sideTitles: SideTitles(showTitles: false),
+
+                      titlesData: FlTitlesData(
+                        show: true,
+                        rightTitles: const AxisTitles(
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
+                        topTitles: const AxisTitles(
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
+                        bottomTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            reservedSize: 30,
+                            interval: 1,
+                            getTitlesWidget: bottomTitleWidgets,
+                          ),
+                        ),
+                        leftTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            interval: 1,
+                            getTitlesWidget: leftTitleWidgets,
+                            reservedSize: 42,
+                          ),
+                        ),
                       ),
-                      topTitles: const AxisTitles(
-              sideTitles: SideTitles(showTitles: false),
-                      ),
-                      bottomTitles: AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: true,
-                reservedSize: 30,
-                interval: 1,
-                getTitlesWidget: bottomTitleWidgets,
-              ),
-                      ),
-                      leftTitles: AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: true,
-                interval: 1,
-                getTitlesWidget: leftTitleWidgets,
-                reservedSize: 42,
-              ),
-                      ),
-                    ),
-                  //       titlesData: FlTitlesData(
-                  //   show: true,
-                  //   bottomTitles: SideTitles(
-                  //     showTitles: true,
-                  //     getTitles: (value){
-                  //       switch (value.toInt()){
-                  //         case 2:
-                  //         return 'Mar';
-                  //       },
-                  //       return '';
-                  //     },
-              
-                  //     margin: 8,
-                  //   ),
-                  // ),
+                      //       titlesData: FlTitlesData(
+                      //   show: true,
+                      //   bottomTitles: SideTitles(
+                      //     showTitles: true,
+                      //     getTitles: (value){
+                      //       switch (value.toInt()){
+                      //         case 2:
+                      //         return 'Mar';
+                      //       },
+                      //       return '';
+                      //     },
+
+                      //     margin: 8,
+                      //   ),
+                      // ),
                       //       titlesData: FlTitlesData(
                       //   bottomTitles: AxisTitles(
                       //     sideTitles: SideTitles(
@@ -273,7 +256,7 @@ return newSpots;
                       //           default:
                       //             return Text('');
                       //         }
-                  
+
                       //       },
                       //     ),
                       //   ),
@@ -286,58 +269,47 @@ return newSpots;
                       //     ),
                       //   ),
                       // ),
-                   // ),
-                   
-                  lineBarsData:[
-                    LineChartBarData(
-                     // spots: createNewSpots(),
-                      spots: createNewSpots()
-                              .map(
-                                (e) => FlSpot(
-                                  e['x'],
-                                  (e['y'] as DateTime)
+                      // ),
+
+                      lineBarsData: [
+                        LineChartBarData(
+                            // spots: createNewSpots(),
+                            spots: createNewSpots().map(
+                              (e) => FlSpot(
+                                e['x'],
+                                (e['y'] as DateTime)
                                     .microsecondsSinceEpoch
                                     .toDouble(),
-                                ),
                               ),
+                            ),
+                            color: Colors.orange[400], // this or gradient
+                            // gradient: const LinearGradient(
+                            //   colors:[
+                            //     Colors.orange,
+                            //     Colors.red,
+                            //     Colors.blue,
+                            //   ],
 
-
-
-
-
-
-
-                 color: Colors.orange[400],  // this or gradient
-                  // gradient: const LinearGradient(
-                  //   colors:[
-                  //     Colors.orange,
-                  //     Colors.red,
-                  //     Colors.blue,
-                  //   ],
-                    
-                  // ),
-                  barWidth: 4,
-                  isCurved:true,
-                  //curveSmoothness: 0.1,
-                  preventCurveOverShooting: true,
-                  isStrokeCapRound: true,
-                  isStrokeJoinRound: true,
-                  belowBarData: BarAreaData(
-                    show: true,
-                    color:Colors.orange.withOpacity(0.3),
-                  ),
-                  aboveBarData: BarAreaData(
-                    show: true,
-                    color:Colors.orange.withOpacity(0.2),
-                  )
-                    )
-                  ] 
+                            // ),
+                            barWidth: 4,
+                            isCurved: true,
+                            //curveSmoothness: 0.1,
+                            preventCurveOverShooting: true,
+                            isStrokeCapRound: true,
+                            isStrokeJoinRound: true,
+                            belowBarData: BarAreaData(
+                              show: true,
+                              color: Colors.orange.withOpacity(0.3),
+                            ),
+                            aboveBarData: BarAreaData(
+                              show: true,
+                              color: Colors.orange.withOpacity(0.2),
+                            ))
+                      ]),
                 ),
               ),
-            ),
-          )
-        ),
+            )),
       ),
-    );         
+    );
   }
 }

@@ -42,7 +42,6 @@ class _SignupScreenState extends State<SignupScreen> {
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(reqBody),
     );
-    var jsonResponse = jsonDecode(response.body);
     if (response.statusCode == 201) {
       // print("got status 201");
       // print(jsonResponse);

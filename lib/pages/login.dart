@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:smart_money_app/main.dart';
 import 'package:smart_money_app/pages/signup.dart';
 import '../common/styles/spacing_styles.dart';
 import '../common/image_strings.dart';
@@ -31,7 +30,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     initSharedPref();
   }
@@ -84,6 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (value!.isEmpty) {
         return 'Please enter a password.';
       }
+      return null;
     }
 
     String? validateEmail(String? value) {
