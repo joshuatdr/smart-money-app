@@ -20,31 +20,61 @@ class _UserScreenState extends State<UserScreen> {
     final response = await http.delete(
         Uri.parse("https://smart-money-backend.onrender.com/api/user/$userId"));
 
-    if (response.statusCode == 200) {
-      // If the server returns a 200 OK response, user is successfully deleted.
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text("Success"),
-            content: Text("user has been deleted successfully."),
-            actions: [
-              MaterialButton(
-                child: Text("OK"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    } else {
-      // If the server did not return a 200 OK response,
-      // throw an exception.
-      throw Exception('Failed to delete User');
-    }
+    if (response.statusCode == 204) {
+      // If the server returns a 204 response, user is successfully deleted
   }
+  }
+
+void promptUser(BuildContext context) {
+  // Step 1 Dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Account deletion'),
+        content: const Text('Remember this is an irreversible action'),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Cancel'),
+            onPressed: () {
+              Navigator.of(context).pop(); // closes prompt
+            },
+          ),
+          TextButton(
+            child: const Text('Next'),
+            onPressed: () {
+              Navigator.of(context).pop();  // closes prompt
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Confirm Account Deletion'),
+                    content: const Text('Please confirm if you would like to delete your account.'),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text('No! I want my account'),
+                        onPressed: () {
+                          Navigator.of(context).pop();  // closes prompt
+                        },
+                      ),
+                      TextButton(
+                        child: const Text('Yes! Get rid of it!'),
+                        onPressed: () {
+                          Navigator.of(context).pop();  // closes prompt
+                          deleteUser(userId);
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
 
   @override
   Widget build(BuildContext context) {
@@ -56,14 +86,6 @@ class _UserScreenState extends State<UserScreen> {
             title: Center(
                 child: Text("Profile", style: TextStyle(color: Colors.white))),
           )),
-      floatingActionButton: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromARGB(255, 59, 17, 107),
-        ),
-        onPressed: () =>
-            ({deleteUser(1)}), // Assuming you want to delete the User with ID 1
-        child: Text("DELETE ACOUNT", style: TextStyle(color: Colors.white)),
-      ),
       body: FutureBuilder(
           future: UserServices()
               .getAllUserData(context.watch<UserProvider>().userID),
@@ -200,11 +222,26 @@ class _UserScreenState extends State<UserScreen> {
                                 },
                                 child: Text("Edit")),
                           ),
+                          Padding(padding: EdgeInsets.all(8.0),
+                          child: OutlinedButton(
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color.fromARGB(255, 147, 7, 7),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 50, vertical: 20),
+                                    textStyle: TextStyle(
+                                        foreground: Paint()
+                                          ..color = Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold)),
+
+                                onPressed: () {promptUser(context);}, // Assuming you want to delete the User with ID 1
+        child: Text("DELETE ACOUNT", style: TextStyle(color: Colors.white)),))
                         ],
                       ),
                     )
 
-                        //
+
+
 
                         ;
                   });
