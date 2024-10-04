@@ -6,7 +6,7 @@ import '../common/sizes.dart';
 import '../common/ttexts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import './config.dart';
+import 'package:smart_money_app/services/config.dart';
 import 'package:status_alert/status_alert.dart';
 
 class SignupScreen extends StatefulWidget {
