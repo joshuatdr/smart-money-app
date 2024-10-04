@@ -9,6 +9,7 @@ import 'dart:convert';
 import './config.dart';
 import 'package:status_alert/status_alert.dart';
 import 'package:smart_money_app/globals.dart' as globals;
+import '../services/api.dart';
 
 var userId = globals.userId;
 
@@ -18,9 +19,15 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
+  var nickName;
+  var email;
+  var password;
+  var income;
+  var savingsTarget;
+
   Future<void> updateUser(
     int userId,
-    String fname,
+    String nickName,
     String email,
     String password,
     String income,
@@ -34,7 +41,7 @@ class _EditProfileState extends State<EditProfile> {
       body: jsonEncode(<String, dynamic>{
         "email": email,
         "password": password,
-        "fname": fname,
+        "fname": nickName,
         "income": income,
         "savings_target": savingsTarget
       }),
@@ -228,41 +235,25 @@ class _EditProfileState extends State<EditProfile> {
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
                                 onPressed: () {
-                                  updateUser(
-                                      userId,
-                                      nickNameController.text,
-                                      emailController.text,
-                                      passController.text,
-                                      incomeController.text,
-                                      savingsController.text);
-                                },
-                                child: Text("Submit changes"))),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(30),
-                            child: TextButton(
-                                onPressed: () {
-                                  Navigator.pop(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => UserScreen()),
-                                  );
-                                },
-                                child: const Text("Back to Profile")),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ), //
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
+                                  if (nickNameController.text.isEmpty) {
+                                    nickNameController.text == nickName;
+                                    print(UserServices().getAllUserData().User);
+                                  }
+                                  if (emailController.text.isEmpty) {
+                                    emailController.text == email;
+                                  }
+                                  if (passController.text.isEmpty) {
+                                    passController.text == password;
+                                  }
+                                  if (incomeController.text.isEmpty) {
+                                    incomeController.text == income;
+                                  }
+                                  if (savingsController.text.isEmpty) {
+                                    savingsController.text == savingsTarget;
+                                  }
+                                  //   updateUser(
+                                  //       userId,
+                                  //       nickNameController.text,
+                                  //       emailController.text,
+                                  //       passController.text,
+                                  //       incomeControlle
