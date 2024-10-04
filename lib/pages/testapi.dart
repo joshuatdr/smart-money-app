@@ -61,7 +61,7 @@ void promptUser(BuildContext context) {
                         child: const Text('Yes! Get rid of it!'),
                         onPressed: () {
                           Navigator.of(context).pop();  // closes prompt
-                          deleteUser(2);
+                          deleteUser(userId);
                         },
                       ),
                     ],
