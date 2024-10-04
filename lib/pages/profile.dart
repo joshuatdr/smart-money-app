@@ -14,65 +14,66 @@ class UserScreen extends StatefulWidget {
 
 class _UserScreenState extends State<UserScreen> {
   bool isReadOnly = true;
-  final userId = context.watch<UserProvider>().userID;
+  // final userId = context.watch<UserProvider>().userID;
   Future<void> deleteUser(int userId) async {
     final response = await http.delete(
         Uri.parse("https://smart-money-backend.onrender.com/api/user/$userId"));
 
     if (response.statusCode == 204) {
       // If the server returns a 204 response, user is successfully deleted
-  }
+    }
   }
 
-void promptUser(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Account deletion'),
-        content: const Text('Remember this is an irreversible action'),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('Cancel'),
-            onPressed: () {
-              Navigator.of(context).pop(); // closes prompt
-            },
-          ),
-          TextButton(
-            child: const Text('Next'),
-            onPressed: () {
-              Navigator.of(context).pop();  // closes prompt
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: const Text('Confirm Account Deletion'),
-                    content: const Text('Please confirm if you would like to delete your account.'),
-                    actions: <Widget>[
-                      TextButton(
-                        child: const Text('No! I want my account'),
-                        onPressed: () {
-                          Navigator.of(context).pop();  // closes prompt
-                        },
-                      ),
-                      TextButton(
-                        child: const Text('Yes! Get rid of it!'),
-                        onPressed: () {
-                          Navigator.of(context).pop();  // closes prompt
-                          deleteUser(userId);
-                        },
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
+  void promptUser(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Account deletion'),
+          content: const Text('Remember this is an irreversible action'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop(); // closes prompt
+              },
+            ),
+            TextButton(
+              child: const Text('Next'),
+              onPressed: () {
+                Navigator.of(context).pop(); // closes prompt
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text('Confirm Account Deletion'),
+                      content: const Text(
+                          'Please confirm if you would like to delete your account.'),
+                      actions: <Widget>[
+                        TextButton(
+                          child: const Text('No! I want my account'),
+                          onPressed: () {
+                            Navigator.of(context).pop(); // closes prompt
+                          },
+                        ),
+                        TextButton(
+                          child: const Text('Yes! Get rid of it!'),
+                          onPressed: () {
+                            Navigator.of(context).pop(); // closes prompt
+                            // deleteUser(userId);
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +91,7 @@ void promptUser(BuildContext context) {
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return Center(
-                child: Text("Error fecthing user data"),
+                child: Text("Error fetching user data"),
               );
             }
 
@@ -220,10 +221,12 @@ void promptUser(BuildContext context) {
                                 },
                                 child: Text("Edit")),
                           ),
-                          Padding(padding: EdgeInsets.all(8.0),
-                          child: OutlinedButton(
+                          Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: OutlinedButton(
                                 style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color.fromARGB(255, 180, 11, 11),
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 180, 11, 11),
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 50, vertical: 20),
                                     textStyle: TextStyle(
@@ -232,16 +235,15 @@ void promptUser(BuildContext context) {
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
 
-                                onPressed: () {promptUser(context);}, // call the prompt
-        child: Text("DELETE ACOUNT", style: TextStyle(color: Colors.white)),))
+                                onPressed: () {
+                                  promptUser(context);
+                                }, // call the prompt
+                                child: Text("DELETE ACCOUNT",
+                                    style: TextStyle(color: Colors.white)),
+                              ))
                         ],
                       ),
-                    )
-
-
-
-
-                        ;
+                    );
                   });
             } else {
               return Center(

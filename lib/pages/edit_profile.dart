@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_money_app/pages/testapi.dart';
+import 'package:smart_money_app/pages/profile.dart';
 import '../common/styles/spacing_styles.dart';
 import '../common/image_strings.dart';
 import '../common/sizes.dart';
