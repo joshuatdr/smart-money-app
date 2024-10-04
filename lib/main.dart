@@ -1,20 +1,34 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_money_app/budget_page.dart';
 import 'package:smart_money_app/goals_page.dart';
 import 'package:smart_money_app/pages/add_transaction.dart';
+import 'package:smart_money_app/pages/signup.dart';
+import './pages/dashboard.dart';
 import 'package:smart_money_app/spending_page.dart';
 import 'package:smart_money_app/pages/history.dart';
 import 'package:provider/provider.dart';
 import './pages/login.dart';
 import './pages/testapi.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var token = prefs.getString('token');
+  token ??=
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE3MjgwMzM4MDIsImV4cCI6MTcyODAzMzg2Mn0.PliYS6OJHCHD8XurFLYmFwMxEgCtt7224W8kemVm2ss"; // app will crash if token is null, need to fix
+  runApp(MyApp(token: token));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final token;
+
+  const MyApp({
+    @required this.token,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +44,9 @@ class MyApp extends StatelessWidget {
               // Color.fromARGB(255, 59, 17, 107)),
               seedColor: const Color.fromARGB(255, 59, 17, 107)),
         ),
-        home: MyHomePage(),
+        home: (JwtDecoder.isExpired(token) == false)
+            ? Dashboard(token: token)
+            : SignupScreen(),
       ),
     );
   }

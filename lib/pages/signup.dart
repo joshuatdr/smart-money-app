@@ -265,11 +265,10 @@ class _SignupScreenState extends State<SignupScreen> {
                             padding: const EdgeInsets.all(60),
                             child: TextButton(
                                 onPressed: () {
-                                  Navigator.pop(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LoginScreen()),
-                                  );
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LoginScreen()));
                                 },
                                 child: const Text("Already have an account?")),
                           ),
