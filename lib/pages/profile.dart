@@ -98,7 +98,7 @@ class _UserScreenState extends State<UserScreen> {
             if (snapshot.hasData) {
               //var data = snapshot .data;
               var data = snapshot.data as List<User>;
-              print(data);
+              // print(data);
 
               return ListView.builder(
                   itemCount: data.length,

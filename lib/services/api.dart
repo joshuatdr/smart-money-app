@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:smart_money_app/model/goals.dart';
 import '../model/user.dart';
 import '../model/transactions.dart';
 
@@ -62,8 +63,8 @@ class UserServices {
 //User newUser = User.fromJson(users);
 //allUsers.add(newUser);
 
-        print(users);
-        print(users['email']);
+        // print(users);
+        // print(users['email']);
         // User newUser = User.fromJson(users);
 //print(allUsers);
 
@@ -83,7 +84,7 @@ class UserServices {
             users); // The Employee.fromJson is a method from the Class Employee in employee.dart is used to create a Dart object from a JSON data structure
         allUsers.add(newUser);
 
-        print(allUsers);
+        // print(allUsers);
         return allUsers;
       }
     } catch (e) {
@@ -128,7 +129,7 @@ class UserServices {
           allTransactions.add(newTransaction);
         }
 
-        print(allTransactions);
+        // print(allTransactions);
         return allTransactions;
 
 /*
@@ -162,6 +163,30 @@ class UserServices {
       throw Exception(e.toString()); // if error convert error to a string.
     }
   }*/
+
+  getAllUserGoals(userID) async {
+    String baseUrl =
+        "https://smart-money-backend.onrender.com/api/user/$userID/goals";
+
+    List<Goals> allGoals = [];
+    try {
+      var response = await http.get(Uri.parse(baseUrl));
+      if (response.statusCode == 200) {
+        var data = response.body;
+        var decodedData = jsonDecode(data);
+        var goals = decodedData['goals'];
+
+        for (var goal in goals) {
+          Goals newGoal = Goals.fromJson(goal);
+          allGoals.add(newGoal);
+        }
+        return allGoals;
+      }
+    } catch (e) {
+      print(e);
+      throw Exception(e.toString());
+    }
+  }
 
   _setHeaders() => {
         'Content-type': 'application/json',
