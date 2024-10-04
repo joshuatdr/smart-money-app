@@ -5,9 +5,8 @@ import '../common/image_strings.dart';
 import '../common/sizes.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:smart_money_app/globals.dart' as globals;
-
-var userId = globals.userId;
+import 'package:provider/provider.dart';
+import '../providers/user_provider.dart';
 
 class EditProfile extends StatefulWidget {
   @override
@@ -82,6 +81,8 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    AsyncSnapshot.waiting();
+    var userId = context.watch<UserProvider>().userID;
     String? validatePass(String? value) {
       const patternPass =
           r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
@@ -223,7 +224,7 @@ class _EditProfileState extends State<EditProfile> {
                                           ..color = Colors.white,
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
-                                onPressed: () {
+                                onPressed: () async {
                                   updateUser(
                                       userId,
                                       nickNameController.text,

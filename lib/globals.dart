@@ -1,5 +1,13 @@
 library smart_money_app.globals;
 
-bool isLoggedIn = false;
-var userId = 1;
-var fname = 'default name';
+class Globals {
+  int userID;
+
+  Globals({this.userID = 0});
+
+  void changeID({
+    required int newUserID,
+  }) async {
+    userID = newUserID;
+  }
+}

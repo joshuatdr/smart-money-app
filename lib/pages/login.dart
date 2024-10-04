@@ -12,8 +12,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_money_app/globals.dart' as globals;
 import './dashboard.dart';
 
-var fname = globals.fname;
-
 class LoginScreen extends StatefulWidget {
   @override
   State<LoginScreen> createState() => _LoginScreenState();
