@@ -82,7 +82,7 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     AsyncSnapshot.waiting();
-    var userId = context.watch<UserProvider>().userID;
+    // var userId = context.watch<UserProvider>().userID;
     String? validatePass(String? value) {
       const patternPass =
           r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
@@ -224,14 +224,43 @@ class _EditProfileState extends State<EditProfile> {
                                           ..color = Colors.white,
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
-                                onPressed: () async {
-                                  updateUser(
-                                      userId,
-                                      nickNameController.text,
-                                      emailController.text,
-                                      passController.text,
-                                      incomeController.text,
-                                      savingsController.text);
+                                onPressed: () {
+                                  // List<String> arguments = [];
+                                  // if (nickNameController.text.isEmpty) {
+                                  //   arguments.add(globals.fname);
+                                  // } else {
+                                  //   arguments.add(nickNameController.text);
+                                  // }
+                                  // if (emailController.text.isEmpty) {
+                                  //   arguments.add(globals.email);
+                                  // } else {
+                                  //   arguments.add(emailController.text);
+                                  // }
+                                  // if (passController.text.isEmpty) {
+                                  //   arguments.add(globals.password);
+                                  // } else {
+                                  //   arguments.add(passController.text);
+                                  // }
+                                  // if (incomeController.text.isEmpty) {
+                                  //   arguments.add(globals.income);
+                                  // } else {
+                                  //   arguments.add(incomeController.text);
+                                  // }
+                                  // if (savingsController.text.isEmpty) {
+                                  //   arguments.add(globals.savingsTarget);
+                                  //   print(userId);
+                                  //   print(arguments);
+                                  //   print(arguments[0]);
+                                  // } else {
+                                  //   arguments.add(savingsController.text);
+                                  // }
+                                  // updateUser(
+                                  //     userId,
+                                  //     argument[0],
+                                  //     emailController.text,
+                                  //     passController.text,
+                                  //     incomeController.text,
+                                  //     savingsController.text);
                                 },
                                 child: Text("Submit changes"))),
                       ),
