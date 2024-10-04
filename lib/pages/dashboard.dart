@@ -115,10 +115,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       BottomNavigationBarItem(
                         icon: Icon(Icons.insights),
-                        label: 'Login',
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.insights),
                         label: 'Profile',
                       ),
                       BottomNavigationBarItem(
