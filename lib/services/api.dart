@@ -6,53 +6,47 @@ import '../model/transactions.dart';
 // This class sends the get request from the endpoint
 
 class UserServices {
-
   String bbaseUrl =
       "https://smart-money-backend.onrender.com/api/login/jimmy4000@gmail.com"; // create a variable String to store the API Base URL
 
-    getUserId() async {
+  getUserId() async {
     // create an asynchronous function
     List<User> allUsers =
         []; // create an array of type <Employee> from employee.dart called allEmployees
-      try {
+    try {
       // try, catch - error handling, very similar to then and catch in JavaScript
       var response = await http.get(Uri.parse(
           bbaseUrl)); // You can use the await keyword to get the completed result of an asynchronous expression. The await keyword only works within an async function.
       if (response.statusCode == 200) {
         var data = response.body;
 
-   // print(data);
-   
+        // print(data);
+
         var decodedData = jsonDecode(
             data); // jsonDecode Parses the string and returns the resulting Json object.
         var users =
             decodedData['user_id']; // employees is an array of objects [{}{}{}]
 
-       // print(users);
-       // print(users['user_id']);
-       
-     //   User newUser = User.fromJson(
-      //      users); // The Employee.fromJson is a method from the Class Employee in employee.dart is used to create a Dart object from a JSON data structure
-       // allUsers.add(newUser);
+        // print(users);
+        // print(users['user_id']);
 
-      //  print(allUsers);
+        //   User newUser = User.fromJson(
+        //      users); // The Employee.fromJson is a method from the Class Employee in employee.dart is used to create a Dart object from a JSON data structure
+        // allUsers.add(newUser);
+
+        //  print(allUsers);
         return users;
       }
     } catch (e) {
-     print(e);
-     print("error");
+      print(e);
+      print("error");
       //throw Exception(e.toString()); // if error convert error to a string.
     }
-  }  
+  }
 
-
-
-
-
-  String baseUrl =
-      "https://smart-money-backend.onrender.com/api/user/1"; // create a variable String to store the API Base URL
-
-  getAllUserData() async {
+  getAllUserData(userID) async {
+    String baseUrl =
+        "https://smart-money-backend.onrender.com/api/user/$userID"; // create a variable String to store the API Base URL
     // create an asynchronous function
     List<User> allUsers =
         []; // create an array of type <Employee> from employee.dart called allEmployees
