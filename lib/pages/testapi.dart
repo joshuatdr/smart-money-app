@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:smart_money_app/pages/edit_profile.dart';
 import '../model/user.dart';
 import '../services/api.dart';
+import '../providers/user_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
 class UserScreen extends StatefulWidget {
@@ -63,7 +65,8 @@ class _UserScreenState extends State<UserScreen> {
         child: Text("DELETE ACOUNT", style: TextStyle(color: Colors.white)),
       ),
       body: FutureBuilder(
-          future: UserServices().getAllUserData(),
+          future: UserServices()
+              .getAllUserData(context.watch<UserProvider>().userID),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return Center(
