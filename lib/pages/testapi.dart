@@ -8,14 +8,13 @@ import 'package:http/http.dart' as http;
 
 class UserScreen extends StatefulWidget {
   const UserScreen({super.key});
-
   @override
   State<UserScreen> createState() => _UserScreenState();
 }
 
 class _UserScreenState extends State<UserScreen> {
   bool isReadOnly = true;
-
+  final userId = context.watch<UserProvider>().userID;
   Future<void> deleteUser(int userId) async {
     final response = await http.delete(
         Uri.parse("https://smart-money-backend.onrender.com/api/user/$userId"));
@@ -26,7 +25,6 @@ class _UserScreenState extends State<UserScreen> {
   }
 
 void promptUser(BuildContext context) {
-  // Step 1 Dialog
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -225,7 +223,7 @@ void promptUser(BuildContext context) {
                           Padding(padding: EdgeInsets.all(8.0),
                           child: OutlinedButton(
                                 style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color.fromARGB(255, 147, 7, 7),
+                                    backgroundColor: const Color.fromARGB(255, 180, 11, 11),
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 50, vertical: 20),
                                     textStyle: TextStyle(
@@ -234,7 +232,7 @@ void promptUser(BuildContext context) {
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
 
-                                onPressed: () {promptUser(context);}, // Assuming you want to delete the User with ID 1
+                                onPressed: () {promptUser(context);}, // call the prompt
         child: Text("DELETE ACOUNT", style: TextStyle(color: Colors.white)),))
                         ],
                       ),
