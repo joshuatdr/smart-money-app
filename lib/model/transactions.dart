@@ -1,4 +1,4 @@
-//import 'package:intl/intl.dart';
+import '../common/dateformat.dart';
 
 class Transactions {
   // Create a class Transactions
@@ -10,30 +10,25 @@ class Transactions {
   int? userId;
 
   Transactions(
-      {this.transactionId,
-  this.name,
-  this.cost,
-  this.imgUrl,
-  this.createdAt,
-  this.userId}); // This is the constructor
+    {this.transactionId,
+    this.name,
+    this.cost,
+    this.imgUrl,
+    this.createdAt,
+    this.userId}
+  ); // This is the constructor
 
   Transactions.fromJson(Map<String, dynamic> json) {
   transactionId = json['transaction_id'];
   name = json['name'];
   cost = json['cost'];
   imgUrl = json['img_url'];
-  createdAt = json['created_at'];
-//   print(DateTime.parse(createdAt.toString()));
-// DateTime tempDate = DateFormat("yyyy-MM-dd hh:mm:ss").parse(createdAt.toString());
-// print(tempDate);
-if (imgUrl == null) {
- imgUrl = "";
-} else {
-  imgUrl == json['img_url'];
-}
-
-
-
+  createdAt = dateFormat(json['created_at']);
+  if (imgUrl == null) {
+  imgUrl = "";
+  } else {
+    imgUrl == json['img_url'];
+  }
   userId = json['user_id'];
   }
 }
