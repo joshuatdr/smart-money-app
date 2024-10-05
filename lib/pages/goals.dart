@@ -73,9 +73,11 @@ class _GoalsPageState extends State<GoalsPage> {
 // =======
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
         backgroundColor: Colors.orange,
         title:
-            Center(child: Text("Goals", style: TextStyle(color: Colors.white))),
+            Text("Goals", style: TextStyle(color: Colors.white)),
       ),
       body: FutureBuilder(
         future: UserServices()
