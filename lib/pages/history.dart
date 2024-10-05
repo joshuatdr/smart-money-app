@@ -5,6 +5,10 @@ import '../model/transactions.dart';
 import '../services/api.dart';
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
+// =======
+// import 'package:smart_money_app/providers/user_provider.dart';
+// import 'package:provider/provider.dart';
+// >>>>>>> main
 
 class HistoryScreen extends StatefulWidget {
   HistoryScreen({super.key});
@@ -25,23 +29,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
       ],
     );
   }
-/*
-bool sort = true;
-List<data>? = filterData; 
-
-onsortColumn(int columnIndex, bool ascending){
-  if (columnIndex == 0){
-    if(ascending){
-      filterData!.sort((a,b)=>a.name!.compareTo(b.name!));
-    } else {
-      filterData!.sort((a,b)=>b.name!.compareTo(a.name!));
-    }
-  }
-}*/
 
   @override
-  //filterData = myData
-
   Widget build(BuildContext context) {
     AsyncSnapshot.waiting();
     var userId = context.watch<UserProvider>().userID;
@@ -67,7 +56,8 @@ onsortColumn(int columnIndex, bool ascending){
           if (snapshot.hasData) {
             var results = snapshot.data as List<Transactions>;
             if (results.isNotEmpty) {
-              return Container(
+              return SingleChildScrollView(
+                  child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.orange),
                 ),
@@ -80,6 +70,7 @@ onsortColumn(int columnIndex, bool ascending){
                   ),
                   columnSpacing: 30,
                   columns: [
+                    
                     DataColumn(label: Text('Name')),
                     DataColumn(label: Text('Cost')),
                     DataColumn(label: Text('Date')),
@@ -94,7 +85,7 @@ onsortColumn(int columnIndex, bool ascending){
                   ),
                   showBottomBorder: true,
                 ),
-              );
+              ));
             } else {
               return Row(
                 children: const <Widget>[
@@ -132,27 +123,3 @@ onsortColumn(int columnIndex, bool ascending){
     );
   }
 }
-
-/*
-DataTable _createDataTable() {
-    return DataTable(columns: _createColumns(), rows: _createRows());
-  }
-List<DataColumn> _createColumns() {
-    return [
-      DataColumn(label: Text('ID')),
-      DataColumn(label: Text('Book')),
-      DataColumn(label: Text('Author')),
-      DataColumn(label: Text('Category'))
-    ];
-  }
-List<DataRow> _createRows() {
-    return _books
-        .map((book) => DataRow(cells: [
-              DataCell(Text('#' + book['id'].toString())),
-              DataCell(Text(book['title'])),
-              DataCell(Text(book['author'])),
-              DataCell(FlutterLogo())
-            ]))
-        .toList();
-  }
-}*/

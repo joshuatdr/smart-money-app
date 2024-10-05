@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:smart_money_app/services/api.dart';
 import '../common/styles/spacing_styles.dart';
@@ -7,6 +6,7 @@ import '../common/sizes.dart';
 import 'package:status_alert/status_alert.dart';
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
+
 
 class AddTransactionScreen extends StatefulWidget {
   @override
@@ -46,6 +46,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
   final imgurlController = TextEditingController();
   final descController = TextEditingController();
 
+
   _register(userId) async {
     var data = {
       'name': nameController.text,
@@ -81,6 +82,11 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
   //       'A special character'];
   @override
   Widget build(BuildContext context) {
+
+    var userID = context.watch<UserProvider>().userID;
+
+//print(userID);
+    
     // String? validatePass(String? value) {
     //   const patternPass = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
     //   final regex = RegExp(patternPass);

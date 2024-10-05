@@ -5,11 +5,12 @@ import '../common/image_strings.dart';
 import '../common/sizes.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-// import './config.dart';
-// import 'package:status_alert/status_alert.dart';
-// import '../services/api.dart';
+//import './config.dart';
+import 'package:status_alert/status_alert.dart';
+import '../services/api.dart';
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
+
 
 class EditProfile extends StatefulWidget {
   @override
@@ -19,9 +20,9 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
   Future<void> updateUser(
     int userId,
-    String fname,
     String email,
-    // String password,
+//     String password,
+    String fname,
     String income,
     String savingsTarget,
   ) async {
@@ -41,6 +42,7 @@ class _EditProfileState extends State<EditProfile> {
     if (response.statusCode == 201) {
       print('SUCCESS');
       // If the server returns a 201 OK response, then the user was successfully updated.
+
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -61,7 +63,6 @@ class _EditProfileState extends State<EditProfile> {
     } else {
       print(userId.runtimeType);
       print('FAIL');
-      print(response.statusCode);
       // If the server did not return a 201 OK response,
       // then throw an exception.
       throw Exception("Failed to update user");
@@ -234,6 +235,7 @@ class _EditProfileState extends State<EditProfile> {
                                           ..color = Colors.white,
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
+
                                 onPressed: () async {
                                   List<String> arguments = [];
                                   if (nickNameController.text.isEmpty) {
@@ -267,6 +269,7 @@ class _EditProfileState extends State<EditProfile> {
                                   updateUser(userId, arguments[0], arguments[1],
                                       arguments[2], arguments[3]);
                                   print(userId);
+
                                 },
                                 child: Text("Submit changes"))),
                       ),
