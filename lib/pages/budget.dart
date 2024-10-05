@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 //import 'package:smart_money_app/pages/dashboard.dart';
-import 'package:smart_money_app/pages/editBudget.dart';
+
 //import 'package:smart_money_app/pages/edit_profile.dart';
 //import '../../model/user.dart';
 //import '../../services/api.dart';
@@ -34,12 +34,12 @@ class Data {
   Data({required this.name, required this.percent, required this.color});
 }
 
-class BudgetPage extends StatefulWidget {
+class SpendingPage extends StatefulWidget {
   @override
-  State<BudgetPage> createState() => _BudgetPageState();
+  State<SpendingPage> createState() => _SpendingPageState();
 }
 
-class _BudgetPageState extends State<BudgetPage> {
+class _SpendingPageState extends State<SpendingPage> {
   late final userId = context.watch<UserProvider>().userID;
   late final email = context.watch<UserProvider>().email;
   late final fName = context.watch<UserProvider>().fName;
@@ -79,7 +79,7 @@ class _BudgetPageState extends State<BudgetPage> {
         //  leading: null,
           backgroundColor: Colors.orange,
           title: Center(
-              child: Text("Budget", style: TextStyle(color: Colors.white))),
+              child: Text("Spending", style: TextStyle(color: Colors.white))),
         ),
         body: Center(
           child: Padding(
@@ -141,15 +141,7 @@ class _BudgetPageState extends State<BudgetPage> {
                     child: _SampleCard(
                         cardName:
                             'It will take {amount of time} to reach your savings target!')),
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => EditBudgetPage()),
-                      );
-                    },
-                    child: Text("Edit Budget"))
+                
               ],
             ),
           ),
