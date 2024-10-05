@@ -76,6 +76,7 @@ class _BudgetPageState extends State<BudgetPage> {
     return Scaffold(
         backgroundColor: Colors.purple,
         appBar: AppBar(
+          leading: null,
           backgroundColor: Colors.orange,
           title: Center(
               child: Text("Budget", style: TextStyle(color: Colors.white))),

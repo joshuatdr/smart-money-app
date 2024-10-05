@@ -27,7 +27,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
   }
 
   @override
-
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -47,12 +46,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
       ),
       body: FutureBuilder(
         future: UserServices()
-        .getAllUserTransactions(context.watch<UserProvider>().userID),
+            .getAllUserTransactions(context.watch<UserProvider>().userID),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             var results = snapshot.data as List<Transactions>;
             if (results.isNotEmpty) {
-              return Container(
+              return SingleChildScrollView(
+                  child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.orange),
                 ),
@@ -65,6 +65,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   ),
                   columnSpacing: 30,
                   columns: [
+                    
                     DataColumn(label: Text('Name')),
                     DataColumn(label: Text('Cost')),
                     DataColumn(label: Text('Date')),
@@ -79,7 +80,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   ),
                   showBottomBorder: true,
                 ),
-              );
+              ));
             } else {
               return Row(
                 children: const <Widget>[
