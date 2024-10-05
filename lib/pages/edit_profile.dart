@@ -5,7 +5,7 @@ import '../common/image_strings.dart';
 import '../common/sizes.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import './config.dart';
+//import './config.dart';
 import 'package:status_alert/status_alert.dart';
 import '../services/api.dart';
 import 'package:provider/provider.dart';

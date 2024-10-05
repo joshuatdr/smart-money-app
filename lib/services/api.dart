@@ -97,9 +97,9 @@ class UserServices {
     }
   }
 
-  getAllUserTransactions() async {
+  getAllUserTransactions(userID) async {
     String baseUrl =
-        "https://smart-money-backend.onrender.com/api/user/1/transactions";
+        "https://smart-money-backend.onrender.com/api/user/$userID/transactions";
 
     // create an asynchronous function
     List<Transactions> allTransactions =
@@ -150,9 +150,8 @@ class UserServices {
     }
   }
 
-  postUserTransaction(data, apiUrl) async {
-    String baseUrl =
-        "https://smart-money-backend.onrender.com/api/user/1/transactions";
+  postUserTransaction(data, userID) async {
+    String baseUrl = "https://smart-money-backend.onrender.com/api/user/$userID/transactions";
 
     return await http.post(
       Uri.parse(baseUrl),
@@ -160,13 +159,6 @@ class UserServices {
       headers: _setHeaders(),
     );
   }
-
-  /*
-    } catch (e) {
-      print(e);
-      throw Exception(e.toString()); // if error convert error to a string.
-    }
-  }*/
 
   getAllUserGoals(userID) async {
     String baseUrl =

@@ -1,10 +1,11 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:smart_money_app/services/api.dart';
 import '../common/styles/spacing_styles.dart';
 import '../common/sizes.dart';
 import 'package:status_alert/status_alert.dart';
+import 'package:smart_money_app/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class AddTransactionScreen extends StatefulWidget {
   @override
@@ -43,17 +44,19 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
   final imgurlController = TextEditingController();
   final descController = TextEditingController();
 
-  _register() async {
+  _register(userID) async {
 
     var data={
       'name':nameController.text,
       'cost':costController.text,
       'img_url':imgurlController.text,
       'description':descController.text,
-      'user_id':'1',
+      'user_id': userID,
     };
+
+    //print(data);
   
-    var res = await UserServices().postUserTransaction(data, 'transactions');
+    var res = await UserServices().postUserTransaction(data, userID);
     var body = jsonDecode(res.body);
 
     if(body['transaction']['transaction_id'] >= 1){
@@ -85,6 +88,11 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
   //       'A special character'];
   @override
   Widget build(BuildContext context) {
+
+    var userID = context.watch<UserProvider>().userID;
+
+//print(userID);
+    
     // String? validatePass(String? value) {
     //   const patternPass = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
     //   final regex = RegExp(patternPass);
@@ -267,7 +275,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                                 onPressed: () {
                                   if (_formfield.currentState!.validate()) {
                                    // print("success");
-                                    _register();
+                                     _register(userID);
 
                                     print(successMsg);
 
