@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_money_app/model/goals.dart';
+import 'package:smart_money_app/pages/add_goal_page.dart';
 import 'package:smart_money_app/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_money_app/services/api.dart';
@@ -23,27 +24,43 @@ class GoalsPage extends StatelessWidget {
       ),
       body: _renderGoals(context, style),
       floatingActionButtonLocation: ExpandableFab.location,
-      floatingActionButton: _renderFloatingActionButton(),
+      floatingActionButton: _renderFloatingActionButton(context),
     );
   }
 
-  ExpandableFab _renderFloatingActionButton() {
+  ExpandableFab _renderFloatingActionButton(context) {
     return ExpandableFab(
+      openButtonBuilder: DefaultFloatingActionButtonBuilder(
+        backgroundColor: Colors.orange,
+        child: const Icon(Icons.menu),
+      ),
+      closeButtonBuilder: DefaultFloatingActionButtonBuilder(
+        backgroundColor: Colors.orange,
+        child: const Icon(Icons.close),
+      ),
       overlayStyle: ExpandableFabOverlayStyle(
         color: Colors.white.withOpacity(0.4),
       ),
       children: [
         FloatingActionButton.small(
+          backgroundColor: Colors.orange,
           heroTag: null,
           child: const Icon(Icons.edit),
           onPressed: () {},
         ),
         FloatingActionButton.small(
+          backgroundColor: Colors.orange,
           heroTag: null,
           child: const Icon(Icons.add),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddGoalPage()),
+            );
+          },
         ),
         FloatingActionButton.small(
+          backgroundColor: Colors.orange,
           heroTag: null,
           child: const Icon(Icons.remove),
           onPressed: () {},
@@ -59,7 +76,7 @@ class GoalsPage extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           var results = snapshot.data as List<Goals>;
-          if (results.isNotEmpty) {
+          if (results.length >= 2) {
             return Center(
               child: Swiper(
                 itemWidth: 400,
@@ -74,36 +91,28 @@ class GoalsPage extends StatelessWidget {
                 layout: SwiperLayout.STACK,
               ),
             );
+          } else if (results.isNotEmpty) {
+            return Center(
+              child: _goalCard(results, 0, style),
+            );
           } else {
-            return Row(
-              children: const <Widget>[
+            return Center(
+              child: Text("You haven't added any goals yet!"),
+            );
+          }
+        } else {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
                 SizedBox(
                   // ignore: sort_child_properties_last
                   child: CircularProgressIndicator(),
                   width: 30,
                   height: 30,
                 ),
-                Padding(
-                  padding: EdgeInsets.all(40),
-                  child: Text('No Data Found...'),
-                ),
               ],
-            );
-          }
-        } else {
-          return Row(
-            children: const <Widget>[
-              SizedBox(
-                // ignore: sort_child_properties_last
-                child: CircularProgressIndicator(),
-                width: 30,
-                height: 30,
-              ),
-              Padding(
-                padding: EdgeInsets.all(40),
-                child: Text('Looking up your transactions...'),
-              ),
-            ],
+            ),
           );
         }
       },
