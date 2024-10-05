@@ -176,7 +176,8 @@ class _EditBudgetPageState extends State<EditBudgetPage> {
                     ],
                   ),
                 ),
-              ), //
+              ),
+              //
             ],
           ),
         ),
