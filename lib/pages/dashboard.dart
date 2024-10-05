@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_money_app/main.dart';
 import 'package:smart_money_app/spending_page.dart';
 import 'package:smart_money_app/pages/history.dart';
-import 'package:smart_money_app/budget_page.dart';
+import 'package:smart_money_app/pages/budget.dart';
 import 'package:smart_money_app/pages/goals.dart';
 import 'package:smart_money_app/pages/add_transaction.dart';
 import 'package:provider/provider.dart';
@@ -31,27 +31,26 @@ class _DashboardState extends State<Dashboard> {
     Map<String, dynamic> jwtDecodedToken =
         await JwtDecoder.decode(widget.token);
 
-      context
-          .read<UserProvider>()
-          .changeUserID(newUserID: jwtDecodedToken['user']['user_id']);
-      context
-          .read<UserProvider>()
-          .changeEmail(newEmail: jwtDecodedToken['user']['email']);
-      context
-          .read<UserProvider>()
-          .changeAvatarURL(newAvatarURL: jwtDecodedToken['user']['avatar_url']);
-      context
-          .read<UserProvider>()
-          .changeFName(newFName: jwtDecodedToken['user']['fname']);
-      context
-          .read<UserProvider>()
-          .changeIncome(newIncome: jwtDecodedToken['user']['income']);
-      context
-          .read<UserProvider>()
-          .changeSavingsTarget(newSavingsTarget: jwtDecodedToken['user']['savings_target']);
-      context
-          .read<UserProvider>()
-          .changeCreatedAt(newCreatedAt: jwtDecodedToken['user']['created_at']);
+    context
+        .read<UserProvider>()
+        .changeUserID(newUserID: jwtDecodedToken['user']['user_id']);
+    context
+        .read<UserProvider>()
+        .changeEmail(newEmail: jwtDecodedToken['user']['email']);
+    context
+        .read<UserProvider>()
+        .changeAvatarURL(newAvatarURL: jwtDecodedToken['user']['avatar_url']);
+    context
+        .read<UserProvider>()
+        .changeFName(newFName: jwtDecodedToken['user']['fname']);
+    context
+        .read<UserProvider>()
+        .changeIncome(newIncome: jwtDecodedToken['user']['income']);
+    context.read<UserProvider>().changeSavingsTarget(
+        newSavingsTarget: jwtDecodedToken['user']['savings_target']);
+    context
+        .read<UserProvider>()
+        .changeCreatedAt(newCreatedAt: jwtDecodedToken['user']['created_at']);
   }
 
   var selectedIndex = 0;
