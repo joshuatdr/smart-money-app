@@ -36,10 +36,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
     var userId = context.watch<UserProvider>().userID;
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.orange,
-        title: Center(
-            child: Text("Transaction History",
-                style: TextStyle(color: Colors.white))),
+        title: Text("Transaction History",
+            style: TextStyle(color: Colors.white)),
         actions: <Widget>[
           IconButton(
               icon: const Icon(Icons.edit),
