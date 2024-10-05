@@ -1,22 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:smart_money_app/main.dart';
+//import '../common/styles/spacing_styles.dart';
 import 'package:fl_chart/fl_chart.dart';
-// <<<<<<< context-userId
-// import 'package:smart_money_app/globals.dart';
-// //import '../common/sizes.dart';
-// //import 'package:status_alert/status_alert.dart';
-// //import '../model/transactions.dart';
-// import '../services/api.dart';
-// import 'package:provider/provider.dart';
-// import '../providers/user_provider.dart';
-// =======
-import '../services/api.dart';
-import 'package:smart_money_app/providers/user_provider.dart';
-import 'package:provider/provider.dart';
-// >>>>>>> main
+//import '../common/sizes.dart';
+//import 'package:status_alert/status_alert.dart';
+//import '../model/transactions.dart';
+//import '../services/api.dart';
 
 class SpendingPage extends StatefulWidget {
-  
   @override
   State<SpendingPage> createState() => _SpendingPageState();
 }
@@ -29,7 +19,6 @@ Widget bottomTitleWidgets(double value, TitleMeta meta) {
       fontWeight: FontWeight.bold,
       fontSize: 16,
     );
-
     Widget text;
     switch (value.toInt()) {
       case 2:
@@ -80,12 +69,24 @@ Widget bottomTitleWidgets(double value, TitleMeta meta) {
 
 class _SpendingPageState extends State<SpendingPage> {
 
+/*
+String _user = 'nobody';
+_testlogin(){
+   setState(() {
+      _user='justin';
+    });
+}*/
+
+
+
 //Future<List<Transactions>> postsFuture = UserServices().getAllUserTransactions();
 
 // https://stackoverflow.com/questions/65389839/how-to-implement-api-data-in-a-line-chart
 // https://arijit-autility.medium.com/creating-line-charts-in-flutter-by-fetching-data-from-graphql-98bb50eb20bb
 
-// <<<<<<< context-userId
+
+
+
 /*
 Future getTransactionData() async {
   var testObj = await UserServices().getAllUserTransactions();
@@ -97,9 +98,10 @@ Future getTransactionData() async {
   return testObj;
 }*/
 
-  //var testObj = getTransactionData();
+ //var testObj = getTransactionData();
 
   //print(testObj);
+
 
 /*
 createList(testObj){
@@ -158,52 +160,28 @@ createData(testObj){
 
 //logic().then((list) => removeOne(list));
 
-  createNewSpots() {
-    List<FlSpot> newSpots = [];
-    //Future<List<Transactions>> postsFuture = UserServices().getAllUserTransactions();
-    Future newSpotss =
-        UserServices().getAllUserTransactions(userId).then((testObj) => {
-              print(testObj),
-              // List<FlSpot> newSpots = [];
-              for (int i = 0; i <= testObj.length - 1; i++)
-                {newSpots.add(FlSpot((i * 1.00), testObj[i]['cost']))}
-            });
+createNewSpots(){
+  // List<FlSpot> newSpots = [];
+   //Future<List<Transactions>> postsFuture = UserServices().getAllUserTransactions();
+//Future newSpotss = UserServices().getAllUserTransactions().then((testObj) => {
+ // print(testObj),
+     // List<FlSpot> newSpots = [];
+  //  for (int i = 0; i <= testObj.length-1; i++) {
+  //    newSpots.add(FlSpot((i * 1.00), testObj[i]['cost']))
+ //   }
+//}); 
 // }).then((data) => {
 //   print('second then'),
 //   print(data)
     // List<FlSpot> newSpots = [];
     // for (int i = 0; i <= testObj.length-1; i++) {
-    //   newSpots.add(FlSpot((i * 1.00), testObj[i]['cost']));
+    //   newSpots.add(FlSpot((i * 1.00), testObj[i]['cost'])); 
     // }
 //});
 //Future.delayed(Duration(seconds: 10), () =>print('postsFuture'));
 //Future.delayed(Duration(seconds: 10), () =>print(postsFuture));
 
 //print('before list');
-/*
- List<dynamic> testObj = [
-{
-  "cost": 13.99, 
-  "created_at": "2024-09-30 10:34:00+01",
-},
-{
-  "cost": 113.99, 
-  "created_at": "2024-08-30 10:34:00+01",
-},
-{
-  "cost": 13.99, 
-  "created_at": "2024-09-30 10:34:00+01",
-},
-{
-  "cost": 113.99, 
-  "created_at": "2024-08-30 10:34:00+01",
-},
-  ];*/
-
-//for (var keys in testObj) {
-// =======
-
-createNewSpots(){
 
  List<dynamic> testObj = [
 {
@@ -226,7 +204,6 @@ createNewSpots(){
 
 //for (var keys in testObj) {
 
-// >>>>>>> main
 
 // final newSpots = [
 //                         // (Month, value)
@@ -242,53 +219,50 @@ createNewSpots(){
 //                         // FlSpot(9,1),
 //                   ];
 
-// <<<<<<< context-userId
-// //List<FlSpot> testObj {
 
-//     // List<FlSpot> newSpots = [];
-//     // for (int i = 0; i <= testObj.length-1; i++) {
-//     //   newSpots.add(FlSpot((i * 1.00), testObj[i]['cost']));
-//     // }
-//     return newSpotss;
-// =======
+//List<FlSpot> testObj {
+
     List<FlSpot> newSpots = [];
     for (int i = 0; i <= testObj.length-1; i++) {
       newSpots.add(FlSpot((i * 1.00), testObj[i]['cost'])); 
     }
    return newSpots;
-// >>>>>>> main
   }
 
   @override
   
   Widget build(BuildContext context) {
-// <<<<<<< context-userId
-//     var userId = context.watch<UserProvider>().userID;
 
-//     return ListView.builder(itemBuilder: (context, index) {
-//       return createNewSpots();
-//     });
+/*
+     return  ListView.builder(
+      itemBuilder: (context, index){
+        return createNewSpots();
+      }
+     );*/
 
-//     // var theme = Theme.of(context);
-//     // var appState = context.watch<MyAppState>();
 
-//     // String? validateName(value) {
-//     //   if (value!.isEmpty) {
-//     //     return 'Enter a valid name';
-//     //   } else {
-//     //     return null;
-//     //   }
-//     // }
 
-//     //  String? validateCost(value) {
-//     //   if (value!.isEmpty) {
-//     //     return 'Please enter a purchase cost';
-//     //   } else {
-//     //     return null;
-//     //   }
-//     // }
-// =======
-// >>>>>>> main
+
+    // var theme = Theme.of(context);
+    // var appState = context.watch<MyAppState>();
+
+    // String? validateName(value) {
+    //   if (value!.isEmpty) {
+    //     return 'Enter a valid name';
+    //   } else {
+    //     return null;
+    //   }
+    // }
+
+    //  String? validateCost(value) {
+    //   if (value!.isEmpty) {
+    //     return 'Please enter a purchase cost';
+    //   } else {
+    //     return null;
+    //   }
+    // }
+
+    
 
     return Scaffold(
       appBar: PreferredSize(
@@ -296,17 +270,13 @@ createNewSpots(){
           child: AppBar(
             backgroundColor: Colors.orange,
             title: Center(
-// <<<<<<< context-userId
-//                 child: Text('$_user', style: TextStyle(color: Colors.white))),
-// =======
                 child: Text('Spending', style: TextStyle(color: Colors.white))),
            
-// >>>>>>> main
           )),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _testlogin,
-      //   child: Icon(Icons.add),
-      // ),
+     /* floatingActionButton: FloatingActionButton(
+        onPressed: _testlogin,
+        child: Icon(Icons.add),
+      ),*/
     
       body: Center(
     
@@ -414,47 +384,6 @@ createNewSpots(){
                       //     ),
                       //   ),
                       // ),
-// <<<<<<< context-userId
-//                       // ),
-
-//                       lineBarsData: [
-//                         LineChartBarData(
-//                             spots: createNewSpots(),
-//                             // spots: createNewSpots()
-//                             //         .map(
-//                             //           (e) => FlSpot(
-//                             //             e['x'],
-//                             //             (e['y'] as DateTime)
-//                             //               .microsecondsSinceEpoch
-//                             //               .toDouble(),
-//                             //           ),
-//                             //         ),
-
-//                             color: Colors.orange[400], // this or gradient
-//                             // gradient: const LinearGradient(
-//                             //   colors:[
-//                             //     Colors.orange,
-//                             //     Colors.red,
-//                             //     Colors.blue,
-//                             //   ],
-
-//                             // ),
-//                             barWidth: 4,
-//                             isCurved: true,
-//                             //curveSmoothness: 0.1,
-//                             preventCurveOverShooting: true,
-//                             isStrokeCapRound: true,
-//                             isStrokeJoinRound: true,
-//                             belowBarData: BarAreaData(
-//                               show: true,
-//                               color: Colors.orange.withOpacity(0.3),
-//                             ),
-//                             aboveBarData: BarAreaData(
-//                               show: true,
-//                               color: Colors.orange.withOpacity(0.2),
-//                             ))
-//                       ]),
-// =======
                    // ),
                    
 
@@ -507,7 +436,6 @@ createNewSpots(){
                   )
                     )
                   ] 
-// >>>>>>> main
                 ),
               ),
             ),

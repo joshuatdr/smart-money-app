@@ -83,7 +83,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
   @override
   Widget build(BuildContext context) {
 
-    var userID = context.watch<UserProvider>().userID;
+    //var userID = context.watch<UserProvider>().userID;
 
 //print(userID);
     
