@@ -81,9 +81,9 @@ class _UserScreenState extends State<UserScreen> {
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: AppBar(
+            centerTitle: true,
             backgroundColor: Colors.orange,
-            title: Center(
-                child: Text("Profile", style: TextStyle(color: Colors.white))),
+            title: Text("Profile", style: TextStyle(color: Colors.white)),
           )),
       body: FutureBuilder(
           future: UserServices()
