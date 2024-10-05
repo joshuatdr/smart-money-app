@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:smart_money_app/pages/testapi.dart';
+import 'package:smart_money_app/pages/profile.dart';
 import '../common/styles/spacing_styles.dart';
 import '../common/image_strings.dart';
 import '../common/sizes.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+// import './config.dart';
+// import 'package:status_alert/status_alert.dart';
+// import '../services/api.dart';
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
 
@@ -18,7 +21,7 @@ class _EditProfileState extends State<EditProfile> {
     int userId,
     String fname,
     String email,
-    String password,
+    // String password,
     String income,
     String savingsTarget,
   ) async {
@@ -28,16 +31,16 @@ class _EditProfileState extends State<EditProfile> {
         "Content-Type": "application/json; charset=UTF-8",
       },
       body: jsonEncode(<String, dynamic>{
-        "email": email,
-        "password": password,
         "fname": fname,
+        "email": email,
+        // "password": password,
         "income": income,
         "savings_target": savingsTarget
       }),
     );
     if (response.statusCode == 201) {
-      print(userId.runtimeType);
-      // If the server returns a 200 OK response, then the user was successfully updated.
+      print('SUCCESS');
+      // If the server returns a 201 OK response, then the user was successfully updated.
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -57,6 +60,8 @@ class _EditProfileState extends State<EditProfile> {
       );
     } else {
       print(userId.runtimeType);
+      print('FAIL');
+      print(response.statusCode);
       // If the server did not return a 201 OK response,
       // then throw an exception.
       throw Exception("Failed to update user");
@@ -67,7 +72,7 @@ class _EditProfileState extends State<EditProfile> {
   final _formfield = GlobalKey<FormState>();
   final nickNameController = TextEditingController();
   final emailController = TextEditingController();
-  final passController = TextEditingController();
+  // final passController = TextEditingController();
   final incomeController = TextEditingController();
   final savingsController = TextEditingController();
   var dark = false;
@@ -82,7 +87,12 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     AsyncSnapshot.waiting();
-    // var userId = context.watch<UserProvider>().userID;
+    var userId = context.watch<UserProvider>().userID;
+    var fName = context.watch<UserProvider>().fName;
+    var email = context.watch<UserProvider>().email;
+    // var password = context.watch<UserProvider>().hashCode;
+    var income = context.watch<UserProvider>().income;
+    var savingsTarget = context.watch<UserProvider>().savingsTarget;
     String? validatePass(String? value) {
       const patternPass =
           r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
@@ -176,18 +186,18 @@ class _EditProfileState extends State<EditProfile> {
 
                       const SizedBox(height: JSizes.spaceBtwItems),
 
-                      TextFormField(
-                          controller: passController,
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.login),
-                            labelText: "Password",
-                          ),
-                          validator: passController.text.isNotEmpty
-                              ? validatePass
-                              : null),
+                      // TextFormField(
+                      //     controller: passController,
+                      //     obscureText: true,
+                      //     decoration: InputDecoration(
+                      //       prefixIcon: Icon(Icons.login),
+                      //       labelText: "Password",
+                      //     ),
+                      //     validator: passController.text.isNotEmpty
+                      //         ? validatePass
+                      //         : null),
 
-                      const SizedBox(height: JSizes.spaceBtwItems),
+                      // const SizedBox(height: JSizes.spaceBtwItems),
 
                       TextFormField(
                         controller: incomeController,
@@ -224,43 +234,39 @@ class _EditProfileState extends State<EditProfile> {
                                           ..color = Colors.white,
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
-                                onPressed: () {
-                                  // List<String> arguments = [];
-                                  // if (nickNameController.text.isEmpty) {
-                                  //   arguments.add(globals.fname);
-                                  // } else {
-                                  //   arguments.add(nickNameController.text);
-                                  // }
-                                  // if (emailController.text.isEmpty) {
-                                  //   arguments.add(globals.email);
-                                  // } else {
-                                  //   arguments.add(emailController.text);
-                                  // }
+                                onPressed: () async {
+                                  List<String> arguments = [];
+                                  if (nickNameController.text.isEmpty) {
+                                    arguments.add(fName);
+                                  } else {
+                                    arguments.add(nickNameController.text);
+                                  }
+                                  if (emailController.text.isEmpty) {
+                                    arguments.add(email);
+                                  } else {
+                                    arguments.add(emailController.text);
+                                  }
                                   // if (passController.text.isEmpty) {
-                                  //   arguments.add(globals.password);
+                                  //   arguments.add(passController.text);
                                   // } else {
                                   //   arguments.add(passController.text);
                                   // }
-                                  // if (incomeController.text.isEmpty) {
-                                  //   arguments.add(globals.income);
-                                  // } else {
-                                  //   arguments.add(incomeController.text);
-                                  // }
-                                  // if (savingsController.text.isEmpty) {
-                                  //   arguments.add(globals.savingsTarget);
-                                  //   print(userId);
-                                  //   print(arguments);
-                                  //   print(arguments[0]);
-                                  // } else {
-                                  //   arguments.add(savingsController.text);
-                                  // }
-                                  // updateUser(
-                                  //     userId,
-                                  //     argument[0],
-                                  //     emailController.text,
-                                  //     passController.text,
-                                  //     incomeController.text,
-                                  //     savingsController.text);
+                                  if (incomeController.text.isEmpty) {
+                                    arguments.add(income.toString());
+                                  } else {
+                                    arguments.add(incomeController.text);
+                                  }
+                                  if (savingsController.text.isEmpty) {
+                                    arguments.add(savingsTarget.toString());
+                                    print(userId);
+                                    print(arguments);
+                                    print(arguments[0]);
+                                  } else {
+                                    arguments.add(savingsController.text);
+                                  }
+                                  updateUser(userId, arguments[0], arguments[1],
+                                      arguments[2], arguments[3]);
+                                  print(userId);
                                 },
                                 child: Text("Submit changes"))),
                       ),

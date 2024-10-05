@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 //import '../common/styles/spacing_styles.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:smart_money_app/globals.dart';
 //import '../common/sizes.dart';
 //import 'package:status_alert/status_alert.dart';
+//import '../model/transactions.dart';
+import '../services/api.dart';
+import 'package:provider/provider.dart';
+import '../providers/user_provider.dart';
 
 class SpendingPage extends StatefulWidget {
   @override
@@ -69,43 +74,126 @@ class _SpendingPageState extends State<SpendingPage> {
     });
   }
 
-  createNewSpots() {
-    List<dynamic> testObj = [
-      {
-        "cost": "13.99",
-        "created_at": "2024-09-30 10:34:00+01",
-      },
-      {
-        "cost": "113.99",
-        "created_at": "2024-08-30 10:34:00+01",
-      }
-    ];
+//Future<List<Transactions>> postsFuture = UserServices().getAllUserTransactions();
 
-    // Using forEach
-    // testObj.forEach((key, value) {
-    //   print('$key is $value years old');
-    // });
+// https://stackoverflow.com/questions/65389839/how-to-implement-api-data-in-a-line-chart
+// https://arijit-autility.medium.com/creating-line-charts-in-flutter-by-fetching-data-from-graphql-98bb50eb20bb
 
-    var newNewSpots = [];
-
-    //   double xValue = 1.99;
-    //   double yValue = 0;
-
-    var createArrayValues = [];
-//for (var keys in testObj) {
-    for (var i = 0; i < testObj.length - 1; i++) {
-      //  double xValue = double.parse(keys);
-      // print(testObj[i]['cost']);
 /*
-createArrayValues.add(
-      FlSpot(i.toDouble(), 
-      double.parse(testObj[i]['cost'].toString())));
+Future getTransactionData() async {
+  var testObj = await UserServices().getAllUserTransactions();
+
+  
+ // var results = await Future.wait(testObj);
+ print('here');
+  print(testObj);
+  return testObj;
+}*/
+
+  //var testObj = getTransactionData();
+
+  //print(testObj);
+
+/*
+createList(testObj){
+  List<dynamic> testObj = [
+{
+  "cost": 13.99, 
+  "created_at": "2024-09-30 10:34:00+01",
+},
+{
+  "cost": 113.99, 
+  "created_at": "2024-08-30 10:34:00+01",
+},
+{
+  "cost": 13.99, 
+  "created_at": "2024-09-30 10:34:00+01",
+},
+{
+  "cost": 113.99, 
+  "created_at": "2024-08-30 10:34:00+01",
+},
+  ];
+//print(testObj);
+    List<FlSpot> newSpots = [];
+    for (int i = 0; i <= testObj.length-1; i++) {
+      newSpots.add(FlSpot((i * 1.00), testObj[i]['cost'])); 
+    }
+    return newSpots;
 }
 
-newNewSpots.add(FlSpot(createArrayValues[0]));
+createData(testObj){
+  //var testObj = UserServices().getAllUserTransactions();
 
-print(newNewSpots);*/
-    }
+
+  
+
+
+
+  //var results = Future.([testObj]);
+  //var results = Future.wait([testObj]);
+  print('createData');
+  print(testObj);
+
+
+  /*
+  var testObj = Future.delayed(Duration(seconds: 10), () =>getTransactionData());
+  var results = await Future.wait(testObj);
+  var newSpots = Future.delayed(Duration(seconds: 5), () =>createList(results));
+  print(newSpots);*/
+  if (testObj.length >= 0){
+  var newSpots = createList('');
+  return newSpots;
+  }
+}
+
+*/
+
+//logic().then((list) => removeOne(list));
+
+  createNewSpots() {
+    List<FlSpot> newSpots = [];
+    //Future<List<Transactions>> postsFuture = UserServices().getAllUserTransactions();
+    Future newSpotss =
+        UserServices().getAllUserTransactions(userId).then((testObj) => {
+              print(testObj),
+              // List<FlSpot> newSpots = [];
+              for (int i = 0; i <= testObj.length - 1; i++)
+                {newSpots.add(FlSpot((i * 1.00), testObj[i]['cost']))}
+            });
+// }).then((data) => {
+//   print('second then'),
+//   print(data)
+    // List<FlSpot> newSpots = [];
+    // for (int i = 0; i <= testObj.length-1; i++) {
+    //   newSpots.add(FlSpot((i * 1.00), testObj[i]['cost']));
+    // }
+//});
+//Future.delayed(Duration(seconds: 10), () =>print('postsFuture'));
+//Future.delayed(Duration(seconds: 10), () =>print(postsFuture));
+
+//print('before list');
+/*
+ List<dynamic> testObj = [
+{
+  "cost": 13.99, 
+  "created_at": "2024-09-30 10:34:00+01",
+},
+{
+  "cost": 113.99, 
+  "created_at": "2024-08-30 10:34:00+01",
+},
+{
+  "cost": 13.99, 
+  "created_at": "2024-09-30 10:34:00+01",
+},
+{
+  "cost": 113.99, 
+  "created_at": "2024-08-30 10:34:00+01",
+},
+  ];*/
+
+//for (var keys in testObj) {
 
 // final newSpots = [
 //                         // (Month, value)
@@ -121,19 +209,23 @@ print(newNewSpots);*/
 //                         // FlSpot(9,1),
 //                   ];
 
-//  List<FlSpot> getAccData(String acc) {
-//     List<FlSpot> newSpots = [];
-//     for (int i = 0; i <= 50; i++) {
-//       newSpots.add(FlSpot((i * 1.00), dataAcc[i][acc] / 1.00));
-//     }
-//     return newSpots;
-//   }
+//List<FlSpot> testObj {
 
-// return newSpots;
+    // List<FlSpot> newSpots = [];
+    // for (int i = 0; i <= testObj.length-1; i++) {
+    //   newSpots.add(FlSpot((i * 1.00), testObj[i]['cost']));
+    // }
+    return newSpotss;
   }
 
   @override
   Widget build(BuildContext context) {
+    var userId = context.watch<UserProvider>().userID;
+
+    return ListView.builder(itemBuilder: (context, index) {
+      return createNewSpots();
+    });
+
     // var theme = Theme.of(context);
     // var appState = context.watch<MyAppState>();
 
@@ -159,7 +251,7 @@ print(newNewSpots);*/
           child: AppBar(
             backgroundColor: Colors.orange,
             title: Center(
-                child: Text(_user, style: TextStyle(color: Colors.white))),
+                child: Text('$_user', style: TextStyle(color: Colors.white))),
           )),
       floatingActionButton: FloatingActionButton(
         onPressed: _testlogin,
@@ -273,15 +365,17 @@ print(newNewSpots);*/
 
                       lineBarsData: [
                         LineChartBarData(
-                            // spots: createNewSpots(),
-                            spots: createNewSpots().map(
-                              (e) => FlSpot(
-                                e['x'],
-                                (e['y'] as DateTime)
-                                    .microsecondsSinceEpoch
-                                    .toDouble(),
-                              ),
-                            ),
+                            spots: createNewSpots(),
+                            // spots: createNewSpots()
+                            //         .map(
+                            //           (e) => FlSpot(
+                            //             e['x'],
+                            //             (e['y'] as DateTime)
+                            //               .microsecondsSinceEpoch
+                            //               .toDouble(),
+                            //           ),
+                            //         ),
+
                             color: Colors.orange[400], // this or gradient
                             // gradient: const LinearGradient(
                             //   colors:[

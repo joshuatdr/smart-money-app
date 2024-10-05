@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_money_app/main.dart';
+import '../providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class GoalsPage extends StatelessWidget {

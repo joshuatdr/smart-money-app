@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import '../model/transactions.dart';
 import '../services/api.dart';
+import 'package:provider/provider.dart';
+import '../providers/user_provider.dart';
 
 class HistoryScreen extends StatefulWidget {
   HistoryScreen({super.key});
@@ -41,6 +43,8 @@ onsortColumn(int columnIndex, bool ascending){
   //filterData = myData
 
   Widget build(BuildContext context) {
+    AsyncSnapshot.waiting();
+    var userId = context.watch<UserProvider>().userID;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.orange,
@@ -58,7 +62,7 @@ onsortColumn(int columnIndex, bool ascending){
         ],
       ),
       body: FutureBuilder(
-        future: UserServices().getAllUserTransactions(),
+        future: UserServices().getAllUserTransactions(userId),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             var results = snapshot.data as List<Transactions>;
