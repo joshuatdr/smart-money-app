@@ -7,7 +7,13 @@ import 'package:smart_money_app/services/api.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 
-class GoalsPage extends StatelessWidget {
+class GoalsPage extends StatefulWidget {
+  @override
+  State<GoalsPage> createState() => _GoalsPageState();
+}
+
+class _GoalsPageState extends State<GoalsPage> {
+  final _key = GlobalKey<ExpandableFabState>();
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -30,6 +36,7 @@ class GoalsPage extends StatelessWidget {
 
   ExpandableFab _renderFloatingActionButton(context) {
     return ExpandableFab(
+      key: _key,
       openButtonBuilder: DefaultFloatingActionButtonBuilder(
         backgroundColor: Colors.orange,
         child: const Icon(Icons.menu),
@@ -56,7 +63,13 @@ class GoalsPage extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => AddGoalPage()),
-            );
+            ).then((value) {
+              setState(() {});
+            });
+            final state = _key.currentState;
+            if (state != null) {
+              state.toggle();
+            }
           },
         ),
         FloatingActionButton.small(

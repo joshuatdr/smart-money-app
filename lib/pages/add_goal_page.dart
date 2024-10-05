@@ -8,7 +8,7 @@ import 'package:status_alert/status_alert.dart';
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
 
-class AddGoalPage extends StatefulWidget {
+class AddGoalPage extends GoalsPage {
   @override
   State<AddGoalPage> createState() => _AddGoalPageState();
 }
