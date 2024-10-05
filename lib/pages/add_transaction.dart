@@ -4,8 +4,9 @@ import 'package:smart_money_app/services/api.dart';
 import '../common/styles/spacing_styles.dart';
 import '../common/sizes.dart';
 import 'package:status_alert/status_alert.dart';
-import 'package:smart_money_app/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+import '../providers/user_provider.dart';
+
 
 class AddTransactionScreen extends StatefulWidget {
   @override
@@ -13,27 +14,28 @@ class AddTransactionScreen extends StatefulWidget {
 }
 
 class _AddTransactionScreenState extends State<AddTransactionScreen> {
-  // Method to show a success alert 
-  void showSuccessAlert(BuildContext context) { 
-    StatusAlert.show( 
-      context, 
-      duration: Duration(seconds: 4), 
-      title: 'Success', 
-      subtitle: 'Transaction Saved!', 
-      configuration: IconConfiguration(icon: Icons.check),backgroundColor: const Color.fromARGB(255, 255, 199, 116), 
-    ); 
-  } 
-  
-  // Method to show an error alert 
-  void showErrorAlert(BuildContext context) { 
-    StatusAlert.show( 
-      context, 
-      duration: Duration(seconds: 2), 
-      title: 'Error', 
-      subtitle: 'Something went wrong!', 
-      configuration: IconConfiguration(icon: Icons.error), 
-    ); 
-  } 
+  // Method to show a success alert
+  void showSuccessAlert(BuildContext context) {
+    StatusAlert.show(
+      context,
+      duration: Duration(seconds: 4),
+      title: 'Success',
+      subtitle: 'Transaction Saved!',
+      configuration: IconConfiguration(icon: Icons.check),
+      backgroundColor: const Color.fromARGB(255, 255, 199, 116),
+    );
+  }
+
+  // Method to show an error alert
+  void showErrorAlert(BuildContext context) {
+    StatusAlert.show(
+      context,
+      duration: Duration(seconds: 2),
+      title: 'Error',
+      subtitle: 'Something went wrong!',
+      configuration: IconConfiguration(icon: Icons.error),
+    );
+  }
 
   //const LoginScreen({super.key});
   bool isChecked = false;
@@ -44,41 +46,33 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
   final imgurlController = TextEditingController();
   final descController = TextEditingController();
 
-  _register(userID) async {
 
-    var data={
-      'name':nameController.text,
-      'cost':costController.text,
-      'img_url':imgurlController.text,
-      'description':descController.text,
-      'user_id': userID,
+  _register(userId) async {
+    var data = {
+      'name': nameController.text,
+      'cost': costController.text,
+      'img_url': imgurlController.text,
+      'description': descController.text,
+      'user_id': userId,
     };
 
-    //print(data);
-  
-    var res = await UserServices().postUserTransaction(data, userID);
+    var res = await UserServices().postUserTransaction(data, 'transactions');
     var body = jsonDecode(res.body);
 
-    if(body['transaction']['transaction_id'] >= 1){
-     // successMsg = true;
+    if (body['transaction']['transaction_id'] >= 1) {
+      // successMsg = true;
       print('success');
       nameController.clear();
       costController.clear();
       imgurlController.clear();
       descController.clear();
       return successMsg = true;
-  } else {
+    } else {
       successMsg = false;
       print('it failed');
       return;
+    }
   }
-
-
-  }
-
-
-
-
 
   var dark = false;
   // List<String> str = ['A password must be at least 8 characters long.',
@@ -96,7 +90,6 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
     // String? validatePass(String? value) {
     //   const patternPass = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
     //   final regex = RegExp(patternPass);
-      
 
     //   if (value!.isEmpty) {
     //     return 'A password must be at least 8 characters long.'
@@ -119,7 +112,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
       }
     }
 
-     String? validateCost(value) {
+    String? validateCost(value) {
       if (value!.isEmpty) {
         return 'Please enter a purchase cost';
       } else {
@@ -127,24 +120,20 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
       }
     }
 
-    
-
+    var userId = context.watch<UserProvider>().userID;
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: AppBar(
             backgroundColor: Colors.orange,
             title: Center(
-                child: Text("Add Transaction", style: TextStyle(color: Colors.white))),
-           
+                child: Text("Add Transaction",
+                    style: TextStyle(color: Colors.white))),
           )),
-     
-    
       body: SingleChildScrollView(
         child: Padding(
           padding: JSpacingStyle.paddingWithAppBarHeight,
           child: Column(
-            
             children: [
               // /// Logo, Title & Sub Title
               // Column(
@@ -187,13 +176,12 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
 
                       /// Cost
                       TextFormField(
-                        controller: costController,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.login),
-                          labelText: 'cost',
-                        ),
-                        validator: validateCost
-                      ),
+                          controller: costController,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.login),
+                            labelText: 'cost',
+                          ),
+                          validator: validateCost),
                       const SizedBox(height: JSizes.spaceBtwItems),
 
                       /// image Url
@@ -203,7 +191,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                           prefixIcon: Icon(Icons.login),
                           labelText: "Image Url",
                         ),
-                       // validator: validateImg
+                        // validator: validateImg
                       ),
                       const SizedBox(height: JSizes.spaceBtwItems),
 
@@ -244,7 +232,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                       //                 )
                       //               : null,
                       //           value: state.value,
-                      //           onChanged: (val) { 
+                      //           onChanged: (val) {
                       //             if (val == true) {
                       //               isChecked = true;
                       //             } else {
@@ -274,40 +262,41 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                                         fontWeight: FontWeight.bold)),
                                 onPressed: () {
                                   if (_formfield.currentState!.validate()) {
-                                   // print("success");
-                                     _register(userID);
+                                    // print("success");
+
+                                    _register(userId);
 
                                     print(successMsg);
 
-                                    if (successMsg){
-                                      showSuccessAlert(context); 
+                                    if (successMsg) {
+                                      showSuccessAlert(context);
                                     } else {
                                       showErrorAlert(context);
                                       successMsg = false;
                                     }
 
-                                    
-                               /*     passController.clear();
+                                    /*     passController.clear();
                                     emailController.clear();
                                     nickNameController.clear();
                                     confirmPassController.clear();*/
                                   }
-                                 /* isChecked == false
+                                  /* isChecked == false
                                       ? print("please accept")
                                       : isChecked == false;*/
                                 },
                                 child: Text('Add Transaction'))),
                       ),
-                      Column(crossAxisAlignment: CrossAxisAlignment.start ,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                       /*   Text('\u2022 A password must be at least 8 characters long.'),
+                          /*   Text('\u2022 A password must be at least 8 characters long.'),
                           Text('\u2022 A password must contain at least a number.'),
                           Text('\u2022 A password must contain an uppercase letter'),
                           Text('\u2022 A password must contain a lowercase letter'),
                           Text('\u2022 A password must contain a special character.'),*/
                           // Padding(
                           //   padding: const EdgeInsets.all(60),
-                          //   child: 
+                          //   child:
                           //   TextButton(
                           //       onPressed: () {
                           //         Navigator.pop(

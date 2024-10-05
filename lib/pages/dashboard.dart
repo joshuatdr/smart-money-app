@@ -31,6 +31,28 @@ class _DashboardState extends State<Dashboard> {
     Map<String, dynamic> jwtDecodedToken =
         await JwtDecoder.decode(widget.token);
 
+//       context
+//           .read<UserProvider>()
+//           .changeUserID(newUserID: jwtDecodedToken['user']['user_id']);
+//       context
+//           .read<UserProvider>()
+//           .changeEmail(newEmail: jwtDecodedToken['user']['email']);
+//       context
+//           .read<UserProvider>()
+//           .changeAvatarURL(newAvatarURL: jwtDecodedToken['user']['avatar_url']);
+//       context
+//           .read<UserProvider>()
+//           .changeFName(newFName: jwtDecodedToken['user']['fname']);
+//       context
+//           .read<UserProvider>()
+//           .changeIncome(newIncome: jwtDecodedToken['user']['income']);
+//       context
+//           .read<UserProvider>()
+//           .changeSavingsTarget(newSavingsTarget: jwtDecodedToken['user']['savings_target']);
+//       context
+//           .read<UserProvider>()
+//           .changeCreatedAt(newCreatedAt: jwtDecodedToken['user']['created_at']);
+
     context
         .read<UserProvider>()
         .changeUserID(newUserID: jwtDecodedToken['user']['user_id']);

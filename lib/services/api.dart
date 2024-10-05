@@ -12,7 +12,7 @@ class UserServices {
 
   getUserId() async {
     // create an asynchronous function
-    
+
     List<User> allUsers =
         []; // create an array of type <Employee> from employee.dart called allEmployees
 
@@ -150,8 +150,11 @@ class UserServices {
     }
   }
 
-  postUserTransaction(data, userID) async {
-    String baseUrl = "https://smart-money-backend.onrender.com/api/user/$userID/transactions";
+  postUserTransaction(data, apiUrl) async {
+    var userId = data['user_id'];
+    String baseUrl =
+        "https://smart-money-backend.onrender.com/api/user/$userId/$apiUrl";
+
 
     return await http.post(
       Uri.parse(baseUrl),

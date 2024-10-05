@@ -3,8 +3,12 @@
 import 'package:flutter/material.dart';
 import '../model/transactions.dart';
 import '../services/api.dart';
-import 'package:smart_money_app/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+import '../providers/user_provider.dart';
+// =======
+// import 'package:smart_money_app/providers/user_provider.dart';
+// import 'package:provider/provider.dart';
+// >>>>>>> main
 
 class HistoryScreen extends StatefulWidget {
   HistoryScreen({super.key});
@@ -28,6 +32,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    AsyncSnapshot.waiting();
+    var userId = context.watch<UserProvider>().userID;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.orange,
@@ -45,8 +51,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         ],
       ),
       body: FutureBuilder(
-        future: UserServices()
-            .getAllUserTransactions(context.watch<UserProvider>().userID),
+        future: UserServices().getAllUserTransactions(userId),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             var results = snapshot.data as List<Transactions>;
