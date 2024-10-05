@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 //import 'package:smart_money_app/pages/dashboard.dart';
-
+import 'package:smart_money_app/pages/editBudget.dart';
 //import 'package:smart_money_app/pages/edit_profile.dart';
 //import '../../model/user.dart';
 //import '../../services/api.dart';
@@ -34,12 +34,12 @@ class Data {
   Data({required this.name, required this.percent, required this.color});
 }
 
-class SpendingPage extends StatefulWidget {
+class BudgetPage extends StatefulWidget {
   @override
-  State<SpendingPage> createState() => _SpendingPageState();
+  State<BudgetPage> createState() => _BudgetPageState();
 }
 
-class _SpendingPageState extends State<SpendingPage> {
+class _BudgetPageState extends State<BudgetPage> {
   late final userId = context.watch<UserProvider>().userID;
   late final email = context.watch<UserProvider>().email;
   late final fName = context.watch<UserProvider>().fName;
@@ -76,10 +76,10 @@ class _SpendingPageState extends State<SpendingPage> {
     return Scaffold(
         backgroundColor: Colors.purple,
         appBar: AppBar(
-        //  leading: null,
+          //  leading: null,
           backgroundColor: Colors.orange,
           title: Center(
-              child: Text("Spending", style: TextStyle(color: Colors.white))),
+              child: Text("Budget", style: TextStyle(color: Colors.white))),
         ),
         body: Center(
           child: Padding(
@@ -141,7 +141,15 @@ class _SpendingPageState extends State<SpendingPage> {
                     child: _SampleCard(
                         cardName:
                             'It will take {amount of time} to reach your savings target!')),
-                
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EditBudgetPage()),
+                      );
+                    },
+                    child: Text("Edit Budget")),
               ],
             ),
           ),
