@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smart_money_app/main.dart';
-import 'package:smart_money_app/spending_page.dart';
+import 'package:smart_money_app/pages/Spending.dart';
 import 'package:smart_money_app/pages/history.dart';
-import 'package:smart_money_app/pages/budget.dart';
+import 'package:smart_money_app/pages/Budget.dart';
 import 'package:smart_money_app/pages/goals.dart';
 import 'package:smart_money_app/pages/add_transaction.dart';
 import 'package:provider/provider.dart';

@@ -5,11 +5,10 @@ import 'package:fl_chart/fl_chart.dart';
 //import 'package:status_alert/status_alert.dart';
 //import '../model/transactions.dart';
 //import '../services/api.dart';
-import 'package:smart_money_app/pages/editBudget.dart';
 
-class BudgetPage extends StatefulWidget {
+class SpendingPage extends StatefulWidget {
   @override
-  State<BudgetPage> createState() => _BudgetPageState();
+  State<SpendingPage> createState() => _SpendingPageState();
 }
 
 Widget bottomTitleWidgets(double value, TitleMeta meta) {
@@ -64,7 +63,7 @@ Widget leftTitleWidgets(double value, TitleMeta meta) {
   return Text(text, style: style, textAlign: TextAlign.left);
 }
 
-class _BudgetPageState extends State<BudgetPage> {
+class _SpendingPageState extends State<SpendingPage> {
 /*
 String _user = 'nobody';
 _testlogin(){
@@ -251,7 +250,7 @@ createData(testObj){
           child: AppBar(
             backgroundColor: Colors.orange,
             title: Center(
-                child: Text('Budget', style: TextStyle(color: Colors.white))),
+                child: Text('Spending', style: TextStyle(color: Colors.white))),
           )),
       /* floatingActionButton: FloatingActionButton(
         onPressed: _testlogin,
@@ -407,14 +406,6 @@ createData(testObj){
                   ),
                 )),
           ),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => EditBudgetPage()),
-                );
-              },
-              child: Text("Edit Budget"))
         ],
       ),
     );
