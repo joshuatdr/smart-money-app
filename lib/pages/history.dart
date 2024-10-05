@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import '../model/transactions.dart';
 import '../services/api.dart';
+import 'package:smart_money_app/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class HistoryScreen extends StatefulWidget {
   HistoryScreen({super.key});
@@ -23,22 +25,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
       ],
     );
   }
-/*
-bool sort = true;
-List<data>? = filterData; 
-
-onsortColumn(int columnIndex, bool ascending){
-  if (columnIndex == 0){
-    if(ascending){
-      filterData!.sort((a,b)=>a.name!.compareTo(b.name!));
-    } else {
-      filterData!.sort((a,b)=>b.name!.compareTo(a.name!));
-    }
-  }
-}*/
 
   @override
-  //filterData = myData
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +46,8 @@ onsortColumn(int columnIndex, bool ascending){
         ],
       ),
       body: FutureBuilder(
-        future: UserServices().getAllUserTransactions(),
+        future: UserServices()
+        .getAllUserTransactions(context.watch<UserProvider>().userID),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             var results = snapshot.data as List<Transactions>;
@@ -128,27 +117,3 @@ onsortColumn(int columnIndex, bool ascending){
     );
   }
 }
-
-/*
-DataTable _createDataTable() {
-    return DataTable(columns: _createColumns(), rows: _createRows());
-  }
-List<DataColumn> _createColumns() {
-    return [
-      DataColumn(label: Text('ID')),
-      DataColumn(label: Text('Book')),
-      DataColumn(label: Text('Author')),
-      DataColumn(label: Text('Category'))
-    ];
-  }
-List<DataRow> _createRows() {
-    return _books
-        .map((book) => DataRow(cells: [
-              DataCell(Text('#' + book['id'].toString())),
-              DataCell(Text(book['title'])),
-              DataCell(Text(book['author'])),
-              DataCell(FlutterLogo())
-            ]))
-        .toList();
-  }
-}*/
