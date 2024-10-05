@@ -36,6 +36,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     var userId = context.watch<UserProvider>().userID;
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         centerTitle: true,
         backgroundColor: Colors.orange,
         title: Text("Transaction History",

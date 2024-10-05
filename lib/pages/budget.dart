@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:smart_money_app/pages/dashboard.dart';
+//import 'package:smart_money_app/pages/dashboard.dart';
 import 'package:smart_money_app/pages/editBudget.dart';
-import 'package:smart_money_app/pages/edit_profile.dart';
-import '../../model/user.dart';
-import '../../services/api.dart';
+//import 'package:smart_money_app/pages/edit_profile.dart';
+//import '../../model/user.dart';
+//import '../../services/api.dart';
 import '../../providers/user_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
+//import 'package:http/http.dart' as http;
 import 'package:fl_chart/fl_chart.dart';
 
 class PieData {
@@ -76,7 +76,7 @@ class _BudgetPageState extends State<BudgetPage> {
     return Scaffold(
         backgroundColor: Colors.purple,
         appBar: AppBar(
-          leading: null,
+        //  leading: null,
           backgroundColor: Colors.orange,
           title: Center(
               child: Text("Budget", style: TextStyle(color: Colors.white))),

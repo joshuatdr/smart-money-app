@@ -125,10 +125,11 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: AppBar(
+            automaticallyImplyLeading: false,
+            centerTitle: true,
             backgroundColor: Colors.orange,
-            title: Center(
-                child: Text("Add Transaction",
-                    style: TextStyle(color: Colors.white))),
+            title: Text("Add Transaction",
+                style: TextStyle(color: Colors.white)),
           )),
       body: SingleChildScrollView(
         child: Padding(
