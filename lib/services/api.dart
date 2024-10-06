@@ -202,49 +202,19 @@ class UserServices {
   getAllUserExpenses(userID) async {
     String baseUrl =
         "https://smart-money-backend.onrender.com/api/user/$userID/expenses";
-
-    // create an asynchronous function
-    List<Expenses> allExpenses =
-        []; // create an array of type <Employee> from employee.dart called allEmployees
+    List<Expenses> allExpenses = [];
     try {
-      // try, catch - error handling, very similar to then and catch in JavaScript
-      var response = await http.get(Uri.parse(
-          baseUrl)); // You can use the await keyword to get the completed result of an asynchronous expression. The await keyword only works within an async function.
+      var response = await http.get(Uri.parse(baseUrl));
       if (response.statusCode == 200) {
         var data = response.body;
-        var decodedData = jsonDecode(
-            data); // jsonDecode Parses the string and returns the resulting Json object.
-        var expenses = decodedData[
-            'expenses']; // employees is an array of objects [{}{}{}]
-
-//User newUser = User.fromJson(users);
-//allUsers.add(newUser);
-
-        //   print(transactions);
-        // print(users['email']);
-        // User newUser = User.fromJson(users);
-//print(allUsers);
-
-        // prints data to console
-// return users;
+        var decodedData = jsonDecode(data);
+        var expenses = decodedData['expenses'];
 
         for (var expense in expenses) {
-          // iterate through employees
-          Expenses newExpense = Expenses.fromJson(
-              expense); // The Employee.fromJson is a method from the Class Employee in employee.dart is used to create a Dart object from a JSON data structure
+          Expenses newExpense = Expenses.fromJson(expense);
           allExpenses.add(newExpense);
         }
-
-        // print(allTransactions);
         return allExpenses;
-
-/*
-        User newUser = User.fromJson(
-            users); // The Employee.fromJson is a method from the Class Employee in employee.dart is used to create a Dart object from a JSON data structure
-        allUsers.add(newUser);
-
-        print(allUsers);
-        return allUsers;*/
       }
     } catch (e) {
       print(e);
