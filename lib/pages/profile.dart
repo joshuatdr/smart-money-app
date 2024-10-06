@@ -127,6 +127,7 @@ class _UserScreenState extends State<UserScreen> {
                               ),
                               initialValue: "${data[index].nickName}",
                               readOnly: isReadOnly,
+                              ignorePointers: true,
                               style: TextStyle(
                                   fontSize: 30, fontWeight: FontWeight.bold),
                             ),
@@ -144,24 +145,7 @@ class _UserScreenState extends State<UserScreen> {
                               ),
                               initialValue: "${data[index].email}",
                               readOnly: isReadOnly,
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: TextFormField(
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                labelText: "Password",
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide:
-                                      const BorderSide(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                              initialValue: "${data[index].password}",
-                              readOnly: isReadOnly,
+                              ignorePointers: true,
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold),
                             ),
@@ -178,6 +162,7 @@ class _UserScreenState extends State<UserScreen> {
                                 ),
                               ),
                               initialValue: "£${data[index].income}",
+                              ignorePointers: true,
                               readOnly: isReadOnly,
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold),
@@ -196,6 +181,7 @@ class _UserScreenState extends State<UserScreen> {
                               ),
                               initialValue: "£${data[index].savingsTarget}",
                               readOnly: isReadOnly,
+                              ignorePointers: true,
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold),
                             ),
@@ -217,7 +203,9 @@ class _UserScreenState extends State<UserScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => EditProfile()),
-                                  );
+                                  ).then((value) {
+                                    setState(() {});
+                                  });
                                 },
                                 child: Text("Edit")),
                           ),
