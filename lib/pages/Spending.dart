@@ -250,7 +250,7 @@ createData(testObj){
           child: AppBar(
             automaticallyImplyLeading: false,
             centerTitle: true,
-            backgroundColor: Colors.orange,
+            backgroundColor: Colors.lightBlue.shade900,
             title: Center(
                 child: Text('Spending', style: TextStyle(color: Colors.white))),
           )),
@@ -380,7 +380,7 @@ createData(testObj){
                                 //           ),
                                 //         ),
 
-                                color: Colors.orange[400], // this or gradient
+                                color: Colors.lightBlue[400], // this or gradient
                                 // gradient: const LinearGradient(
                                 //   colors:[
                                 //     Colors.orange,
@@ -397,11 +397,11 @@ createData(testObj){
                                 isStrokeJoinRound: true,
                                 belowBarData: BarAreaData(
                                   show: true,
-                                  color: Colors.orange.withOpacity(0.3),
+                                  color: Colors.lightBlue.withOpacity(0.3),
                                 ),
                                 aboveBarData: BarAreaData(
                                   show: true,
-                                  color: Colors.orange.withOpacity(0.2),
+                                  color: Colors.lightBlue.withOpacity(0.2),
                                 ))
                           ]),
                     ),

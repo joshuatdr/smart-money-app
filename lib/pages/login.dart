@@ -25,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   var dark = false;
   late SharedPreferences prefs;
 
+
   @override
   void initState() {
     super.initState();
@@ -147,6 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.login),
                           labelText: TTexts.password,
+                          // suffixIcon: Icon(Icons.remove_red_eye),
                         ),
                         validator: validatePass,
                       ),
@@ -173,7 +175,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           // Forgot Password
                           TextButton(
                               onPressed: () {},
-                              child: const Text(TTexts.forgotPassword)),
+                                  child: Text(
+                                  TTexts.forgotPassword,
+                                  style: TextStyle(color: Colors.lightBlue.shade900),)),
                         ],
                       ),
                       const SizedBox(height: JSizes.spaceBtwItems),
@@ -185,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             width: double.infinity,
                             child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.orange,
+                                    backgroundColor: Colors.lightBlue.shade900,
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 50, vertical: 20),
                                     textStyle: TextStyle(
@@ -197,7 +201,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   _formfield.currentState!.validate();
                                   loginUser();
                                 },
-                                child: Text(TTexts.signIn))),
+                                child: Text(
+                                  TTexts.signIn,
+                                  style: TextStyle(color: Colors.lightBlue.shade900),))),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -205,7 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             width: double.infinity,
                             child: OutlinedButton(
                                 style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.orange,
+                                    backgroundColor: Colors.lightBlue.shade900,
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 50, vertical: 20),
                                     textStyle: TextStyle(
@@ -220,7 +226,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                         builder: (context) => SignupScreen()),
                                   );
                                 },
-                                child: Text(TTexts.createAccount))),
+                                child: Text(
+                                  TTexts.signUp,
+                                  style: TextStyle(color: Colors.lightBlue.shade900),))),
                       ),
                     ],
                   ),

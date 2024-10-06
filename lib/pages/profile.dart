@@ -83,7 +83,7 @@ class _UserScreenState extends State<UserScreen> {
           child: AppBar(
             automaticallyImplyLeading: false,
             centerTitle: true,
-            backgroundColor: Colors.orange,
+            backgroundColor: Colors.lightBlue.shade900,
             title: Text("Profile", style: TextStyle(color: Colors.white)),
           )),
       body: FutureBuilder(
@@ -204,7 +204,7 @@ class _UserScreenState extends State<UserScreen> {
                             padding: const EdgeInsets.all(8.0),
                             child: OutlinedButton(
                                 style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.orange,
+                                    backgroundColor: Colors.lightBlue.shade900,
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 50, vertical: 20),
                                     textStyle: TextStyle(

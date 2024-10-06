@@ -74,11 +74,11 @@ class _BudgetPageState extends State<BudgetPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.purple,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           centerTitle: true,
-          backgroundColor: Colors.orange,
+          backgroundColor: Colors.lightBlue.shade900,
           title: Center(
               child: Text("Budget", style: TextStyle(color: Colors.white))),
         ),

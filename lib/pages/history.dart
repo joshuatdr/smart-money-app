@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:smart_money_app/pages/add_transaction.dart';
 import '../model/transactions.dart';
 import '../services/api.dart';
@@ -77,17 +78,17 @@ class _HistoryScreenState extends State<HistoryScreen> {
           DataCell(Text('£${data.cost}')),
           DataCell(Text(data.createdAt)),
           DataCell(
-            Icon(Icons.image_outlined, color: Colors.red[500]),
+            Icon(Icons.image_outlined, color: Colors.lightBlue[500]),
           ),
           DataCell(
-            Icon(Icons.edit, color: Colors.red[500]),
+            Icon(Icons.edit, color: Colors.lightBlue[500]),
             // onTap: () async {
             //   await promptTransaction(context, data, userId)
             //       .then((value) => {setState(() {})});
             // },
           ),
           DataCell(
-            Icon(Icons.delete_forever, color: Colors.red[500]),
+            Icon(Icons.delete_forever, color: Colors.lightBlue[500]),
             onTap: () async {
               await promptTransaction(context, data, userId)
                   .then((value) => {setState(() {})});
@@ -101,7 +102,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.lightBlue.shade900,
         title:
             Text("Transaction History", style: TextStyle(color: Colors.white)),
         // actions: <Widget>[
@@ -115,7 +116,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         // ],
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.lightBlue.shade600,
         heroTag: null,
         child: const Icon(Icons.add),
         onPressed: () {
@@ -141,7 +142,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     SingleChildScrollView(
                       child: Container(
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.orange),
+                          border: Border.all(color: Colors.lightBlue.shade500),
                         ),
                         child: DataTable(
                           dataRowMaxHeight:
@@ -150,16 +151,28 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           dividerThickness: 1,
                           headingRowColor: WidgetStateColor.resolveWith(
                             (states) =>
-                                const Color.fromARGB(255, 255, 201, 139),
+                                Colors.lightBlue.shade800,
                           ),
                           columnSpacing: 30,
                           columns: [
-                            DataColumn(label: Text('Name')),
-                            DataColumn(label: Text('Cost')),
-                            DataColumn(label: Text('Date')),
-                            DataColumn(label: Text('Image')),
-                            DataColumn(label: Text('Edit')),
-                            DataColumn(label: Text('Del')),
+                          DataColumn(
+                          label: Text('Name',
+                            style: TextStyle(color: Colors.white),)),
+                          DataColumn(
+                          label: Text('Cost',
+                            style: TextStyle(color: Colors.white),)),
+                          DataColumn(
+                          label: Text('Date',
+                            style: TextStyle(color: Colors.white),)),
+                          DataColumn(
+                          label: Text('Image',
+                            style: TextStyle(color: Colors.white),)),
+                          DataColumn(
+                          label: Text('Edit',
+                            style: TextStyle(color: Colors.white),)),
+                          DataColumn(
+                          label: Text('Delete',
+                            style: TextStyle(color: Colors.white),)),
                           ],
                           rows: List.generate(
                             results.length,
