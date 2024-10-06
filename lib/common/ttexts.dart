@@ -4,15 +4,16 @@ class TTexts {
   // -- SignInPage
   static const String loginTitle = "Login";
   static const String loginSubTitle = "Please sign in to continue";
-  static const String email = "email";
-  static const String password = "password";
-  static const String rememberMe = "remember me";
-  static const String forgotPassword = "forgot password";
-static const String signIn = "Sign in";
+  static const String email = "Email";
+  static const String password = "Password";
+  static const String rememberMe = "Remember Me";
+  static const String forgotPassword = "Forgot Password";
+static const String signIn = "Sign In";
   // -- SignUpPage
-  static const String signUp = "Sign up";
-  static const String createAccount = "Create account";
-  static const String friendlyName = "Nick name";
+  static const String signUp = "Sign Up";
+  static const String signUpSub = "Please enter your details below.";
+  static const String createAccount = "Create your free account";
+  static const String friendlyName = "Nickname";
    
   static const String terms = "Terms and Conditions";
 }

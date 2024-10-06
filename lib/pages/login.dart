@@ -24,13 +24,14 @@ class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   var dark = false;
   late SharedPreferences prefs;
-
-
-  @override
-  void initState() {
-    super.initState();
-    initSharedPref();
-  }
+   bool passwordVisible=false; 
+     
+   @override 
+    void initState(){ 
+      super.initState(); 
+      passwordVisible=true; 
+          initSharedPref();
+    }
 
   void initSharedPref() async {
     prefs = await SharedPreferences.getInstance();
@@ -143,13 +144,28 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       /// Password
                       TextFormField(
-                        obscureText: true,
+                        obscureText: passwordVisible,
                         controller: passController,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.login),
                           labelText: TTexts.password,
-                          // suffixIcon: Icon(Icons.remove_red_eye),
-                        ),
+                          suffixIcon: IconButton( 
+                      icon: Icon(passwordVisible 
+                          ? Icons.visibility 
+                          : Icons.visibility_off), 
+                      onPressed: () { 
+                        setState( 
+                          () { 
+                            passwordVisible = !passwordVisible; 
+                          }, 
+                        ); 
+                      }, 
+                    ), 
+                    alignLabelWithHint: false, 
+                    filled: true, 
+                  ), 
+                  keyboardType: TextInputType.visiblePassword, 
+                  textInputAction: TextInputAction.done,
                         validator: validatePass,
                       ),
                       const SizedBox(height: JSizes.spaceBtwItems),

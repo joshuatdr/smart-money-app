@@ -17,10 +17,13 @@ class ChangePass extends StatefulWidget {
 
 class _ChangePassState extends State<ChangePass> {
   late SharedPreferences prefs;
-
+bool passwordVisible=false; 
+bool passwordVisibleCurrent=false; 
   @override
   void initState() {
     super.initState();
+          passwordVisible=true; 
+                passwordVisibleCurrent=true; 
     initSharedPref();
   }
 
@@ -144,11 +147,25 @@ class _ChangePassState extends State<ChangePass> {
                   children: [
                     TextFormField(
                       controller: passController,
-                      obscureText: true,
+                      obscureText: passwordVisibleCurrent,
                       decoration: InputDecoration(
                         errorMaxLines: 3,
                         prefixIcon: Icon(Icons.password),
                         labelText: "Current Password",
+                          suffixIcon: IconButton( 
+                      icon: Icon(passwordVisibleCurrent 
+                          ? Icons.visibility 
+                          : Icons.visibility_off), 
+                      onPressed: () { 
+                        setState( 
+                          () { 
+                            passwordVisibleCurrent = !passwordVisibleCurrent; 
+                          }, 
+                        ); 
+                      }, 
+                    ), 
+                    alignLabelWithHint: false, 
+                    filled: true, 
                       ),
                       validator: validatePass,
                     ),
@@ -157,11 +174,25 @@ class _ChangePassState extends State<ChangePass> {
 
                     TextFormField(
                         controller: newPassController,
-                        obscureText: true,
+                        obscureText: passwordVisible,
                         decoration: InputDecoration(
                           errorMaxLines: 3,
                           prefixIcon: Icon(Icons.edit),
                           labelText: "New Password",
+                          suffixIcon: IconButton( 
+                      icon: Icon(passwordVisible 
+                          ? Icons.visibility 
+                          : Icons.visibility_off), 
+                      onPressed: () { 
+                        setState( 
+                          () { 
+                            passwordVisible = !passwordVisible; 
+                          }, 
+                        ); 
+                      }, 
+                    ), 
+                    alignLabelWithHint: false, 
+                    filled: true, 
                         ),
                         validator: validatePass),
 
@@ -169,11 +200,25 @@ class _ChangePassState extends State<ChangePass> {
 
                     TextFormField(
                         controller: confirmPassController,
-                        obscureText: true,
+                        obscureText: passwordVisible,
                         decoration: InputDecoration(
                           errorMaxLines: 3,
                           prefixIcon: Icon(Icons.loop),
                           labelText: "Confirm New Password",
+                          suffixIcon: IconButton( 
+                      icon: Icon(passwordVisible 
+                          ? Icons.visibility 
+                          : Icons.visibility_off), 
+                      onPressed: () { 
+                        setState( 
+                          () { 
+                            passwordVisible = !passwordVisible; 
+                          }, 
+                        ); 
+                      }, 
+                    ), 
+                    alignLabelWithHint: false, 
+                    filled: true, 
                         ),
                         validator: validatePass),
 
