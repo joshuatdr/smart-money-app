@@ -7,7 +7,6 @@ import 'package:status_alert/status_alert.dart';
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
 
-
 class AddTransactionScreen extends StatefulWidget {
   @override
   State<AddTransactionScreen> createState() => _AddTransactionScreenState();
@@ -18,12 +17,13 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
   void showSuccessAlert(BuildContext context) {
     StatusAlert.show(
       context,
-      duration: Duration(seconds: 4),
+      duration: Duration(seconds: 2),
       title: 'Success',
       subtitle: 'Transaction Saved!',
       configuration: IconConfiguration(icon: Icons.check),
       backgroundColor: const Color.fromARGB(255, 255, 199, 116),
     );
+    Navigator.pop(context);
   }
 
   // Method to show an error alert
@@ -46,7 +46,6 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
   final imgurlController = TextEditingController();
   final descController = TextEditingController();
 
-
   _register(userId) async {
     var data = {
       'name': nameController.text,
@@ -60,17 +59,13 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
     var body = jsonDecode(res.body);
 
     if (body['transaction']['transaction_id'] >= 1) {
-      // successMsg = true;
-      print('success');
       nameController.clear();
       costController.clear();
       imgurlController.clear();
       descController.clear();
-      return successMsg = true;
+      showSuccessAlert(context);
     } else {
-      successMsg = false;
-      print('it failed');
-      return;
+      showErrorAlert(context);
     }
   }
 
@@ -82,11 +77,10 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
   //       'A special character'];
   @override
   Widget build(BuildContext context) {
-
     //var userID = context.watch<UserProvider>().userID;
 
 //print(userID);
-    
+
     // String? validatePass(String? value) {
     //   const patternPass = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
     //   final regex = RegExp(patternPass);
@@ -125,11 +119,10 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: AppBar(
-            automaticallyImplyLeading: false,
             centerTitle: true,
             backgroundColor: Colors.orange,
-            title: Text("Add Transaction",
-                style: TextStyle(color: Colors.white)),
+            title:
+                Text("Add Transaction", style: TextStyle(color: Colors.white)),
           )),
       body: SingleChildScrollView(
         child: Padding(
@@ -264,18 +257,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                                 onPressed: () {
                                   if (_formfield.currentState!.validate()) {
                                     // print("success");
-
                                     _register(userId);
-
-                                    print(successMsg);
-
-                                    if (successMsg) {
-                                      showSuccessAlert(context);
-                                    } else {
-                                      showErrorAlert(context);
-                                      successMsg = false;
-                                    }
-
                                     /*     passController.clear();
                                     emailController.clear();
                                     nickNameController.clear();
