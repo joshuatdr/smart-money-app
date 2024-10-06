@@ -80,6 +80,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
             Icon(Icons.image_outlined, color: Colors.red[500]),
           ),
           DataCell(
+            Icon(Icons.edit, color: Colors.red[500]),
+            // onTap: () async {
+            //   await promptTransaction(context, data, userId)
+            //       .then((value) => {setState(() {})});
+            // },
+          ),
+          DataCell(
             Icon(Icons.delete_forever, color: Colors.red[500]),
             onTap: () async {
               await promptTransaction(context, data, userId)
@@ -97,15 +104,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
         backgroundColor: Colors.orange,
         title:
             Text("Transaction History", style: TextStyle(color: Colors.white)),
-        actions: <Widget>[
-          IconButton(
-              icon: const Icon(Icons.edit),
-              onPressed: () {
-                setState(() {
-                  // isReadOnly = !isReadOnly;
-                });
-              }),
-        ],
+        // actions: <Widget>[
+        //   IconButton(
+        //       icon: const Icon(Icons.edit),
+        //       onPressed: () {
+        //         setState(() {
+        //           // isReadOnly = !isReadOnly;
+        //         });
+        //       }),
+        // ],
       ),
       body: FutureBuilder(
         future: UserServices().getAllUserTransactions(userId),
@@ -131,6 +138,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     DataColumn(label: Text('Cost')),
                     DataColumn(label: Text('Date')),
                     DataColumn(label: Text('Image')),
+                    DataColumn(label: Text('Edit')),
                     DataColumn(label: Text('Del')),
                   ],
                   rows: List.generate(
