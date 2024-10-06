@@ -248,6 +248,8 @@ createData(testObj){
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: AppBar(
+            automaticallyImplyLeading: false,
+            centerTitle: true,
             backgroundColor: Colors.orange,
             title: Center(
                 child: Text('Spending', style: TextStyle(color: Colors.white))),
