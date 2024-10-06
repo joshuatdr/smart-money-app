@@ -67,23 +67,6 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     AsyncSnapshot.waiting();
     var userID = context.watch<UserProvider>().userID;
-    // String? validatePass(String? value) {
-    //   const patternPass =
-    //       r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
-    //   final regex = RegExp(patternPass);
-
-    //   if (value!.isEmpty) {
-    //     return 'A password must be at least 8 characters long.'
-    //         ' must contain an uppercase'
-    //         'lowercase letter'
-    //         'A number'
-    //         'A special character';
-    //   } else {
-    //     return value.isNotEmpty && !regex.hasMatch(value)
-    //         ? 'A password must be at least 8 characters long, must contain an uppercase, lowercase letter, a number and a special character'
-    //         : null;
-    //   }
-    // }
 
     String? validateEmail(String? value) {
       const pattern = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
@@ -160,19 +143,6 @@ class _EditProfileState extends State<EditProfile> {
 
                       const SizedBox(height: JSizes.spaceBtwItems),
 
-                      // TextFormField(
-                      //     controller: passController,
-                      //     obscureText: true,
-                      //     decoration: InputDecoration(
-                      //       prefixIcon: Icon(Icons.login),
-                      //       labelText: "Password",
-                      //     ),
-                      //     validator: passController.text.isNotEmpty
-                      //         ? validatePass
-                      //         : null),
-
-                      // const SizedBox(height: JSizes.spaceBtwItems),
-
                       TextFormField(
                         controller: incomeController,
                         obscureText: false,
@@ -210,32 +180,30 @@ class _EditProfileState extends State<EditProfile> {
                                         fontWeight: FontWeight.bold)),
                                 onPressed: () {
                                   final data = <String, dynamic>{};
+                                  
                                   if (nickNameController.text.isNotEmpty) {
-                                    data['fname'] = nickNameController
-                                        .text; //add the key to the data object
-                                    context.read<UserProvider>().changeFName(
-                                        newFName: nickNameController
-                                            .text); //update provider
+                                    data['fname'] = nickNameController.text; //add the key to the data object
+                                    context
+                                      .read<UserProvider>()
+                                      .changeFName(newFName: nickNameController.text); //update provider
                                   }
                                   if (emailController.text.isNotEmpty) {
                                     data['email'] = emailController.text;
-                                    context.read<UserProvider>().changeEmail(
-                                        newEmail: emailController.text);
+                                    context
+                                      .read<UserProvider>()
+                                      .changeEmail(newEmail: emailController.text);
                                   }
                                   if (incomeController.text.isNotEmpty) {
                                     data['income'] = incomeController.text;
-                                    context.read<UserProvider>().changeIncome(
-                                        newIncome:
-                                            int.parse(incomeController.text));
+                                    context
+                                      .read<UserProvider>()
+                                      .changeIncome(newIncome: int.parse(incomeController.text));
                                   }
                                   if (savingsController.text.isNotEmpty) {
-                                    data['savings_target'] =
-                                        savingsController.text;
+                                    data['savings_target'] = savingsController.text;
                                     context
-                                        .read<UserProvider>()
-                                        .changeSavingsTarget(
-                                            newSavingsTarget: int.parse(
-                                                savingsController.text));
+                                      .read<UserProvider>()
+                                      .changeSavingsTarget(newSavingsTarget: int.parse(savingsController.text));
                                   }
                                   updateUser(data, userID);
                                 },
