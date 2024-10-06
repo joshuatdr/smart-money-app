@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(
               //change this to change the general theme of the app
               // Color.fromARGB(255, 59, 17, 107)),
-              seedColor: const Color.fromARGB(255, 59, 17, 107)),
+              seedColor: Colors.blue),
         ),
         home: (JwtDecoder.isExpired(token) == false)
             ? Dashboard(token: token)
