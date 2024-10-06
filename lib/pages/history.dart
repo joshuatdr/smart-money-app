@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_money_app/pages/add_transaction.dart';
 import '../model/transactions.dart';
 import '../services/api.dart';
 import 'package:provider/provider.dart';
@@ -22,20 +23,18 @@ Future promptTransaction(context, data, userId) async {
       return AlertDialog(
         title: Center(child: const Text('Delete Transaction')),
         content: SizedBox(
-           width: 100,
-        height: 200,
+          width: 100,
+          height: 200,
           child: Column(
-            children:  [
-                            Text(data.name),
-                           // Text(data.cost),
-                           // Text(data.created_at),
-                                
-              const Text(
-                  'Do you want to delete this transaction?'),
+            children: [
+              Text(data.name),
+              // Text(data.cost),
+              // Text(data.created_at),
+
+              const Text('Do you want to delete this transaction?'),
             ],
           ),
         ),
-            
         actions: <Widget>[
           TextButton(
             child: const Text('Cancel'),
@@ -46,9 +45,10 @@ Future promptTransaction(context, data, userId) async {
           TextButton(
             child: const Text('Delete'),
             onPressed: () async {
-              await deleteTransaction(data.transactionId, userId).then((value) => {
-                    if (context.mounted) {Navigator.of(context).pop()}
-                  });
+              await deleteTransaction(data.transactionId, userId)
+                  .then((value) => {
+                        if (context.mounted) {Navigator.of(context).pop()}
+                      });
             },
           ),
         ],
@@ -114,73 +114,80 @@ class _HistoryScreenState extends State<HistoryScreen> {
         //       }),
         // ],
       ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.orange,
+        heroTag: null,
+        child: const Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddTransactionScreen()),
+          ).then(
+            (value) {
+              setState(() {});
+            },
+          );
+        },
+      ),
       body: FutureBuilder(
         future: UserServices().getAllUserTransactions(userId),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             var results = snapshot.data as List<Transactions>;
             if (results.isNotEmpty) {
-              return SingleChildScrollView(
-                  child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.orange),
-                ),
-                child: DataTable(
-                  dataRowMaxHeight: double.infinity, // Code to be changed.
-                  dataRowMinHeight: 80, // Set the min required height.
-                  dividerThickness: 1,
-                  headingRowColor: WidgetStateColor.resolveWith(
-                    (states) => const Color.fromARGB(255, 255, 201, 139),
-                  ),
-                  columnSpacing: 30,
-                  columns: [
-                    DataColumn(label: Text('Name')),
-                    DataColumn(label: Text('Cost')),
-                    DataColumn(label: Text('Date')),
-                    DataColumn(label: Text('Image')),
-                    DataColumn(label: Text('Edit')),
-                    DataColumn(label: Text('Del')),
-                  ],
-                  rows: List.generate(
-                    results.length,
-                    (index) => getDataRow(
-                      index,
-                      results[index],
+              return Center(
+                child: Column(
+                  children: [
+                    SingleChildScrollView(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.orange),
+                        ),
+                        child: DataTable(
+                          dataRowMaxHeight:
+                              double.infinity, // Code to be changed.
+                          dataRowMinHeight: 80, // Set the min required height.
+                          dividerThickness: 1,
+                          headingRowColor: WidgetStateColor.resolveWith(
+                            (states) =>
+                                const Color.fromARGB(255, 255, 201, 139),
+                          ),
+                          columnSpacing: 30,
+                          columns: [
+                            DataColumn(label: Text('Name')),
+                            DataColumn(label: Text('Cost')),
+                            DataColumn(label: Text('Date')),
+                            DataColumn(label: Text('Image')),
+                            DataColumn(label: Text('Edit')),
+                            DataColumn(label: Text('Del')),
+                          ],
+                          rows: List.generate(
+                            results.length,
+                            (index) => getDataRow(
+                              index,
+                              results[index],
+                            ),
+                          ),
+                          showBottomBorder: true,
+                        ),
+                      ),
                     ),
-                  ),
-                  showBottomBorder: true,
+                  ],
                 ),
-              ));
+              );
             } else {
-              return Row(
-                children: const <Widget>[
-                  SizedBox(
-                    // ignore: sort_child_properties_last
-                    child: CircularProgressIndicator(),
-                    width: 30,
-                    height: 30,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(40),
-                    child: Text('No Data Found...'),
-                  ),
-                ],
+              return Center(
+                child: Text("No transactions yet!"),
               );
             }
           } else {
-            return Row(
-              children: const <Widget>[
-                SizedBox(
-                  // ignore: sort_child_properties_last
-                  child: CircularProgressIndicator(),
-                  width: 30,
-                  height: 30,
-                ),
-                Padding(
-                  padding: EdgeInsets.all(40),
-                  child: Text('Looking up your transactions...'),
-                ),
-              ],
+            return Center(
+              child: SizedBox(
+                // ignore: sort_child_properties_last
+                child: CircularProgressIndicator(),
+                width: 30,
+                height: 30,
+              ),
             );
           }
         },

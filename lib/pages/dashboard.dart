@@ -149,10 +149,6 @@ class _DashboardState extends State<Dashboard> {
                         icon: Icon(Icons.account_circle),
                         label: 'Profile',
                       ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.add),
-                        label: 'Add Trans',
-                      ),
                     ],
                     currentIndex: selectedIndex,
                     onTap: (value) {
@@ -194,10 +190,6 @@ class _DashboardState extends State<Dashboard> {
                       NavigationRailDestination(
                         icon: Icon(Icons.account_circle),
                         label: Text('Profile'),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(Icons.add),
-                        label: Text('Add Transaction'),
                       ),
                     ],
                     selectedIndex: selectedIndex,
