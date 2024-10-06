@@ -76,7 +76,8 @@ class _BudgetPageState extends State<BudgetPage> {
     return Scaffold(
         backgroundColor: Colors.purple,
         appBar: AppBar(
-          //  leading: null,
+          automaticallyImplyLeading: false,
+          centerTitle: true,
           backgroundColor: Colors.orange,
           title: Center(
               child: Text("Budget", style: TextStyle(color: Colors.white))),
@@ -88,48 +89,51 @@ class _BudgetPageState extends State<BudgetPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Card(
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: 200,
-                        child: Expanded(
-                          child: PieChart(
-                            PieChartData(
-                              pieTouchData: PieTouchData(
-                                touchCallback: (FlTouchEvent event,
-                                    PieTouchResponse? pieTouchResponse) {
-                                  setState(() {
-                                    if (pieTouchResponse != null &&
-                                        (event is FlLongPressEnd ||
-                                            event is FlPanEndEvent)) {
-                                      touchedIndex = -1;
-                                    } else {
-                                      touchedIndex = pieTouchResponse
-                                              ?.touchedSection
-                                              ?.touchedSectionIndex ??
-                                          -1;
-                                    }
-                                  });
-                                },
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10, bottom: 1),
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(
+                          height: 169,
+                          child: Expanded(
+                            child: PieChart(
+                              PieChartData(
+                                pieTouchData: PieTouchData(
+                                  touchCallback: (FlTouchEvent event,
+                                      PieTouchResponse? pieTouchResponse) {
+                                    setState(() {
+                                      if (pieTouchResponse != null &&
+                                          (event is FlLongPressEnd ||
+                                              event is FlPanEndEvent)) {
+                                        touchedIndex = -1;
+                                      } else {
+                                        touchedIndex = pieTouchResponse
+                                                ?.touchedSection
+                                                ?.touchedSectionIndex ??
+                                            -1;
+                                      }
+                                    });
+                                  },
+                                ),
+                                borderData: FlBorderData(show: false),
+                                sectionsSpace: 0,
+                                centerSpaceRadius: 40,
+                                sections: getSections(touchedIndex),
                               ),
-                              borderData: FlBorderData(show: false),
-                              sectionsSpace: 0,
-                              centerSpaceRadius: 40,
-                              sections: getSections(touchedIndex),
                             ),
                           ),
                         ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: IndicatorsWidget(),
-                          )
-                        ],
-                      )
-                    ],
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: IndicatorsWidget(),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 Card(
