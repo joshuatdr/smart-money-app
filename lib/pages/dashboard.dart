@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:smart_money_app/main.dart';
+import 'package:provider/provider.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'dart:math';
 import 'package:smart_money_app/pages/Spending.dart';
 import 'package:smart_money_app/pages/history.dart';
 import 'package:smart_money_app/pages/Budget.dart';
 import 'package:smart_money_app/pages/goals.dart';
-import 'package:provider/provider.dart';
 import 'package:smart_money_app/pages/login.dart';
-import '../providers/user_provider.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
-import 'profile.dart';
+import 'package:smart_money_app/providers/user_provider.dart';
+import 'package:smart_money_app/pages/profile.dart';
 
 class Dashboard extends StatefulWidget {
   final token;
@@ -173,15 +173,18 @@ class _DashboardState extends State<Dashboard> {
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-    var pair = appState.current;
-
-    IconData icon;
-    if (appState.favorites.contains(pair)) {
-      icon = Icons.favorite;
-    } else {
-      icon = Icons.favorite_border;
-    }
+    List greetings = [
+      "Welcome back!\n Ready to grow your savings today?",
+      "Good to see you again!\n Let's make your savings work harder.",
+      "You're back!\n Let’s check in on your savings progress.",
+      "Welcome back!\n Every step counts—how can we help you save more today?",
+      "Hey there, great to have you back!\n Let’s boost those savings.",
+      "Nice to see you again!\n Your savings journey continues here.",
+      "Welcome back!\n Let’s keep building towards your financial goals.",
+      "You're back!\n Ready to watch your savings grow?",
+      "Hello again!\n Let’s take another step toward your savings target.",
+    ];
+    final _random = Random();
 
     return Center(
       child: Column(
@@ -190,7 +193,7 @@ class HomePage extends StatelessWidget {
           BigCard(
               greeting: context.watch<UserProvider>().newUser
                   ? 'Welcome'
-                  : 'Welcome back'),
+                  : greetings[_random.nextInt(greetings.length)]),
           ElevatedButton(
             onPressed: () {
               Navigator.of(context).pushAndRemoveUntil(
@@ -233,6 +236,7 @@ class BigCard extends StatelessWidget {
             ),
             Text(
               greeting,
+              textAlign: TextAlign.center,
               style: style.copyWith(fontSize: 14),
             ),
           ],
