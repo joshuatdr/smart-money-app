@@ -6,11 +6,9 @@ import '../common/sizes.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 //import './config.dart';
-import 'package:status_alert/status_alert.dart';
-import '../services/api.dart';
 import 'package:provider/provider.dart';
+import 'package:status_alert/status_alert.dart';
 import '../providers/user_provider.dart';
-
 
 class EditProfile extends StatefulWidget {
   @override
@@ -18,54 +16,34 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  Future<void> updateUser(
-    int userId,
-    String email,
-//     String password,
-    String fname,
-    String income,
-    String savingsTarget,
-  ) async {
+  void showSuccessAlert(BuildContext context) {
+    StatusAlert.show(
+      context,
+      duration: Duration(seconds: 2),
+      title: 'Success',
+      subtitle: 'Profile Updated',
+      configuration: IconConfiguration(icon: Icons.check),
+      backgroundColor: Colors.lightBlue.shade600,
+    );
+    Navigator.pop(context);
+  }
+
+  Future<void> updateUser(data, userID) async {
+    final patchBody = jsonEncode(data);
+    // print('$patchBody <--- encoded JSON');
     final response = await http.patch(
-      Uri.parse("https://smart-money-backend.onrender.com/api/user/$userId"),
+      Uri.parse("https://smart-money-backend.onrender.com/api/user/$userID"),
       headers: <String, String>{
         "Content-Type": "application/json; charset=UTF-8",
       },
-      body: jsonEncode(<String, dynamic>{
-        "fname": fname,
-        "email": email,
-        // "password": password,
-        "income": income,
-        "savings_target": savingsTarget
-      }),
+      body: patchBody,
     );
     if (response.statusCode == 201) {
-      print('SUCCESS');
-      // If the server returns a 201 OK response, then the user was successfully updated.
-
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text("User Updated"),
-            content: Text("user updated successfully."),
-            actions: [
-              MaterialButton(
-                child: Text("OK"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
+      showSuccessAlert(context);
     } else {
-      print(userId.runtimeType);
       print('FAIL');
       // If the server did not return a 201 OK response,
       // then throw an exception.
-      throw Exception("Failed to update user");
     }
   }
 
@@ -88,29 +66,7 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     AsyncSnapshot.waiting();
-    var userId = context.watch<UserProvider>().userID;
-    var fName = context.watch<UserProvider>().fName;
-    var email = context.watch<UserProvider>().email;
-    // var password = context.watch<UserProvider>().hashCode;
-    var income = context.watch<UserProvider>().income;
-    var savingsTarget = context.watch<UserProvider>().savingsTarget;
-    String? validatePass(String? value) {
-      const patternPass =
-          r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
-      final regex = RegExp(patternPass);
-
-      if (value!.isEmpty) {
-        return 'A password must be at least 8 characters long.'
-            ' must contain an uppercase'
-            'lowercase letter'
-            'A number'
-            'A special character';
-      } else {
-        return value.isNotEmpty && !regex.hasMatch(value)
-            ? 'A password must be at least 8 characters long, must contain an uppercase, lowercase letter, a number and a special character'
-            : null;
-      }
-    }
+    var userID = context.watch<UserProvider>().userID;
 
     String? validateEmail(String? value) {
       const pattern = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
@@ -187,19 +143,6 @@ class _EditProfileState extends State<EditProfile> {
 
                       const SizedBox(height: JSizes.spaceBtwItems),
 
-                      // TextFormField(
-                      //     controller: passController,
-                      //     obscureText: true,
-                      //     decoration: InputDecoration(
-                      //       prefixIcon: Icon(Icons.login),
-                      //       labelText: "Password",
-                      //     ),
-                      //     validator: passController.text.isNotEmpty
-                      //         ? validatePass
-                      //         : null),
-
-                      // const SizedBox(height: JSizes.spaceBtwItems),
-
                       TextFormField(
                         controller: incomeController,
                         obscureText: false,
@@ -235,41 +178,34 @@ class _EditProfileState extends State<EditProfile> {
                                           ..color = Colors.white,
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
-
-                                onPressed: () async {
-                                  List<String> arguments = [];
-                                  if (nickNameController.text.isEmpty) {
-                                    arguments.add(fName);
-                                  } else {
-                                    arguments.add(nickNameController.text);
+                                onPressed: () {
+                                  final data = <String, dynamic>{};
+                                  
+                                  if (nickNameController.text.isNotEmpty) {
+                                    data['fname'] = nickNameController.text; //add the key to the data object
+                                    context
+                                      .read<UserProvider>()
+                                      .changeFName(newFName: nickNameController.text); //update provider
                                   }
-                                  if (emailController.text.isEmpty) {
-                                    arguments.add(email);
-                                  } else {
-                                    arguments.add(emailController.text);
+                                  if (emailController.text.isNotEmpty) {
+                                    data['email'] = emailController.text;
+                                    context
+                                      .read<UserProvider>()
+                                      .changeEmail(newEmail: emailController.text);
                                   }
-                                  // if (passController.text.isEmpty) {
-                                  //   arguments.add(passController.text);
-                                  // } else {
-                                  //   arguments.add(passController.text);
-                                  // }
-                                  if (incomeController.text.isEmpty) {
-                                    arguments.add(income.toString());
-                                  } else {
-                                    arguments.add(incomeController.text);
+                                  if (incomeController.text.isNotEmpty) {
+                                    data['income'] = incomeController.text;
+                                    context
+                                      .read<UserProvider>()
+                                      .changeIncome(newIncome: int.parse(incomeController.text));
                                   }
-                                  if (savingsController.text.isEmpty) {
-                                    arguments.add(savingsTarget.toString());
-                                    print(userId);
-                                    print(arguments);
-                                    print(arguments[0]);
-                                  } else {
-                                    arguments.add(savingsController.text);
+                                  if (savingsController.text.isNotEmpty) {
+                                    data['savings_target'] = savingsController.text;
+                                    context
+                                      .read<UserProvider>()
+                                      .changeSavingsTarget(newSavingsTarget: int.parse(savingsController.text));
                                   }
-                                  updateUser(userId, arguments[0], arguments[1],
-                                      arguments[2], arguments[3]);
-                                  print(userId);
-
+                                  updateUser(data, userID);
                                 },
                                 child: Text("Submit changes"))),
                       ),

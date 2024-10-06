@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:smart_money_app/pages/change_pass_page.dart';
 import 'package:smart_money_app/pages/edit_profile.dart';
-import '../model/user.dart';
-import '../services/api.dart';
-import '../providers/user_provider.dart';
+import 'package:smart_money_app/model/user.dart';
+import 'package:smart_money_app/services/api.dart';
+import 'package:smart_money_app/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
@@ -87,170 +88,181 @@ class _UserScreenState extends State<UserScreen> {
             title: Text("Profile", style: TextStyle(color: Colors.white)),
           )),
       body: FutureBuilder(
-          future: UserServices()
-              .getAllUserData(context.watch<UserProvider>().userID),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return Center(
-                child: Text("Error fetching user data"),
-              );
-            }
+        future:
+            UserServices().getAllUserData(context.watch<UserProvider>().userID),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text("Error fetching user data"),
+            );
+          }
 
-            if (snapshot.hasData) {
-              //var data = snapshot .data;
-              var data = snapshot.data as List<User>;
+          if (snapshot.hasData) {
+            //var data = snapshot .data;
+            var data = snapshot.data as List<User>;
 
-              return ListView.builder(
-                  itemCount: data.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(40),
-                            child: CircleAvatar(
-                                backgroundImage:
-                                    NetworkImage(data[index].avatar_url!),
-                                radius: 120),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                labelText: "Name",
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide:
-                                      const BorderSide(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                              initialValue: "${data[index].nickName}",
-                              readOnly: isReadOnly,
-                              style: TextStyle(
-                                  fontSize: 30, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                labelText: "Email",
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide:
-                                      const BorderSide(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                              initialValue: "${data[index].email}",
-                              readOnly: isReadOnly,
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: TextFormField(
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                labelText: "Password",
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide:
-                                      const BorderSide(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                              initialValue: "${data[index].password}",
-                              readOnly: isReadOnly,
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                labelText: "Income",
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide:
-                                      const BorderSide(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                              initialValue: "£${data[index].income}",
-                              readOnly: isReadOnly,
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                labelText: "Savings target",
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide:
-                                      const BorderSide(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                              initialValue: "£${data[index].savingsTarget}",
-                              readOnly: isReadOnly,
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: OutlinedButton(
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.lightBlue.shade900,
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 50, vertical: 20),
-                                    textStyle: TextStyle(
-                                        foreground: Paint()
-                                          ..color = Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold)),
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => EditProfile()),
-                                  );
-                                },
-                                child: Text("Edit")),
-                          ),
-                          Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: OutlinedButton(
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor:
-                                        const Color.fromARGB(255, 180, 11, 11),
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 50, vertical: 20),
-                                    textStyle: TextStyle(
-                                        foreground: Paint()
-                                          ..color = Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold)),
-
-                                onPressed: () {
-                                  promptUser(context);
-                                }, // call the prompt
-                                child: Text("DELETE ACCOUNT",
-                                    style: TextStyle(color: Colors.white)),
-                              ))
-                        ],
+            return ListView.builder(
+              itemCount: data.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(40),
+                        child: CircleAvatar(
+                            backgroundImage:
+                                NetworkImage(data[index].avatar_url!),
+                            radius: 120),
                       ),
-                    );
-                  });
-            } else {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-          }),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          controller: TextEditingController()
+                            ..text = '${data[index].nickName}',
+                          decoration: InputDecoration(
+                            labelText: "Name",
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          readOnly: isReadOnly,
+                          ignorePointers: true,
+                          style: TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          controller: TextEditingController()
+                            ..text = '${data[index].email}',
+                          decoration: InputDecoration(
+                            labelText: "Email",
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          readOnly: isReadOnly,
+                          ignorePointers: true,
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          controller: TextEditingController()
+                            ..text = '£${data[index].income}',
+                          decoration: InputDecoration(
+                            labelText: "Income",
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          ignorePointers: true,
+                          readOnly: isReadOnly,
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          controller: TextEditingController()
+                            ..text = '£${data[index].savingsTarget}',
+                          decoration: InputDecoration(
+                            labelText: "Savings target",
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          readOnly: isReadOnly,
+                          ignorePointers: true,
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: OutlinedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.lightBlue.shade900,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 50, vertical: 20),
+                                textStyle: TextStyle(
+                                    foreground: Paint()..color = Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold)),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EditProfile()),
+                              ).then((value) {
+                                setState(() {});
+                              });
+                            },
+                            child: Text("Edit")),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: OutlinedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.lightBlue.shade900,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 50, vertical: 20),
+                                textStyle: TextStyle(
+                                    foreground: Paint()..color = Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold)),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ChangePass()),
+                              ).then((value) {
+                                setState(() {});
+                              });
+                            },
+                            child: Text("Change Password")),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: OutlinedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  const Color.fromARGB(255, 180, 11, 11),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 50, vertical: 20),
+                              textStyle: TextStyle(
+                                  foreground: Paint()..color = Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold)),
+
+                          onPressed: () {
+                            promptUser(context);
+                          }, // call the prompt
+                          child: Text("DELETE ACCOUNT",
+                              style: TextStyle(color: Colors.white)),
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              },
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
+      ),
     );
   }
 }
