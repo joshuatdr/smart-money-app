@@ -25,10 +25,11 @@ class _SignupScreenState extends State<SignupScreen> {
   final nickNameController = TextEditingController();
   var dark = false;
   late SharedPreferences prefs;
-
+   bool passwordVisible=false; 
   @override
   void initState() {
     super.initState();
+    passwordVisible=true; 
     initSharedPref();
   }
 
@@ -153,7 +154,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   const SizedBox(
                     height: JSizes.sm,
                   ),
-                  Text(TTexts.signUp,
+                  Text(TTexts.signUpSub,
                       style: Theme.of(context).textTheme.bodyMedium),
                 ],
               ),
@@ -180,10 +181,24 @@ class _SignupScreenState extends State<SignupScreen> {
                       /// Password
                       TextFormField(
                           controller: passController,
-                          obscureText: true,
+                          obscureText: passwordVisible,
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.login),
                             labelText: TTexts.password,
+                            suffixIcon: IconButton( 
+                      icon: Icon(passwordVisible 
+                          ? Icons.visibility 
+                          : Icons.visibility_off), 
+                      onPressed: () { 
+                        setState( 
+                          () { 
+                            passwordVisible = !passwordVisible; 
+                          }, 
+                        ); 
+                      }, 
+                    ), 
+                    alignLabelWithHint: false, 
+                    filled: true, 
                           ),
                           validator: validatePass),
 
@@ -192,10 +207,24 @@ class _SignupScreenState extends State<SignupScreen> {
                       /// confirm Password
                       TextFormField(
                           controller: confirmPassController,
-                          obscureText: true,
+                          obscureText: passwordVisible,
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.login),
-                            labelText: "confirm password",
+                            labelText: "Confirm Password",
+                            suffixIcon: IconButton( 
+                      icon: Icon(passwordVisible 
+                          ? Icons.visibility 
+                          : Icons.visibility_off), 
+                      onPressed: () { 
+                        setState( 
+                          () { 
+                            passwordVisible = !passwordVisible; 
+                          }, 
+                        ); 
+                      }, 
+                    ), 
+                    alignLabelWithHint: false, 
+                    filled: true, 
                           ),
                           validator: validatePass),
 
@@ -204,14 +233,14 @@ class _SignupScreenState extends State<SignupScreen> {
                       /// nick name
                       TextFormField(
                         controller: nickNameController,
-                        obscureText: false,
+                        obscureText: passwordVisible,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.alternate_email),
                           labelText: TTexts.friendlyName,
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "please enter a nick name";
+                            return "Please enter a nickname";
                           }
                           return null;
                         },
