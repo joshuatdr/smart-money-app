@@ -5,13 +5,15 @@ import 'package:smart_money_app/pages/history.dart';
 import 'package:smart_money_app/pages/Budget.dart';
 import 'package:smart_money_app/pages/goals.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_money_app/pages/login.dart';
 import '../providers/user_provider.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'profile.dart';
 
 class Dashboard extends StatefulWidget {
   final token;
-  const Dashboard({@required this.token, super.key});
+  final bool firstLogin;
+  const Dashboard({@required this.token, required this.firstLogin, super.key});
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -28,26 +30,16 @@ class _DashboardState extends State<Dashboard> {
   void parseToken() async {
     Map<String, dynamic> jwtDecodedToken =
         await JwtDecoder.decode(widget.token);
-    context
-        .read<UserProvider>()
-        .changeUserID(newUserID: jwtDecodedToken['user']['user_id']);
-    context
-        .read<UserProvider>()
-        .changeEmail(newEmail: jwtDecodedToken['user']['email']);
-    context
-        .read<UserProvider>()
-        .changeAvatarURL(newAvatarURL: jwtDecodedToken['user']['avatar_url']);
-    context
-        .read<UserProvider>()
-        .changeFName(newFName: jwtDecodedToken['user']['fname']);
-    context
-        .read<UserProvider>()
-        .changeIncome(newIncome: jwtDecodedToken['user']['income']);
-    context.read<UserProvider>().changeSavingsTarget(
-        newSavingsTarget: jwtDecodedToken['user']['savings_target']);
-    context
-        .read<UserProvider>()
-        .changeCreatedAt(newCreatedAt: jwtDecodedToken['user']['created_at']);
+    context.read<UserProvider>().loginUser(
+          loginUserID: jwtDecodedToken['user']['user_id'],
+          loginEmail: jwtDecodedToken['user']['email'],
+          loginAvatarURL: jwtDecodedToken['user']['avatar_url'],
+          loginFName: jwtDecodedToken['user']['fname'],
+          loginIncome: jwtDecodedToken['user']['income'],
+          loginSavingsTarget: jwtDecodedToken['user']['savings_target'],
+          loginCreatedAt: jwtDecodedToken['user']['created_at'],
+          firstLogin: widget.firstLogin,
+        );
   }
 
   var selectedIndex = 0;
@@ -195,9 +187,17 @@ class HomePage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          BigCard(greeting: 'Welcome back'),
+          BigCard(
+              greeting: context.watch<UserProvider>().newUser
+                  ? 'Welcome'
+                  : 'Welcome back'),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (ctx) => LoginScreen()),
+                  (route) => false);
+              context.read<UserProvider>().logoutUser();
+            },
             child: Text('Logout'),
           ),
         ],

@@ -49,8 +49,11 @@ class _LoginScreenState extends State<LoginScreen> {
       var jsonResponse = jsonDecode(response.body);
       var myToken = jsonResponse['token'];
       prefs.setString('token', myToken);
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => Dashboard(token: myToken)));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  Dashboard(token: myToken, firstLogin: false)));
     } else {
       StatusAlert.show(
         context,

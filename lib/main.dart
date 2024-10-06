@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
               seedColor: Colors.blue),
         ),
         home: (JwtDecoder.isExpired(token) == false)
-            ? Dashboard(token: token)
+            ? Dashboard(token: token, firstLogin: false)
             : SignupScreen(),
       ),
     );
