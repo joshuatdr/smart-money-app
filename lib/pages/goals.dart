@@ -25,7 +25,7 @@ class _GoalsPageState extends State<GoalsPage> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.lightBlue.shade900,
         title: Text("Goals", style: TextStyle(color: Colors.white)),
       ),
       body: _renderGoals(context, style),
@@ -38,11 +38,11 @@ class _GoalsPageState extends State<GoalsPage> {
     return ExpandableFab(
       key: _key,
       openButtonBuilder: DefaultFloatingActionButtonBuilder(
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.blue.shade600,
         child: const Icon(Icons.menu),
       ),
       closeButtonBuilder: DefaultFloatingActionButtonBuilder(
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.blue.shade600,
         child: const Icon(Icons.close),
       ),
       overlayStyle: ExpandableFabOverlayStyle(
@@ -50,13 +50,13 @@ class _GoalsPageState extends State<GoalsPage> {
       ),
       children: [
         FloatingActionButton.small(
-          backgroundColor: Colors.orange,
+          backgroundColor: Colors.blue.shade600,
           heroTag: null,
           child: const Icon(Icons.edit),
           onPressed: () {},
         ),
         FloatingActionButton.small(
-          backgroundColor: Colors.orange,
+          backgroundColor: Colors.blue.shade600,
           heroTag: null,
           child: const Icon(Icons.add),
           onPressed: () {
@@ -73,7 +73,7 @@ class _GoalsPageState extends State<GoalsPage> {
           },
         ),
         FloatingActionButton.small(
-          backgroundColor: Colors.orange,
+          backgroundColor: Colors.blue.shade600,
           heroTag: null,
           child: const Icon(Icons.remove),
           onPressed: () {},
@@ -138,8 +138,8 @@ class _GoalsPageState extends State<GoalsPage> {
         height: 400,
         decoration: BoxDecoration(
           gradient: LinearGradient(colors: [
-            Colors.orange,
-            Colors.orange.shade800,
+            Colors.purple.shade900,
+            Colors.purple.shade300,
           ]),
           image: DecorationImage(
             fit: BoxFit.cover,
@@ -157,13 +157,13 @@ class _GoalsPageState extends State<GoalsPage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       gradient: LinearGradient(colors: [
-                        Colors.orange,
-                        const Color.fromARGB(131, 224, 18, 18),
+                      const Color.fromARGB(255, 2, 61, 189),
+                       Colors.blue.shade800,
                       ]),
                     ),
                     child: Text(results[index].name ??= "",
                         textAlign: TextAlign.center,
-                        style: style.copyWith(fontWeight: FontWeight.bold))),
+                        style: style.copyWith(fontWeight: FontWeight.bold, color: Colors.white))),
               ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -171,13 +171,13 @@ class _GoalsPageState extends State<GoalsPage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       gradient: LinearGradient(colors: [
-                        Colors.orange,
-                        const Color.fromARGB(131, 224, 18, 18),
+                      const Color.fromARGB(255, 2, 61, 189),
+                       Colors.blue.shade800,
                       ]),
                     ),
                     child: Text('£${(results[index].cost ??= 0).toString()}',
                         textAlign: TextAlign.center,
-                        style: style.copyWith(fontWeight: FontWeight.bold))),
+                        style: style.copyWith(fontWeight: FontWeight.bold, color: Colors.white))),
               ),
             ],
           ),

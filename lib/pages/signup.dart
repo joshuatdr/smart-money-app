@@ -257,7 +257,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             width: double.infinity,
                             child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.orange,
+                                    backgroundColor: Colors.lightBlue.shade900,
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 50, vertical: 20),
                                     textStyle: TextStyle(
@@ -274,7 +274,9 @@ class _SignupScreenState extends State<SignupScreen> {
                                       ? print("please accept")
                                       : isChecked == false;
                                 },
-                                child: Text(TTexts.signUp))),
+                                child: Text(
+                                  TTexts.signUp,
+                                  style: TextStyle(color: Colors.lightBlue.shade900),))),
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

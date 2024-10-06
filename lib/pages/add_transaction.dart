@@ -21,7 +21,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
       title: 'Success',
       subtitle: 'Transaction Saved!',
       configuration: IconConfiguration(icon: Icons.check),
-      backgroundColor: const Color.fromARGB(255, 255, 199, 116),
+      backgroundColor: Colors.lightBlue.shade600,
     );
     Navigator.pop(context);
   }
@@ -120,7 +120,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
           preferredSize: Size.fromHeight(50.0),
           child: AppBar(
             centerTitle: true,
-            backgroundColor: Colors.orange,
+            backgroundColor: Colors.lightBlue.shade900,
             title:
                 Text("Add Transaction", style: TextStyle(color: Colors.white)),
           )),
@@ -246,7 +246,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                             width: double.infinity,
                             child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.orange,
+                                    backgroundColor: Colors.lightBlue.shade900,
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 50, vertical: 20),
                                     textStyle: TextStyle(
