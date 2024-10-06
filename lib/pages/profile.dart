@@ -116,7 +116,9 @@ class _UserScreenState extends State<UserScreen> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: TextFormField(
+                            child: TextField(
+                              controller: TextEditingController()
+                                ..text = '${data[index].nickName}',
                               decoration: InputDecoration(
                                 labelText: "Name",
                                 enabledBorder: OutlineInputBorder(
@@ -125,7 +127,6 @@ class _UserScreenState extends State<UserScreen> {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
-                              initialValue: "${data[index].nickName}",
                               readOnly: isReadOnly,
                               ignorePointers: true,
                               style: TextStyle(
@@ -134,7 +135,9 @@ class _UserScreenState extends State<UserScreen> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: TextFormField(
+                            child: TextField(
+                              controller: TextEditingController()
+                                ..text = '${data[index].email}',
                               decoration: InputDecoration(
                                 labelText: "Email",
                                 enabledBorder: OutlineInputBorder(
@@ -143,7 +146,6 @@ class _UserScreenState extends State<UserScreen> {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
-                              initialValue: "${data[index].email}",
                               readOnly: isReadOnly,
                               ignorePointers: true,
                               style: TextStyle(
@@ -152,7 +154,9 @@ class _UserScreenState extends State<UserScreen> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: TextFormField(
+                            child: TextField(
+                              controller: TextEditingController()
+                                ..text = '£${data[index].income}',
                               decoration: InputDecoration(
                                 labelText: "Income",
                                 enabledBorder: OutlineInputBorder(
@@ -161,7 +165,6 @@ class _UserScreenState extends State<UserScreen> {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
-                              initialValue: "£${data[index].income}",
                               ignorePointers: true,
                               readOnly: isReadOnly,
                               style: TextStyle(
@@ -170,7 +173,9 @@ class _UserScreenState extends State<UserScreen> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: TextFormField(
+                            child: TextField(
+                              controller: TextEditingController()
+                                ..text = '£${data[index].savingsTarget}',
                               decoration: InputDecoration(
                                 labelText: "Savings target",
                                 enabledBorder: OutlineInputBorder(
@@ -179,7 +184,6 @@ class _UserScreenState extends State<UserScreen> {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
-                              initialValue: "£${data[index].savingsTarget}",
                               readOnly: isReadOnly,
                               ignorePointers: true,
                               style: TextStyle(
