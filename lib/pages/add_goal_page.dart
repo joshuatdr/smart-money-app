@@ -22,7 +22,7 @@ class _AddGoalPageState extends State<AddGoalPage> {
       title: 'Success',
       subtitle: 'Goal added!',
       configuration: IconConfiguration(icon: Icons.check),
-      backgroundColor: Colors.lightBlue.shade600,
+      backgroundColor: Colors.lightBlue.shade900,
     );
     Navigator.pop(context);
   }
@@ -96,7 +96,7 @@ class _AddGoalPageState extends State<AddGoalPage> {
           preferredSize: Size.fromHeight(50.0),
           child: AppBar(
             centerTitle: true,
-            backgroundColor: Colors.orange,
+            backgroundColor: Colors.lightBlue.shade900,
             title: Text("Add Goal", style: TextStyle(color: Colors.white)),
           )),
       body: SingleChildScrollView(
@@ -161,7 +161,7 @@ class _AddGoalPageState extends State<AddGoalPage> {
                             width: double.infinity,
                             child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.orange,
+                                    backgroundColor: Colors.lightBlue.shade900,
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 50, vertical: 20),
                                     textStyle: TextStyle(
