@@ -8,6 +8,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:smart_money_app/services/config.dart';
 import 'package:status_alert/status_alert.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_money_app/pages/dashboard.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -15,7 +17,6 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  //const LoginScreen({super.key});
   bool isChecked = false;
   final _formfield = GlobalKey<FormState>();
   final passController = TextEditingController();
@@ -23,6 +24,18 @@ class _SignupScreenState extends State<SignupScreen> {
   final emailController = TextEditingController();
   final nickNameController = TextEditingController();
   var dark = false;
+  late SharedPreferences prefs;
+
+  @override
+  void initState() {
+    super.initState();
+    initSharedPref();
+  }
+
+  void initSharedPref() async {
+    prefs = await SharedPreferences.getInstance();
+  }
+
   List<String> str = [
     'A password must be at least 8 characters long.',
     'Must contain an uppercase',
@@ -43,10 +56,7 @@ class _SignupScreenState extends State<SignupScreen> {
       body: jsonEncode(reqBody),
     );
     if (response.statusCode == 201) {
-      // print("got status 201");
-      // print(jsonResponse);
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => LoginScreen()));
+      loginAfterSignup();
     } else {
       StatusAlert.show(
         context,
@@ -56,6 +66,30 @@ class _SignupScreenState extends State<SignupScreen> {
         configuration: IconConfiguration(icon: Icons.error),
       );
     }
+  }
+
+  void loginAfterSignup() async {
+    var loginBody = {
+      "email": emailController.text,
+      "password": passController.text,
+    };
+
+    var response = await http.post(Uri.parse(login),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(loginBody));
+
+    var jsonResponse = jsonDecode(response.body);
+    var myToken = jsonResponse['token'];
+    prefs.setString('token', myToken);
+
+    passController.clear();
+    emailController.clear();
+    nickNameController.clear();
+    confirmPassController.clear();
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Dashboard(token: myToken, firstLogin: true)));
   }
 
   @override
@@ -235,11 +269,6 @@ class _SignupScreenState extends State<SignupScreen> {
                                   if (_formfield.currentState!.validate() &&
                                       isChecked) {
                                     registerUser();
-                                    print("success");
-                                    passController.clear();
-                                    emailController.clear();
-                                    nickNameController.clear();
-                                    confirmPassController.clear();
                                   }
                                   isChecked == false
                                       ? print("please accept")

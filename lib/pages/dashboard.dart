@@ -4,16 +4,16 @@ import 'package:smart_money_app/pages/Spending.dart';
 import 'package:smart_money_app/pages/history.dart';
 import 'package:smart_money_app/pages/Budget.dart';
 import 'package:smart_money_app/pages/goals.dart';
-import 'package:smart_money_app/pages/add_transaction.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_money_app/pages/login.dart';
 import '../providers/user_provider.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:english_words/english_words.dart';
 import 'profile.dart';
 
 class Dashboard extends StatefulWidget {
   final token;
-  const Dashboard({@required this.token, super.key});
+  final bool firstLogin;
+  const Dashboard({@required this.token, required this.firstLogin, super.key});
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -30,49 +30,16 @@ class _DashboardState extends State<Dashboard> {
   void parseToken() async {
     Map<String, dynamic> jwtDecodedToken =
         await JwtDecoder.decode(widget.token);
-
-//       context
-//           .read<UserProvider>()
-//           .changeUserID(newUserID: jwtDecodedToken['user']['user_id']);
-//       context
-//           .read<UserProvider>()
-//           .changeEmail(newEmail: jwtDecodedToken['user']['email']);
-//       context
-//           .read<UserProvider>()
-//           .changeAvatarURL(newAvatarURL: jwtDecodedToken['user']['avatar_url']);
-//       context
-//           .read<UserProvider>()
-//           .changeFName(newFName: jwtDecodedToken['user']['fname']);
-//       context
-//           .read<UserProvider>()
-//           .changeIncome(newIncome: jwtDecodedToken['user']['income']);
-//       context
-//           .read<UserProvider>()
-//           .changeSavingsTarget(newSavingsTarget: jwtDecodedToken['user']['savings_target']);
-//       context
-//           .read<UserProvider>()
-//           .changeCreatedAt(newCreatedAt: jwtDecodedToken['user']['created_at']);
-
-    context
-        .read<UserProvider>()
-        .changeUserID(newUserID: jwtDecodedToken['user']['user_id']);
-    context
-        .read<UserProvider>()
-        .changeEmail(newEmail: jwtDecodedToken['user']['email']);
-    context
-        .read<UserProvider>()
-        .changeAvatarURL(newAvatarURL: jwtDecodedToken['user']['avatar_url']);
-    context
-        .read<UserProvider>()
-        .changeFName(newFName: jwtDecodedToken['user']['fname']);
-    context
-        .read<UserProvider>()
-        .changeIncome(newIncome: jwtDecodedToken['user']['income']);
-    context.read<UserProvider>().changeSavingsTarget(
-        newSavingsTarget: jwtDecodedToken['user']['savings_target']);
-    context
-        .read<UserProvider>()
-        .changeCreatedAt(newCreatedAt: jwtDecodedToken['user']['created_at']);
+    context.read<UserProvider>().loginUser(
+          loginUserID: jwtDecodedToken['user']['user_id'],
+          loginEmail: jwtDecodedToken['user']['email'],
+          loginAvatarURL: jwtDecodedToken['user']['avatar_url'],
+          loginFName: jwtDecodedToken['user']['fname'],
+          loginIncome: jwtDecodedToken['user']['income'],
+          loginSavingsTarget: jwtDecodedToken['user']['savings_target'],
+          loginCreatedAt: jwtDecodedToken['user']['created_at'],
+          firstLogin: widget.firstLogin,
+        );
   }
 
   var selectedIndex = 0;
@@ -95,15 +62,10 @@ class _DashboardState extends State<Dashboard> {
         page = HistoryScreen();
       case 5:
         page = UserScreen();
-      case 6:
-        page = AddTransactionScreen();
-
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
 
-    // The container for the current page, with its background color
-    // and subtle switching animation.
     var mainArea = ColoredBox(
       color: colorScheme.surfaceContainerHighest,
       child: AnimatedSwitcher(
@@ -116,8 +78,6 @@ class _DashboardState extends State<Dashboard> {
       body: LayoutBuilder(
         builder: (context, constraints) {
           if (constraints.maxWidth < 510) {
-            // Use a more mobile-friendly layout with BottomNavigationBar
-            // on narrow screens.
             return Column(
               children: [
                 Expanded(child: mainArea),
@@ -227,33 +187,19 @@ class HomePage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Expanded(
-            flex: 3,
-            child: HistoryListView(),
+          BigCard(
+              greeting: context.watch<UserProvider>().newUser
+                  ? 'Welcome'
+                  : 'Welcome back'),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (ctx) => LoginScreen()),
+                  (route) => false);
+              context.read<UserProvider>().logoutUser();
+            },
+            child: Text('Logout'),
           ),
-          SizedBox(height: 10),
-          BigCard(pair: pair),
-          SizedBox(height: 10),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  appState.toggleFavorite();
-                },
-                icon: Icon(icon),
-                label: Text('UserID: ${context.watch<UserProvider>().userID}'),
-              ),
-              SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: () {
-                  appState.getNext();
-                },
-                child: Text('Next'),
-              ),
-            ],
-          ),
-          Spacer(flex: 2),
         ],
       ),
     );
@@ -262,11 +208,11 @@ class HomePage extends StatelessWidget {
 
 class BigCard extends StatelessWidget {
   const BigCard({
+    required this.greeting,
     Key? key,
-    required this.pair,
   }) : super(key: key);
 
-  final WordPair pair;
+  final String greeting;
 
   @override
   Widget build(BuildContext context) {
@@ -279,87 +225,18 @@ class BigCard extends StatelessWidget {
       color: theme.colorScheme.primary,
       child: Padding(
         padding: const EdgeInsets.all(20),
-        child: AnimatedSize(
-          duration: Duration(milliseconds: 200),
-          // Make sure that the compound word wraps correctly when the window
-          // is too narrow.
-          child: MergeSemantics(
-            child: Wrap(
-              children: [
-                Text(
-                  pair.first,
-                  style: style.copyWith(fontWeight: FontWeight.w200),
-                ),
-                Text(
-                  pair.second,
-                  style: style.copyWith(fontWeight: FontWeight.bold),
-                )
-              ],
+        child: Column(
+          children: [
+            Text(
+              context.watch<UserProvider>().fName,
+              style: style.copyWith(fontWeight: FontWeight.bold),
             ),
-          ),
+            Text(
+              greeting,
+              style: style.copyWith(fontSize: 14),
+            ),
+          ],
         ),
-      ),
-    );
-  }
-}
-
-class HistoryListView extends StatefulWidget {
-  const HistoryListView({Key? key}) : super(key: key);
-
-  @override
-  State<HistoryListView> createState() => _HistoryListViewState();
-}
-
-class _HistoryListViewState extends State<HistoryListView> {
-  /// Needed so that [MyAppState] can tell [AnimatedList] below to animate
-  /// new items.
-  final _key = GlobalKey();
-
-  /// Used to "fade out" the history items at the top, to suggest continuation.
-  static const Gradient _maskingGradient = LinearGradient(
-    // This gradient goes from fully transparent to fully opaque black...
-    colors: [Colors.transparent, Colors.black],
-    // ... from the top (transparent) to half (0.5) of the way to the bottom.
-    stops: [0.0, 0.5],
-    begin: Alignment.topCenter,
-    end: Alignment.bottomCenter,
-  );
-
-  @override
-  Widget build(BuildContext context) {
-    final appState = context.watch<MyAppState>();
-    appState.historyListKey = _key;
-
-    return ShaderMask(
-      shaderCallback: (bounds) => _maskingGradient.createShader(bounds),
-      // This blend mode takes the opacity of the shader (i.e. our gradient)
-      // and applies it to the destination (i.e. our animated list).
-      blendMode: BlendMode.dstIn,
-      child: AnimatedList(
-        key: _key,
-        reverse: true,
-        padding: EdgeInsets.only(top: 100),
-        initialItemCount: appState.history.length,
-        itemBuilder: (context, index, animation) {
-          final pair = appState.history[index];
-          return SizeTransition(
-            sizeFactor: animation,
-            child: Center(
-              child: TextButton.icon(
-                onPressed: () {
-                  appState.toggleFavorite(pair);
-                },
-                icon: appState.favorites.contains(pair)
-                    ? Icon(Icons.favorite, size: 12)
-                    : SizedBox(),
-                label: Text(
-                  pair.asLowerCase,
-                  semanticsLabel: pair.asPascalCase,
-                ),
-              ),
-            ),
-          );
-        },
       ),
     );
   }

@@ -8,6 +8,7 @@ class UserProvider extends ChangeNotifier {
   int income = 0;
   int savingsTarget = 0;
   String createdAt = "";
+  bool newUser = false;
 
   UserProvider({
     this.userID = 0,
@@ -17,12 +18,38 @@ class UserProvider extends ChangeNotifier {
     this.income = 0,
     this.savingsTarget = 0,
     this.createdAt = "",
+    this.newUser = false,
   });
 
-  void changeUserID({
-    required int newUserID,
+  void logoutUser() async {
+    userID = 0;
+    email = "";
+    avatarURL = "";
+    fName = "";
+    income = 0;
+    savingsTarget = 0;
+    createdAt = "";
+    notifyListeners();
+  }
+
+  void loginUser({
+    required int loginUserID,
+    required String loginEmail,
+    required String loginAvatarURL,
+    required String loginFName,
+    required int loginIncome,
+    required int loginSavingsTarget,
+    required String loginCreatedAt,
+    required bool firstLogin,
   }) async {
-    userID = newUserID;
+    userID = loginUserID;
+    email = loginEmail;
+    avatarURL = loginAvatarURL;
+    fName = loginFName;
+    income = loginIncome;
+    savingsTarget = loginSavingsTarget;
+    createdAt = loginCreatedAt;
+    newUser = firstLogin;
     notifyListeners();
   }
 
@@ -58,13 +85,6 @@ class UserProvider extends ChangeNotifier {
     required int newSavingsTarget,
   }) async {
     savingsTarget = newSavingsTarget;
-    notifyListeners();
-  }
-
-  void changeCreatedAt({
-    required String newCreatedAt,
-  }) async {
-    createdAt = newCreatedAt;
     notifyListeners();
   }
 }
