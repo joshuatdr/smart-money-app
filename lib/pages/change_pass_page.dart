@@ -194,9 +194,8 @@ class _ChangePassState extends State<ChangePass> {
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold)),
                               onPressed: () {
-                                if (_formfield.currentState!.validate() &&
-                                    newPassController.text ==
-                                        confirmPassController.text) {
+                                if (_formfield.currentState!.validate()) {
+                                  if (newPassController.text == confirmPassController.text) {             
                                   final data = <String, dynamic>{};
                                   data['password'] = passController.text;
                                   data['email'] = email;
@@ -205,6 +204,16 @@ class _ChangePassState extends State<ChangePass> {
                                     jsonEncode(data),
                                     userID,
                                   );
+                                  } else {
+                                    StatusAlert.show(
+                                      context,
+                                      duration: Duration(seconds: 2),
+                                      title: 'Error',
+                                      subtitle: "Passwords Don't Match",
+                                      configuration:
+                                          IconConfiguration(icon: Icons.error),
+                                    );
+                                  }
                                 }
                               },
                               child: Text("Submit"))),
