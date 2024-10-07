@@ -31,6 +31,24 @@ bool passwordVisibleCurrent=false;
     prefs = await SharedPreferences.getInstance();
   }
 
+      String? validatePass(String? value) {
+      const patternPass =
+          r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
+      final regex = RegExp(patternPass);
+
+      if (value!.isEmpty) {
+        return 'A password must be at least 8 characters long.'
+            ' must contain an uppercase'
+            'lowercase letter'
+            'A number'
+            'A special character';
+      } else {
+        return value.isNotEmpty && !regex.hasMatch(value)
+            ? 'A password must be at least 8 characters long, must contain an uppercase, lowercase letter, a number and a special character'
+            : null;
+      }
+    }
+
   void showSuccessAlert(BuildContext context) {
     StatusAlert.show(
       context,
@@ -173,6 +191,7 @@ bool passwordVisibleCurrent=false;
                     const SizedBox(height: JSizes.spaceBtwItems),
 
                     TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                         controller: newPassController,
                         obscureText: passwordVisible,
                         decoration: InputDecoration(
@@ -199,6 +218,7 @@ bool passwordVisibleCurrent=false;
                     const SizedBox(height: JSizes.spaceBtwItems),
 
                     TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                         controller: confirmPassController,
                         obscureText: passwordVisible,
                         decoration: InputDecoration(

@@ -26,10 +26,12 @@ class _SignupScreenState extends State<SignupScreen> {
   var dark = false;
   late SharedPreferences prefs;
    bool passwordVisible=false; 
+   bool termsAccept=false;
   @override
   void initState() {
     super.initState();
     passwordVisible=true; 
+    isChecked = true;
     initSharedPref();
   }
 
@@ -246,7 +248,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         },
                       ),
                       FormField(
-                          autovalidateMode: AutovalidateMode.always,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           initialValue: false,
                           validator: (value) {
                             if (value != true) {
@@ -268,11 +270,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                       : null,
                                   value: state.value,
                                   onChanged: (val) {
-                                    if (val == true) {
-                                      isChecked = true;
-                                    } else {
-                                      isChecked = false;
-                                    }
+                                  isChecked == !isChecked;
                                     state.didChange(val);
                                   }),
                             );
