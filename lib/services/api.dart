@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:smart_money_app/model/goals.dart';
 import '../model/user.dart';
 import '../model/transactions.dart';
+import '../model/expenses.dart';
 
 // This class sends the get request from the endpoint
 
@@ -196,6 +197,29 @@ class UserServices {
       body: jsonEncode(data),
       headers: _setHeaders(),
     );
+  }
+
+  getAllUserExpenses(userID) async {
+    String baseUrl =
+        "https://smart-money-backend.onrender.com/api/user/$userID/expenses";
+    List<Expenses> allExpenses = [];
+    try {
+      var response = await http.get(Uri.parse(baseUrl));
+      if (response.statusCode == 200) {
+        var data = response.body;
+        var decodedData = jsonDecode(data);
+        var expenses = decodedData['expenses'];
+
+        for (var expense in expenses) {
+          Expenses newExpense = Expenses.fromJson(expense);
+          allExpenses.add(newExpense);
+        }
+        return allExpenses;
+      }
+    } catch (e) {
+      print(e);
+      throw Exception(e.toString()); // if error convert error to a string.
+    }
   }
 
   _setHeaders() => {
