@@ -21,36 +21,60 @@ Future promptTransaction(context, data, userId) async {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Center(child: const Text('Delete Transaction')),
+          scrollable: true,
+        title: Center(child: 
+        Text('Delete Transaction',
+          style: TextStyle(
+            color: Colors.lightBlue.shade600,
+           fontWeight: FontWeight.w800, 
+           fontSize: 20),),),
         content: SizedBox(
-          width: 100,
-          height: 200,
+          // width: 100,
+          // height: 200,
           child: Column(
             children: [
-              Text(data.name),
+            Text(
+        data.name,
+          style: TextStyle(
+           fontWeight: FontWeight.w400, fontSize: 16),),
+              // Text(TextStyle(data.name)),
               // Text(data.cost),
               // Text(data.created_at),
+              
+              Padding(
+  padding: const EdgeInsets.all(12.0),
+  child:          
+   const Text('Do you want to delete this transaction?'),
+),
 
-              const Text('Do you want to delete this transaction?'),
             ],
           ),
         ),
         actions: <Widget>[
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
           TextButton(
-            child: const Text('Cancel'),
+            
+            child: const Text('Cancel',textAlign: TextAlign.left,),
+
             onPressed: () {
               Navigator.of(context).pop(false); // closes prompt
             },
           ),
           TextButton(
-            child: const Text('Delete'),
+            child: const Text(
+        'Delete',
+          style: TextStyle(
+           color: Colors.red,),),
             onPressed: () async {
               await deleteTransaction(data.transactionId, userId)
                   .then((value) => {
                         if (context.mounted) {Navigator.of(context).pop()}
                       });
             },
-          ),
+        ),
+        ]),
+        
         ],
       );
     },

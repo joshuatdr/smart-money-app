@@ -59,7 +59,10 @@ class _UserScreenState extends State<UserScreen> {
                           },
                         ),
                         TextButton(
-                          child: const Text('Yes! Get rid of it!'),
+                          child: const Text(
+                          'Yes! Get rid of it!',
+                           style: TextStyle(
+                            color: Colors.red,),),
                           onPressed: () {
                             Navigator.of(context).pushAndRemoveUntil(
                                 MaterialPageRoute(
