@@ -61,6 +61,16 @@ class _ChangePassState extends State<ChangePass> {
     Navigator.pop(context);
   }
 
+  void showErrorAlert(BuildContext context, message) {
+    StatusAlert.show(
+      context,
+      duration: Duration(seconds: 2),
+      title: 'Error',
+      subtitle: message,
+      configuration: IconConfiguration(icon: Icons.error),
+    );
+  }
+
   Future<void> passwordChangeRequest(newPass, currPassCheck, userID) async {
     var response = await http.post(
         Uri.parse("https://smart-money-backend.onrender.com/api/login"),
@@ -85,19 +95,14 @@ class _ChangePassState extends State<ChangePass> {
         if (!mounted) return;
         showSuccessAlert(context);
       } else {
-        print('FAIL');
+        if (!mounted) return;
+        showErrorAlert(context, 'Something went wrong');
         // If the server did not return a 201 OK response,
         // then throw an exception.
       }
     } else {
       if (!mounted) return;
-      StatusAlert.show(
-        context,
-        duration: Duration(seconds: 2),
-        title: 'Error',
-        subtitle: 'Incorrect Password',
-        configuration: IconConfiguration(icon: Icons.error),
-      );
+      showErrorAlert(context, 'Incorrect Password');
     }
   }
 
@@ -294,14 +299,25 @@ class _ChangePassState extends State<ChangePass> {
                         Padding(
                           padding: const EdgeInsets.all(30),
                           child: TextButton(
-                              onPressed: () {
-                                Navigator.pop(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => UserScreen()),
-                                );
-                              },
-                              child: const Text("Back to Profile")),
+                            onPressed: () {
+                              Navigator.pop(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => UserScreen()),
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(30),
+                              child: FilledButton.icon(
+                                label: Text("Back to Profile"),
+                                icon: const Icon(Icons.arrow_back),
+                                iconAlignment: IconAlignment.start,
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),

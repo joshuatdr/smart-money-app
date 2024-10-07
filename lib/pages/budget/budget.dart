@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 //import 'package:smart_money_app/pages/dashboard.dart';
-import 'package:smart_money_app/pages/budget/edit_budget.dart';
 //import 'package:smart_money_app/pages/edit_profile.dart';
 import '../../../model/expenses.dart';
 import '../../../services/api.dart';
@@ -84,8 +83,6 @@ class _BudgetPageState extends State<BudgetPage> {
     if (response.statusCode == 204) {
       // If the server returns a 204 response, user is successfully deleted
     }
-
-    print('delete expense');
   }
 
   Future promptExpense(context, data, userId) async {
@@ -161,10 +158,7 @@ class _BudgetPageState extends State<BudgetPage> {
           heroTag: null,
           child: const Icon(Icons.add),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => EditBudgetPage()),
-            ).then(
+            Navigator.pushNamed(context, '/editbudget').then(
               (value) {
                 setState(() {});
               },

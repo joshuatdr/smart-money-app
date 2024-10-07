@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:smart_money_app/pages/profile/change_password.dart';
-import 'package:smart_money_app/pages/profile/edit_profile.dart';
 import 'package:smart_money_app/model/user.dart';
 import 'package:smart_money_app/services/api.dart';
 import 'package:smart_money_app/providers/user_provider.dart';
@@ -30,73 +28,87 @@ class _UserScreenState extends State<UserScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-                    title: Center(child:
-                    Text('Account deletion',
-                    style: TextStyle(
-                    color: Colors.lightBlue.shade600,
-                    fontWeight: FontWeight.w800, 
-                  fontSize: 20),)),
-          content:  Text('Please confirm if you would like to delete your account.'),
+            title: Center(
+                child: Text(
+              'Account deletion',
+              style: TextStyle(
+                  color: Colors.lightBlue.shade600,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 20),
+            )),
+            content: Text(
+                'Please confirm if you would like to delete your account.'),
             actions: <Widget>[
-                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-            TextButton(
-              child: Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop(); // closes prompt
-              },
-            ),
-            TextButton(
-              child: Text('Next'),
-              onPressed: () {
-                Navigator.of(context).pop(); // closes prompt
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    final userID = context.watch<UserProvider>().userID;
-                    return AlertDialog(
-                    title: Center(child:
-                    Text('Account deletion',
-                    style: TextStyle(
-                    color: Colors.lightBlue.shade600,
-                    fontWeight: FontWeight.w800, 
-                  fontSize: 20),)),
-                      content: Text('Remember this is an irreversible action'),
-                  
-                      actions: <Widget>[
-                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TextButton(
-                            child: Text('Cancel'),
-                            onPressed: () {
-                              Navigator.of(context).pop(); // closes prompt
-                            },
-                          ),
-                        TextButton(
-                          child: Text(
-                          'Yes! Delete it!',
-                           style: TextStyle(
-                            color: Colors.red,),),
-                          onPressed: () {
-                            deleteUser(userID);
-                            context
-                                .read<UserProvider>()
-                                .logoutUser(); 
-                            Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(
-                                    builder: (ctx) => LoginScreen()),
-                                (route) => false); // route to login page, prevent browser back button
-                          },
-                        )]
-                      ),
-          ],
-                        );
-                  },
-                );
-              },
-            ),
-          ],
-            )]);
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    child: Text('Cancel'),
+                    onPressed: () {
+                      Navigator.of(context).pop(); // closes prompt
+                    },
+                  ),
+                  TextButton(
+                    child: Text('Next'),
+                    onPressed: () {
+                      Navigator.of(context).pop(); // closes prompt
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          final userID = context.watch<UserProvider>().userID;
+                          return AlertDialog(
+                            title: Center(
+                                child: Text(
+                              'Account deletion',
+                              style: TextStyle(
+                                  color: Colors.lightBlue.shade600,
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 20),
+                            )),
+                            content:
+                                Text('Remember this is an irreversible action'),
+                            actions: <Widget>[
+                              Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    TextButton(
+                                      child: Text('Cancel'),
+                                      onPressed: () {
+                                        Navigator.of(context)
+                                            .pop(); // closes prompt
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: Text(
+                                        'Yes! Delete it!',
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        deleteUser(userID);
+                                        context
+                                            .read<UserProvider>()
+                                            .logoutUser();
+                                        Navigator.of(context).pushAndRemoveUntil(
+                                            MaterialPageRoute(
+                                                builder: (ctx) =>
+                                                    LoginScreen()),
+                                            (route) =>
+                                                false); // route to login page, prevent browser back button
+                                      },
+                                    )
+                                  ]),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ],
+              )
+            ]);
       },
     );
   }
@@ -224,11 +236,8 @@ class _UserScreenState extends State<UserScreen> {
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold)),
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => EditProfile()),
-                              ).then((value) {
+                              Navigator.pushNamed(context, '/editprofile')
+                                  .then((value) {
                                 setState(() {});
                               });
                             },
@@ -246,11 +255,8 @@ class _UserScreenState extends State<UserScreen> {
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold)),
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ChangePass()),
-                              ).then((value) {
+                              Navigator.pushNamed(context, '/changepass')
+                                  .then((value) {
                                 setState(() {});
                               });
                             },

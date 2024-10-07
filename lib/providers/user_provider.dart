@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProvider extends ChangeNotifier {
   int userID;
@@ -29,6 +30,8 @@ class UserProvider extends ChangeNotifier {
     income = 0;
     savingsTarget = 0;
     createdAt = "";
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('token');
     notifyListeners();
   }
 

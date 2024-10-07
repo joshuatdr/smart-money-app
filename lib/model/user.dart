@@ -1,5 +1,4 @@
 class User {
-  // Create a class Employee
   int? id; // Declare instance variables (https://dart.dev/language/classes)
   String? email; // No default values declared so will be null.
   String? password;
@@ -27,7 +26,8 @@ class User {
 
   User.fromJson(Map<String, dynamic> json) {
     // Is used to create a Dart object from a JSON data structure using map,
-    id = json['user_id']; // maps a String key with the dynamic value. Since the key is always a String and the value can be of any type,
+    id = json[
+        'user_id']; // maps a String key with the dynamic value. Since the key is always a String and the value can be of any type,
     email = json[
         'email']; // it is kept as dynamic to be on the safer side. It is very useful in reading a JSON object as the JSON object
     password = json[

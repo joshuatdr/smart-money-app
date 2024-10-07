@@ -122,6 +122,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: AppBar(
+            automaticallyImplyLeading: false,
             centerTitle: true,
             backgroundColor: Colors.lightBlue.shade900,
             title:
@@ -272,28 +273,16 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                                 },
                                 child: Text('Add Transaction'))),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          /*   Text('\u2022 A password must be at least 8 characters long.'),
-                          Text('\u2022 A password must contain at least a number.'),
-                          Text('\u2022 A password must contain an uppercase letter'),
-                          Text('\u2022 A password must contain a lowercase letter'),
-                          Text('\u2022 A password must contain a special character.'),*/
-                          // Padding(
-                          //   padding: const EdgeInsets.all(60),
-                          //   child:
-                          //   TextButton(
-                          //       onPressed: () {
-                          //         Navigator.pop(
-                          //           context,
-                          //           MaterialPageRoute(
-                          //               builder: (context) => LoginScreen()),
-                          //         );
-                          //       },
-                          //       child: const Text("Already have an account?")),
-                          // ),
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.all(30),
+                        child: FilledButton.icon(
+                          label: Text("Back"),
+                          icon: const Icon(Icons.arrow_back),
+                          iconAlignment: IconAlignment.start,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
                       ),
                     ],
                   ),

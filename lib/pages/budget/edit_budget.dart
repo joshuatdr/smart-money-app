@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:smart_money_app/pages/profile/profile.dart';
 import '../../common/styles/spacing_styles.dart';
 import '../../common/image_strings.dart';
 import '../../common/sizes.dart';
@@ -34,7 +33,6 @@ class _EditBudgetPageState extends State<EditBudgetPage> {
       }),
     );
     if (response.statusCode == 201) {
-      print(userId.runtimeType);
       // If the server returns a 200 OK response, then the user was successfully updated.
       if (!mounted) return;
       showDialog(
@@ -55,7 +53,6 @@ class _EditBudgetPageState extends State<EditBudgetPage> {
         },
       );
     } else {
-      print(userId.runtimeType);
       // If the server did not return a 201 OK response,
       // then throw an exception.
       throw Exception("Failed to update user");
@@ -151,15 +148,11 @@ class _EditBudgetPageState extends State<EditBudgetPage> {
                           Padding(
                             padding: const EdgeInsets.all(30),
                             child: FilledButton.icon(
-                              label: Text("Back to Profile"),
+                              label: Text("Back"),
                               icon: const Icon(Icons.arrow_back),
                               iconAlignment: IconAlignment.start,
                               onPressed: () {
-                                Navigator.pop(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => UserScreen()),
-                                );
+                                Navigator.pop(context);
                               },
                             ),
                           ),

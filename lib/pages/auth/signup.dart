@@ -301,9 +301,6 @@ class _SignupScreenState extends State<SignupScreen> {
                                         isChecked) {
                                       registerUser();
                                     }
-                                    isChecked == false
-                                        ? print("please accept")
-                                        : isChecked == false;
                                   } else {
                                     StatusAlert.show(
                                       context,
