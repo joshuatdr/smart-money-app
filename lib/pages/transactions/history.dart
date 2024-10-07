@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:smart_money_app/pages/transactions/add_transaction.dart';
+import 'package:smart_money_app/pages/transactions/spending.dart';
 import '../../model/transactions.dart';
 import '../../services/api.dart';
 import 'package:provider/provider.dart';
 import '../../providers/user_provider.dart';
+import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:http/http.dart' as http;
 
 Future<void> deleteTransaction(int transactionId, int userId) async {
@@ -89,6 +91,7 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
+  final _key = GlobalKey<ExpandableFabState>();
   @override
   Widget build(BuildContext context) {
     AsyncSnapshot.waiting();
@@ -152,21 +155,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
         //       }),
         // ],
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.lightBlue.shade600,
-        heroTag: null,
-        child: const Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddTransactionScreen()),
-          ).then(
-            (value) {
-              setState(() {});
-            },
-          );
-        },
-      ),
+      floatingActionButtonLocation: ExpandableFab.location,
+      floatingActionButton: _renderFloatingActionButton(context),
       body: FutureBuilder(
         future: UserServices().getAllUserTransactions(userId),
         builder: (context, snapshot) {
@@ -259,4 +249,103 @@ class _HistoryScreenState extends State<HistoryScreen> {
       ),
     );
   }
-}
+
+  ExpandableFab _renderFloatingActionButton(BuildContext context) {
+    return ExpandableFab(
+  key: _key,
+  type: ExpandableFabType.up,
+  childrenAnimation: ExpandableFabAnimation.none,
+  distance: 70,
+  childrenOffset: Offset(8, 16),
+      openButtonBuilder: DefaultFloatingActionButtonBuilder(
+        backgroundColor: Colors.blue.shade600,
+        child: const Icon(Icons.menu, color: Colors.white),
+      ),
+      closeButtonBuilder: DefaultFloatingActionButtonBuilder(
+        backgroundColor: Colors.blue.shade800,
+        child: const Icon(Icons.close, color: Colors.white),
+      ),
+  overlayStyle: ExpandableFabOverlayStyle(
+    color: Colors.white.withOpacity(0.6),
+  ),
+  children: [
+    Row(
+      children: [
+        Text('Add Purchase'),
+        SizedBox(width: 20),
+        FloatingActionButton.small(
+              backgroundColor: Colors.blue.shade600,
+          heroTag: null,
+          onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AddTransactionScreen()),
+                ).then(
+                  (value) {
+                    setState(() {});
+                  },
+                );
+                final state = _key.currentState;
+                if (state != null) {
+                  state.toggle();
+                }
+              },
+          child: Icon(Icons.add, color: Colors.white),
+        ),
+      ],
+    ),
+    Row(
+      children: [
+        Text('View Data'),
+        SizedBox(width: 20),
+        FloatingActionButton.small(
+              backgroundColor: Colors.blue.shade600,
+          heroTag: null,
+          onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SpendingPage()),
+                ).then(
+                  (value) {
+                    setState(() {});
+                  },
+                );
+                final state = _key.currentState;
+                if (state != null) {
+                  state.toggle();
+                }
+              },
+          child: Icon(Icons.insights, color: Colors.white),
+        ),
+      ],
+    ),
+        Row(
+          children: [
+            Text('Search'),
+            SizedBox(width: 20),
+            FloatingActionButton.small(
+
+              backgroundColor: Colors.blue.shade600,
+              heroTag: null,
+              onPressed: null,
+              child: Icon(Icons.search, color: Colors.white),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Text('Sort'),
+            SizedBox(width: 20),
+            FloatingActionButton.small(
+              backgroundColor: Colors.blue.shade600,
+              heroTag: null,
+              onPressed: null,
+              child: Icon(Icons.sort, color: Colors.white),
+            ),
+          ],
+        ),
+  ],
+);
+}}
