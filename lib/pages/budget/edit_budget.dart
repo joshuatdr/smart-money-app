@@ -34,7 +34,6 @@ class _EditBudgetPageState extends State<EditBudgetPage> {
       }),
     );
     if (response.statusCode == 201) {
-      print(userId.runtimeType);
       // If the server returns a 200 OK response, then the user was successfully updated.
       if (!mounted) return;
       showDialog(
@@ -55,7 +54,6 @@ class _EditBudgetPageState extends State<EditBudgetPage> {
         },
       );
     } else {
-      print(userId.runtimeType);
       // If the server did not return a 201 OK response,
       // then throw an exception.
       throw Exception("Failed to update user");

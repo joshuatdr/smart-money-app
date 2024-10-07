@@ -32,7 +32,6 @@ class UserProvider extends ChangeNotifier {
     createdAt = "";
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('token');
-    print(prefs);
     notifyListeners();
   }
 

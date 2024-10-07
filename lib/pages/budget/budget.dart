@@ -84,8 +84,6 @@ class _BudgetPageState extends State<BudgetPage> {
     if (response.statusCode == 204) {
       // If the server returns a 204 response, user is successfully deleted
     }
-
-    print('delete expense');
   }
 
   Future promptExpense(context, data, userId) async {

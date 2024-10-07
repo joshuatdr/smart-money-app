@@ -14,8 +14,6 @@ Future<void> deleteTransaction(int transactionId, int userId) async {
   if (response.statusCode == 204) {
     // If the server returns a 204 response, user is successfully deleted
   }
-
-  print('deleteTransaction');
 }
 
 Future promptTransaction(context, data, userId) async {
@@ -23,60 +21,62 @@ Future promptTransaction(context, data, userId) async {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-          scrollable: true,
-        title: Center(child: 
-        Text('Delete Transaction',
-          style: TextStyle(
-            color: Colors.lightBlue.shade600,
-           fontWeight: FontWeight.w800, 
-           fontSize: 20),),),
+        scrollable: true,
+        title: Center(
+          child: Text(
+            'Delete Transaction',
+            style: TextStyle(
+                color: Colors.lightBlue.shade600,
+                fontWeight: FontWeight.w800,
+                fontSize: 20),
+          ),
+        ),
         content: SizedBox(
           // width: 100,
           // height: 200,
           child: Column(
             children: [
-            Text(
-        data.name,
-          style: TextStyle(
-           fontWeight: FontWeight.w400, fontSize: 16),),
+              Text(
+                data.name,
+                style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+              ),
               // Text(TextStyle(data.name)),
               // Text(data.cost),
               // Text(data.created_at),
-              
-              Padding(
-  padding: const EdgeInsets.all(12.0),
-  child:          
-   const Text('Do you want to delete this transaction?'),
-),
 
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: const Text('Do you want to delete this transaction?'),
+              ),
             ],
           ),
         ),
         actions: <Widget>[
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-          TextButton(
-            
-            child: const Text('Cancel',textAlign: TextAlign.left,),
-
-            onPressed: () {
-              Navigator.of(context).pop(false); // closes prompt
-            },
-          ),
-          TextButton(
-            child: const Text(
-        'Delete',
-          style: TextStyle(
-           color: Colors.red,),),
-            onPressed: () async {
-              await deleteTransaction(data.transactionId, userId)
-                  .then((value) => {
-                        if (context.mounted) {Navigator.of(context).pop()}
-                      });
-            },
-        ),
-        ]),
-        
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            TextButton(
+              child: const Text(
+                'Cancel',
+                textAlign: TextAlign.left,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(false); // closes prompt
+              },
+            ),
+            TextButton(
+              child: const Text(
+                'Delete',
+                style: TextStyle(
+                  color: Colors.red,
+                ),
+              ),
+              onPressed: () async {
+                await deleteTransaction(data.transactionId, userId)
+                    .then((value) => {
+                          if (context.mounted) {Navigator.of(context).pop()}
+                        });
+              },
+            ),
+          ]),
         ],
       );
     },
@@ -252,11 +252,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   ExpandableFab _renderFloatingActionButton(BuildContext context) {
     return ExpandableFab(
-  key: _key,
-  type: ExpandableFabType.up,
-  childrenAnimation: ExpandableFabAnimation.none,
-  distance: 70,
-  childrenOffset: Offset(8, 16),
+      key: _key,
+      type: ExpandableFabType.up,
+      childrenAnimation: ExpandableFabAnimation.none,
+      distance: 70,
+      childrenOffset: Offset(8, 16),
       openButtonBuilder: DefaultFloatingActionButtonBuilder(
         backgroundColor: Colors.blue.shade600,
         child: const Icon(Icons.menu, color: Colors.white),
@@ -265,18 +265,18 @@ class _HistoryScreenState extends State<HistoryScreen> {
         backgroundColor: Colors.blue.shade800,
         child: const Icon(Icons.close, color: Colors.white),
       ),
-  overlayStyle: ExpandableFabOverlayStyle(
-    color: Colors.white.withOpacity(0.6),
-  ),
-  children: [
-    Row(
+      overlayStyle: ExpandableFabOverlayStyle(
+        color: Colors.white.withOpacity(0.6),
+      ),
       children: [
-        Text('Add Purchase'),
-        SizedBox(width: 20),
-        FloatingActionButton.small(
+        Row(
+          children: [
+            Text('Add Purchase'),
+            SizedBox(width: 20),
+            FloatingActionButton.small(
               backgroundColor: Colors.blue.shade600,
-          heroTag: null,
-          onPressed: () {
+              heroTag: null,
+              onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -291,22 +291,21 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   state.toggle();
                 }
               },
-          child: Icon(Icons.add, color: Colors.white),
+              child: Icon(Icons.add, color: Colors.white),
+            ),
+          ],
         ),
-      ],
-    ),
-    Row(
-      children: [
-        Text('View Data'),
-        SizedBox(width: 20),
-        FloatingActionButton.small(
+        Row(
+          children: [
+            Text('View Data'),
+            SizedBox(width: 20),
+            FloatingActionButton.small(
               backgroundColor: Colors.blue.shade600,
-          heroTag: null,
-          onPressed: () {
+              heroTag: null,
+              onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => SpendingPage()),
+                  MaterialPageRoute(builder: (context) => SpendingPage()),
                 ).then(
                   (value) {
                     setState(() {});
@@ -317,16 +316,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   state.toggle();
                 }
               },
-          child: Icon(Icons.insights, color: Colors.white),
+              child: Icon(Icons.insights, color: Colors.white),
+            ),
+          ],
         ),
-      ],
-    ),
         Row(
           children: [
             Text('Search'),
             SizedBox(width: 20),
             FloatingActionButton.small(
-
               backgroundColor: Colors.blue.shade600,
               heroTag: null,
               onPressed: null,
@@ -346,6 +344,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ),
           ],
         ),
-  ],
-);
-}}
+      ],
+    );
+  }
+}
