@@ -246,10 +246,11 @@ class _BudgetPageState extends State<BudgetPage> {
                   Card(
                     child: Padding(
                       padding: const EdgeInsets.only(top: 10, bottom: 1),
-                      child: Column(
+                      child: Row(
                         children: <Widget>[
                           SizedBox(
-                            height: 169,
+                            height: 200,
+                            width: 250,
                             child: PieChart(
                               PieChartData(
                                 pieTouchData: PieTouchData(
