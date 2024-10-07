@@ -17,10 +17,10 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final token;
+  final String token;
 
   const MyApp({
-    @required this.token,
+    required this.token,
     Key? key,
   }) : super(key: key);
 

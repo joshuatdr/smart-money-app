@@ -82,6 +82,7 @@ class _ChangePassState extends State<ChangePass> {
         body: jsonEncode(patchBody),
       );
       if (passChangeResponse.statusCode == 201) {
+        if (!mounted) return;
         showSuccessAlert(context);
       } else {
         print('FAIL');
@@ -89,6 +90,7 @@ class _ChangePassState extends State<ChangePass> {
         // then throw an exception.
       }
     } else {
+      if (!mounted) return;
       StatusAlert.show(
         context,
         duration: Duration(seconds: 2),
@@ -129,6 +131,7 @@ class _ChangePassState extends State<ChangePass> {
       } else if (value.isEmpty) {
         return 'Please enter a password';
       }
+      return null;
     }
 
     return Scaffold(

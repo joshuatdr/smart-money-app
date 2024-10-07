@@ -11,9 +11,9 @@ import 'package:smart_money_app/providers/user_provider.dart';
 import 'package:smart_money_app/pages/profile/profile.dart';
 
 class Dashboard extends StatefulWidget {
-  final token;
+  final String token;
   final bool firstLogin;
-  const Dashboard({@required this.token, required this.firstLogin, super.key});
+  const Dashboard({required this.token, required this.firstLogin, super.key});
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -30,6 +30,7 @@ class _DashboardState extends State<Dashboard> {
   void parseToken() async {
     Map<String, dynamic> jwtDecodedToken =
         await JwtDecoder.decode(widget.token);
+    if (!mounted) return;
     context.read<UserProvider>().loginUser(
           loginUserID: jwtDecodedToken['user']['user_id'],
           loginEmail: jwtDecodedToken['user']['email'],
@@ -184,7 +185,6 @@ class HomePage extends StatelessWidget {
       "You're back!\n Ready to watch your savings grow?",
       "Hello again!\n Let’s take another step toward your savings target.",
     ];
-    final _random = Random();
 
     return Center(
       child: Column(
@@ -193,7 +193,7 @@ class HomePage extends StatelessWidget {
           BigCard(
               greeting: context.watch<UserProvider>().newUser
                   ? 'Welcome'
-                  : greetings[_random.nextInt(greetings.length)]),
+                  : greetings[Random().nextInt(greetings.length)]),
           ElevatedButton(
             onPressed: () {
               Navigator.of(context).pushAndRemoveUntil(

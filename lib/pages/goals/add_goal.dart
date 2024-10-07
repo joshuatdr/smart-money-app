@@ -64,8 +64,11 @@ class _AddGoalPageState extends State<AddGoalPage> {
       costController.clear();
       imgurlController.clear();
       descController.clear();
+
+      if (!mounted) return;
       showSuccessAlert(context);
     } else {
+      if (!mounted) return;
       showErrorAlert(context);
     }
   }

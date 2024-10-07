@@ -136,17 +136,7 @@ class _GoalsPageState extends State<GoalsPage> {
     return Container(
         width: 400,
         height: 400,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-            Colors.lightBlue.shade700,
-            Colors.lightBlue.shade400,
-          ]),
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: NetworkImage(results[index].imgURL ??= ""),
-          ),
-          borderRadius: BorderRadius.circular(20),
-        ),
+        decoration: _goalCardBody(results, index),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -184,5 +174,27 @@ class _GoalsPageState extends State<GoalsPage> {
             ],
           ),
         ));
+  }
+
+  BoxDecoration _goalCardBody(List<Goals> results, int index) {
+    return results[index].imgURL != ""
+        ? BoxDecoration(
+            gradient: LinearGradient(colors: [
+              Colors.lightBlue.shade700,
+              Colors.lightBlue.shade400,
+            ]),
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: NetworkImage(results[index].imgURL ??= ""),
+            ),
+            borderRadius: BorderRadius.circular(20),
+          )
+        : BoxDecoration(
+            gradient: LinearGradient(colors: [
+              Colors.lightBlue.shade700,
+              Colors.lightBlue.shade400,
+            ]),
+            borderRadius: BorderRadius.circular(20),
+          );
   }
 }
