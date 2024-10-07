@@ -78,14 +78,14 @@ class _UserScreenState extends State<UserScreen> {
                            style: TextStyle(
                             color: Colors.red,),),
                           onPressed: () {
+                            deleteUser(context.watch<UserProvider>().userID);
+                            context
+                                .read<UserProvider>()
+                                .logoutUser(); // closes prompt
                             Navigator.of(context).pushAndRemoveUntil(
                                 MaterialPageRoute(
                                     builder: (ctx) => LoginScreen()),
                                 (route) => false);
-                            context
-                                .read<UserProvider>()
-                                .logoutUser(); // closes prompt
-                            deleteUser(userId);
                           },
                         )]
                       ),
