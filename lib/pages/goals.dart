@@ -138,8 +138,8 @@ class _GoalsPageState extends State<GoalsPage> {
         height: 400,
         decoration: BoxDecoration(
           gradient: LinearGradient(colors: [
-            Colors.purple.shade900,
-            Colors.purple.shade300,
+            Colors.lightBlue.shade700,
+            Colors.lightBlue.shade400,
           ]),
           image: DecorationImage(
             fit: BoxFit.cover,
@@ -157,8 +157,8 @@ class _GoalsPageState extends State<GoalsPage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       gradient: LinearGradient(colors: [
-                      const Color.fromARGB(255, 2, 61, 189),
-                       Colors.blue.shade800,
+                      const Color.fromARGB(160, 18, 18, 18),
+                       Color.fromARGB(160, 54, 53, 53),
                       ]),
                     ),
                     child: Text(results[index].name ??= "",
@@ -171,8 +171,8 @@ class _GoalsPageState extends State<GoalsPage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       gradient: LinearGradient(colors: [
-                      const Color.fromARGB(255, 2, 61, 189),
-                       Colors.blue.shade800,
+                      const Color.fromARGB(160, 18, 18, 18),
+                       Color.fromARGB(160, 54, 53, 53),
                       ]),
                     ),
                     child: Text('£${(results[index].cost ??= 0).toString()}',
