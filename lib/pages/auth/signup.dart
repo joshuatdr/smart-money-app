@@ -49,7 +49,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   void registerUser() async {
     var reqBody = {
-      "email": emailController.text,
+      "email": emailController.text.toLowerCase(),
       "password": passController.text,
       "fname": nickNameController.text,
     };
@@ -74,7 +74,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   void loginAfterSignup() async {
     var loginBody = {
-      "email": emailController.text,
+      "email": emailController.text.toLowerCase(),
       "password": passController.text,
     };
 
@@ -295,13 +295,25 @@ class _SignupScreenState extends State<SignupScreen> {
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
                                 onPressed: () {
-                                  if (_formfield.currentState!.validate() &&
-                                      isChecked) {
-                                    registerUser();
+                                  if (passController.text ==
+                                      confirmPassController.text) {
+                                    if (_formfield.currentState!.validate() &&
+                                        isChecked) {
+                                      registerUser();
+                                    }
+                                    isChecked == false
+                                        ? print("please accept")
+                                        : isChecked == false;
+                                  } else {
+                                    StatusAlert.show(
+                                      context,
+                                      duration: Duration(seconds: 2),
+                                      title: 'Error',
+                                      subtitle: 'Passwords must match!',
+                                      configuration:
+                                          IconConfiguration(icon: Icons.error),
+                                    );
                                   }
-                                  isChecked == false
-                                      ? print("please accept")
-                                      : isChecked == false;
                                 },
                                 child: Text(
                                   TTexts.signUp,
