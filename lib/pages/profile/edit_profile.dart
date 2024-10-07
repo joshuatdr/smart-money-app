@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:smart_money_app/pages/profile/profile.dart';
 import '../../common/styles/spacing_styles.dart';
 import '../../common/image_strings.dart';
 import '../../common/sizes.dart';
@@ -39,6 +38,7 @@ class _EditProfileState extends State<EditProfile> {
       body: patchBody,
     );
     if (response.statusCode == 201) {
+      if (!mounted) return;
       showSuccessAlert(context);
     } else {
       print('FAIL');

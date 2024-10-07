@@ -47,6 +47,8 @@ class _LoginScreenState extends State<LoginScreen> {
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(reqBody));
 
+    if (!mounted) return;
+
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
       var myToken = jsonResponse['token'];

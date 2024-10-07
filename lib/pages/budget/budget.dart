@@ -155,163 +155,156 @@ class _BudgetPageState extends State<BudgetPage> {
               child: Text("Budget", style: TextStyle(color: Colors.white))),
         ),
         body: SingleChildScrollView(
-          child: Column(children: <Widget>[
-            Container(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Card(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 10, bottom: 1),
+          child: Column(children: [
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Card(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 10, bottom: 1),
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(
+                            height: 169,
+                            child: PieChart(
+                              PieChartData(
+                                pieTouchData: PieTouchData(
+                                  touchCallback: (FlTouchEvent event,
+                                      PieTouchResponse? pieTouchResponse) {
+                                    setState(() {
+                                      if (pieTouchResponse != null &&
+                                          (event is FlLongPressEnd ||
+                                              event is FlPanEndEvent)) {
+                                        touchedIndex = -1;
+                                      } else {
+                                        touchedIndex = pieTouchResponse
+                                                ?.touchedSection
+                                                ?.touchedSectionIndex ??
+                                            -1;
+                                      }
+                                    });
+                                  },
+                                ),
+                                borderData: FlBorderData(show: false),
+                                sectionsSpace: 0,
+                                centerSpaceRadius: 40,
+                                sections: getSections(touchedIndex),
+                              ),
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(16),
+                                child: IndicatorsWidget(),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Card(
+                      child: _SampleCard(
+                    cardName:
+                        'Your weekly savings are £... after unavoidable spending',
+                  )),
+                  Card(
+                      child: _SampleCard(
+                          cardName:
+                              'It will take {amount of time} to reach your savings target!')),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EditBudgetPage()),
+                        );
+                      },
+                      child: Text("Edit Budget")),
+                ],
+              ),
+            ),
+            FutureBuilder(
+                future: UserServices().getAllUserExpenses(userId),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    var results = snapshot.data as List<Expenses>;
+                    if (results.isNotEmpty) {
+                      return Center(
                         child: Column(
-                          children: <Widget>[
-                            SizedBox(
-                              height: 169,
-                              child: Expanded(
-                                child: PieChart(
-                                  PieChartData(
-                                    pieTouchData: PieTouchData(
-                                      touchCallback: (FlTouchEvent event,
-                                          PieTouchResponse? pieTouchResponse) {
-                                        setState(() {
-                                          if (pieTouchResponse != null &&
-                                              (event is FlLongPressEnd ||
-                                                  event is FlPanEndEvent)) {
-                                            touchedIndex = -1;
-                                          } else {
-                                            touchedIndex = pieTouchResponse
-                                                    ?.touchedSection
-                                                    ?.touchedSectionIndex ??
-                                                -1;
-                                          }
-                                        });
-                                      },
-                                    ),
-                                    borderData: FlBorderData(show: false),
-                                    sectionsSpace: 0,
-                                    centerSpaceRadius: 40,
-                                    sections: getSections(touchedIndex),
+                          children: [
+                            SingleChildScrollView(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Colors.lightBlue.shade500),
+                                ),
+                                child: DataTable(
+                                  dataRowMaxHeight:
+                                      double.infinity, // Code to be changed.
+                                  dataRowMinHeight:
+                                      80, // Set the min required height.
+                                  dividerThickness: 1,
+                                  headingRowColor: WidgetStateColor.resolveWith(
+                                    (states) => Colors.lightBlue.shade800,
                                   ),
+                                  columnSpacing: 30,
+                                  columns: [
+                                    DataColumn(
+                                        label: Text(
+                                      'Name',
+                                      style: TextStyle(color: Colors.white),
+                                    )),
+                                    DataColumn(
+                                        label: Text(
+                                      'Cost',
+                                      style: TextStyle(color: Colors.white),
+                                    )),
+                                    DataColumn(
+                                        label: Text(
+                                      'Edit',
+                                      style: TextStyle(color: Colors.white),
+                                    )),
+                                    DataColumn(
+                                        label: Text(
+                                      'Delete',
+                                      style: TextStyle(color: Colors.white),
+                                    )),
+                                  ],
+                                  rows: List.generate(
+                                    results.length,
+                                    (index) => getDataRow(
+                                      index,
+                                      results[index],
+                                    ),
+                                  ),
+                                  showBottomBorder: true,
                                 ),
                               ),
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(16),
-                                  child: IndicatorsWidget(),
-                                )
-                              ],
-                            )
                           ],
                         ),
-                      ),
-                    ),
-                    Card(
-                        child: _SampleCard(
-                      cardName:
-                          'Your weekly savings are £... after unavoidable spending',
-                    )),
-                    Card(
-                        child: _SampleCard(
-                            cardName:
-                                'It will take {amount of time} to reach your savings target!')),
-                    ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => EditBudgetPage()),
-                          );
-                        },
-                        child: Text("Edit Budget")),
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              child: FutureBuilder(
-                  future: UserServices().getAllUserExpenses(userId),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      var results = snapshot.data as List<Expenses>;
-                      if (results.isNotEmpty) {
-                        return Center(
-                          child: Column(
-                            children: [
-                              SingleChildScrollView(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Colors.lightBlue.shade500),
-                                  ),
-                                  child: DataTable(
-                                    dataRowMaxHeight:
-                                        double.infinity, // Code to be changed.
-                                    dataRowMinHeight:
-                                        80, // Set the min required height.
-                                    dividerThickness: 1,
-                                    headingRowColor:
-                                        WidgetStateColor.resolveWith(
-                                      (states) => Colors.lightBlue.shade800,
-                                    ),
-                                    columnSpacing: 30,
-                                    columns: [
-                                      DataColumn(
-                                          label: Text(
-                                        'Name',
-                                        style: TextStyle(color: Colors.white),
-                                      )),
-                                      DataColumn(
-                                          label: Text(
-                                        'Cost',
-                                        style: TextStyle(color: Colors.white),
-                                      )),
-                                      DataColumn(
-                                          label: Text(
-                                        'Edit',
-                                        style: TextStyle(color: Colors.white),
-                                      )),
-                                      DataColumn(
-                                          label: Text(
-                                        'Delete',
-                                        style: TextStyle(color: Colors.white),
-                                      )),
-                                    ],
-                                    rows: List.generate(
-                                      results.length,
-                                      (index) => getDataRow(
-                                        index,
-                                        results[index],
-                                      ),
-                                    ),
-                                    showBottomBorder: true,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      } else {
-                        return Center(
-                          child: Text("No expenses yet!"),
-                        );
-                      }
+                      );
                     } else {
                       return Center(
-                        child: SizedBox(
-                          // ignore: sort_child_properties_last
-                          child: CircularProgressIndicator(),
-                          width: 30,
-                          height: 30,
-                        ),
+                        child: Text("No expenses yet!"),
                       );
                     }
-                  }),
-            )
+                  } else {
+                    return Center(
+                      child: SizedBox(
+                        // ignore: sort_child_properties_last
+                        child: CircularProgressIndicator(),
+                        width: 30,
+                        height: 30,
+                      ),
+                    );
+                  }
+                }),
           ]),
         ));
   }
