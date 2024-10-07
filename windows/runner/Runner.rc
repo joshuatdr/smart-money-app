@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "namer_app" "\0"
+            VALUE "FileDescription", "smart_money" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "namer_app" "\0"
+            VALUE "InternalName", "smart_money" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "namer_app.exe" "\0"
-            VALUE "ProductName", "namer_app" "\0"
+            VALUE "OriginalFilename", "smart_money.exe" "\0"
+            VALUE "ProductName", "smart_money" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
