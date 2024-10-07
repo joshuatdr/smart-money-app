@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'dart:math';
-import 'package:smart_money_app/pages/Spending.dart';
-import 'package:smart_money_app/pages/history.dart';
-import 'package:smart_money_app/pages/Budget.dart';
-import 'package:smart_money_app/pages/goals.dart';
-import 'package:smart_money_app/pages/login.dart';
+import 'package:smart_money_app/pages/transactions/spending.dart';
+import 'package:smart_money_app/pages/transactions/history.dart';
+import 'package:smart_money_app/pages/budget/budget.dart';
+import 'package:smart_money_app/pages/goals/goals.dart';
+import 'package:smart_money_app/pages/auth/login.dart';
 import 'package:smart_money_app/providers/user_provider.dart';
-import 'package:smart_money_app/pages/profile.dart';
+import 'package:smart_money_app/pages/profile/profile.dart';
 
 class Dashboard extends StatefulWidget {
   final token;

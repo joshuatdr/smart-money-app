@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:smart_money_app/pages/change_pass_page.dart';
-import 'package:smart_money_app/pages/edit_profile.dart';
+import 'package:smart_money_app/pages/profile/change_password.dart';
+import 'package:smart_money_app/pages/profile/edit_profile.dart';
 import 'package:smart_money_app/model/user.dart';
 import 'package:smart_money_app/services/api.dart';
 import 'package:smart_money_app/providers/user_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_money_app/pages/login.dart';
+import 'package:smart_money_app/pages/auth/login.dart';
 import 'package:http/http.dart' as http;
 
 class UserScreen extends StatefulWidget {
@@ -61,10 +61,13 @@ class _UserScreenState extends State<UserScreen> {
                         TextButton(
                           child: const Text('Yes! Get rid of it!'),
                           onPressed: () {
-              Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (ctx) => LoginScreen()),
-                  (route) => false);
-              context.read<UserProvider>().logoutUser(); // closes prompt
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (ctx) => LoginScreen()),
+                                (route) => false);
+                            context
+                                .read<UserProvider>()
+                                .logoutUser(); // closes prompt
                             // deleteUser(userId);
                           },
                         ),

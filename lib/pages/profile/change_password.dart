@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:smart_money_app/pages/profile.dart';
-import '../common/styles/spacing_styles.dart';
-import '../common/image_strings.dart';
-import '../common/sizes.dart';
+import 'package:smart_money_app/pages/profile/profile.dart';
+import '../../common/styles/spacing_styles.dart';
+import '../../common/image_strings.dart';
+import '../../common/sizes.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:provider/provider.dart';
 import 'package:status_alert/status_alert.dart';
-import '../providers/user_provider.dart';
+import '../../providers/user_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChangePass extends StatefulWidget {
@@ -17,13 +17,13 @@ class ChangePass extends StatefulWidget {
 
 class _ChangePassState extends State<ChangePass> {
   late SharedPreferences prefs;
-bool passwordVisible=false; 
-bool passwordVisibleCurrent=false; 
+  bool passwordVisible = false;
+  bool passwordVisibleCurrent = false;
   @override
   void initState() {
     super.initState();
-          passwordVisible=true; 
-                passwordVisibleCurrent=true; 
+    passwordVisible = true;
+    passwordVisibleCurrent = true;
     initSharedPref();
   }
 
@@ -31,23 +31,23 @@ bool passwordVisibleCurrent=false;
     prefs = await SharedPreferences.getInstance();
   }
 
-      String? validatePass(String? value) {
-      const patternPass =
-          r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
-      final regex = RegExp(patternPass);
+  String? validatePass(String? value) {
+    const patternPass =
+        r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
+    final regex = RegExp(patternPass);
 
-      if (value!.isEmpty) {
-        return 'A password must be at least 8 characters long.'
-            ' must contain an uppercase'
-            'lowercase letter'
-            'A number'
-            'A special character';
-      } else {
-        return value.isNotEmpty && !regex.hasMatch(value)
-            ? 'A password must be at least 8 characters long, must contain an uppercase, lowercase letter, a number and a special character'
-            : null;
-      }
+    if (value!.isEmpty) {
+      return 'A password must be at least 8 characters long.'
+          ' must contain an uppercase'
+          'lowercase letter'
+          'A number'
+          'A special character';
+    } else {
+      return value.isNotEmpty && !regex.hasMatch(value)
+          ? 'A password must be at least 8 characters long, must contain an uppercase, lowercase letter, a number and a special character'
+          : null;
     }
+  }
 
   void showSuccessAlert(BuildContext context) {
     StatusAlert.show(
@@ -170,20 +170,21 @@ bool passwordVisibleCurrent=false;
                         errorMaxLines: 3,
                         prefixIcon: Icon(Icons.password),
                         labelText: "Current Password",
-                          suffixIcon: IconButton( 
-                      icon: Icon(passwordVisibleCurrent 
-                          ? Icons.visibility 
-                          : Icons.visibility_off), 
-                      onPressed: () { 
-                        setState( 
-                          () { 
-                            passwordVisibleCurrent = !passwordVisibleCurrent; 
-                          }, 
-                        ); 
-                      }, 
-                    ), 
-                    alignLabelWithHint: false, 
-                    filled: true, 
+                        suffixIcon: IconButton(
+                          icon: Icon(passwordVisibleCurrent
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            setState(
+                              () {
+                                passwordVisibleCurrent =
+                                    !passwordVisibleCurrent;
+                              },
+                            );
+                          },
+                        ),
+                        alignLabelWithHint: false,
+                        filled: true,
                       ),
                       validator: validatePass,
                     ),
@@ -191,54 +192,54 @@ bool passwordVisibleCurrent=false;
                     const SizedBox(height: JSizes.spaceBtwItems),
 
                     TextFormField(
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         controller: newPassController,
                         obscureText: passwordVisible,
                         decoration: InputDecoration(
                           errorMaxLines: 3,
                           prefixIcon: Icon(Icons.edit),
                           labelText: "New Password",
-                          suffixIcon: IconButton( 
-                      icon: Icon(passwordVisible 
-                          ? Icons.visibility 
-                          : Icons.visibility_off), 
-                      onPressed: () { 
-                        setState( 
-                          () { 
-                            passwordVisible = !passwordVisible; 
-                          }, 
-                        ); 
-                      }, 
-                    ), 
-                    alignLabelWithHint: false, 
-                    filled: true, 
+                          suffixIcon: IconButton(
+                            icon: Icon(passwordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off),
+                            onPressed: () {
+                              setState(
+                                () {
+                                  passwordVisible = !passwordVisible;
+                                },
+                              );
+                            },
+                          ),
+                          alignLabelWithHint: false,
+                          filled: true,
                         ),
                         validator: validatePass),
 
                     const SizedBox(height: JSizes.spaceBtwItems),
 
                     TextFormField(
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         controller: confirmPassController,
                         obscureText: passwordVisible,
                         decoration: InputDecoration(
                           errorMaxLines: 3,
                           prefixIcon: Icon(Icons.loop),
                           labelText: "Confirm New Password",
-                          suffixIcon: IconButton( 
-                      icon: Icon(passwordVisible 
-                          ? Icons.visibility 
-                          : Icons.visibility_off), 
-                      onPressed: () { 
-                        setState( 
-                          () { 
-                            passwordVisible = !passwordVisible; 
-                          }, 
-                        ); 
-                      }, 
-                    ), 
-                    alignLabelWithHint: false, 
-                    filled: true, 
+                          suffixIcon: IconButton(
+                            icon: Icon(passwordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off),
+                            onPressed: () {
+                              setState(
+                                () {
+                                  passwordVisible = !passwordVisible;
+                                },
+                              );
+                            },
+                          ),
+                          alignLabelWithHint: false,
+                          filled: true,
                         ),
                         validator: validatePass),
 
@@ -260,15 +261,16 @@ bool passwordVisibleCurrent=false;
                                       fontWeight: FontWeight.bold)),
                               onPressed: () {
                                 if (_formfield.currentState!.validate()) {
-                                  if (newPassController.text == confirmPassController.text) {             
-                                  final data = <String, dynamic>{};
-                                  data['password'] = passController.text;
-                                  data['email'] = email;
-                                  passwordChangeRequest(
-                                    newPassController.text,
-                                    jsonEncode(data),
-                                    userID,
-                                  );
+                                  if (newPassController.text ==
+                                      confirmPassController.text) {
+                                    final data = <String, dynamic>{};
+                                    data['password'] = passController.text;
+                                    data['email'] = email;
+                                    passwordChangeRequest(
+                                      newPassController.text,
+                                      jsonEncode(data),
+                                      userID,
+                                    );
                                   } else {
                                     StatusAlert.show(
                                       context,

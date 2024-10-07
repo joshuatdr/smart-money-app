@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smart_money_app/pages/signup.dart';
+import 'package:smart_money_app/pages/auth/signup.dart';
 import 'package:smart_money_app/providers/user_provider.dart';
 import 'package:provider/provider.dart';
-import './pages/dashboard.dart';
+import 'pages/dashboard/dashboard.dart';
 import 'package:english_words/english_words.dart';
 
 void main() async {

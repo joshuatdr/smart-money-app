@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:smart_money_app/pages/add_transaction.dart';
-import '../model/transactions.dart';
-import '../services/api.dart';
+import 'package:smart_money_app/pages/transactions/add_transaction.dart';
+import '../../model/transactions.dart';
+import '../../services/api.dart';
 import 'package:provider/provider.dart';
-import '../providers/user_provider.dart';
+import '../../providers/user_provider.dart';
 import 'package:http/http.dart' as http;
 
 Future<void> deleteTransaction(int transactionId, int userId) async {
@@ -74,25 +73,23 @@ class _HistoryScreenState extends State<HistoryScreen> {
     DataRow getDataRow(index, data) {
       return DataRow(
         cells: <DataCell>[
-          (DataCell(Expanded(
-              child: Text(
+          (DataCell(Text(
             data.name,
             maxLines: 6,
             softWrap: true,
-          )))),
-          DataCell(Expanded(
-            child: Text(
+          ))),
+          DataCell(
+            Text(
               '£${data.cost.toStringAsFixed(2)}',
               maxLines: 2,
               softWrap: false,
             ),
-          )),
-          DataCell(Expanded(
-              child: Text(
+          ),
+          DataCell(Text(
             data.createdAt,
             maxLines: 2,
             softWrap: false,
-          ))),
+          )),
           DataCell(
             Icon(Icons.image_outlined, color: Colors.lightBlue[500]),
           ),
@@ -211,6 +208,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           showBottomBorder: true,
                         ),
                       ),
+                      SizedBox(
+                        //padding @bottom of list to make space for floating button
+                        height: 80,
+                      )
                     ],
                   ),
                 ),

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:smart_money_app/pages/login.dart';
-import '../common/styles/spacing_styles.dart';
-import '../common/image_strings.dart';
-import '../common/sizes.dart';
-import '../common/ttexts.dart';
+import 'package:smart_money_app/pages/auth/login.dart';
+import '../../common/styles/spacing_styles.dart';
+import '../../common/image_strings.dart';
+import '../../common/sizes.dart';
+import '../../common/ttexts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:smart_money_app/services/config.dart';
 import 'package:status_alert/status_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smart_money_app/pages/dashboard.dart';
+import 'package:smart_money_app/pages/dashboard/dashboard.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -25,12 +25,12 @@ class _SignupScreenState extends State<SignupScreen> {
   final nickNameController = TextEditingController();
   var dark = false;
   late SharedPreferences prefs;
-   bool passwordVisible=false; 
-   bool termsAccept=false;
+  bool passwordVisible = false;
+  bool termsAccept = false;
   @override
   void initState() {
     super.initState();
-    passwordVisible=true; 
+    passwordVisible = true;
     isChecked = true;
     initSharedPref();
   }
@@ -187,20 +187,20 @@ class _SignupScreenState extends State<SignupScreen> {
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.login),
                             labelText: TTexts.password,
-                            suffixIcon: IconButton( 
-                      icon: Icon(passwordVisible 
-                          ? Icons.visibility 
-                          : Icons.visibility_off), 
-                      onPressed: () { 
-                        setState( 
-                          () { 
-                            passwordVisible = !passwordVisible; 
-                          }, 
-                        ); 
-                      }, 
-                    ), 
-                    alignLabelWithHint: false, 
-                    filled: true, 
+                            suffixIcon: IconButton(
+                              icon: Icon(passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off),
+                              onPressed: () {
+                                setState(
+                                  () {
+                                    passwordVisible = !passwordVisible;
+                                  },
+                                );
+                              },
+                            ),
+                            alignLabelWithHint: false,
+                            filled: true,
                           ),
                           validator: validatePass),
 
@@ -213,20 +213,20 @@ class _SignupScreenState extends State<SignupScreen> {
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.login),
                             labelText: "Confirm Password",
-                            suffixIcon: IconButton( 
-                      icon: Icon(passwordVisible 
-                          ? Icons.visibility 
-                          : Icons.visibility_off), 
-                      onPressed: () { 
-                        setState( 
-                          () { 
-                            passwordVisible = !passwordVisible; 
-                          }, 
-                        ); 
-                      }, 
-                    ), 
-                    alignLabelWithHint: false, 
-                    filled: true, 
+                            suffixIcon: IconButton(
+                              icon: Icon(passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off),
+                              onPressed: () {
+                                setState(
+                                  () {
+                                    passwordVisible = !passwordVisible;
+                                  },
+                                );
+                              },
+                            ),
+                            alignLabelWithHint: false,
+                            filled: true,
                           ),
                           validator: validatePass),
 
@@ -270,7 +270,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                       : null,
                                   value: state.value,
                                   onChanged: (val) {
-                                  isChecked == !isChecked;
+                                    isChecked == !isChecked;
                                     state.didChange(val);
                                   }),
                             );
@@ -303,7 +303,9 @@ class _SignupScreenState extends State<SignupScreen> {
                                 },
                                 child: Text(
                                   TTexts.signUp,
-                                  style: TextStyle(color: Colors.lightBlue.shade900),))),
+                                  style: TextStyle(
+                                      color: Colors.lightBlue.shade900),
+                                ))),
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
