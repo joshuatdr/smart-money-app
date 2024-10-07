@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void loginUser() async {
     var reqBody = {
-      "email": emailController.text,
+      "email": emailController.text.toLowerCase(),
       "password": passController.text,
     };
 
