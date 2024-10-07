@@ -2,25 +2,36 @@ import 'package:flutter/material.dart';
 //import 'package:smart_money_app/pages/dashboard.dart';
 import 'package:smart_money_app/pages/editBudget.dart';
 //import 'package:smart_money_app/pages/edit_profile.dart';
-//import '../../model/user.dart';
-//import '../../services/api.dart';
+import '../../model/expenses.dart';
+import '../../services/api.dart';
 import '../../providers/user_provider.dart';
 import 'package:provider/provider.dart';
-//import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http;
 import 'package:fl_chart/fl_chart.dart';
 
 class PieData {
   static List<Data> data = [
-    Data(name: "Blue", percent: 40, color: const Color(0xff0293ee)),
+    Data(name: "Rent", percent: 30, color: const Color(0xff0293ee)),
     Data(
-        name: "Orange",
-        percent: 30,
+        name: "utilities",
+        percent: 20,
         color: const Color.fromARGB(255, 235, 126, 3)),
-    Data(name: "Black", percent: 15, color: const Color.fromARGB(255, 0, 0, 0)),
     Data(
-        name: "Green",
+        name: "travel",
         percent: 15,
-        color: const Color.fromARGB(255, 2, 238, 41)),
+        color: const Color.fromARGB(255, 219, 62, 222)),
+    Data(
+        name: "food",
+        percent: 20,
+        color: const Color.fromARGB(255, 10, 52, 192)),
+    Data(
+        name: "subscription",
+        percent: 8,
+        color: const Color.fromARGB(255, 222, 22, 29)),
+    Data(
+        name: "charity",
+        percent: 7,
+        color: const Color.fromARGB(255, 192, 225, 44)),
   ];
 }
 
@@ -41,12 +52,6 @@ class BudgetPage extends StatefulWidget {
 
 class _BudgetPageState extends State<BudgetPage> {
   late final userId = context.watch<UserProvider>().userID;
-  late final email = context.watch<UserProvider>().email;
-  late final fName = context.watch<UserProvider>().fName;
-  late final createdAt = context.watch<UserProvider>().createdAt;
-  late final income = context.watch<UserProvider>().income;
-  late final savingsTarget = context.watch<UserProvider>().savingsTarget;
-
   List<PieChartSectionData> getSections(int touchedIndex) => PieData.data
       .asMap()
       .map<int, PieChartSectionData>((index, data) {
@@ -57,7 +62,7 @@ class _BudgetPageState extends State<BudgetPage> {
         final value = PieChartSectionData(
             color: data.color,
             value: data.percent,
-            title: "$userId",
+            title: "",
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -71,6 +76,73 @@ class _BudgetPageState extends State<BudgetPage> {
       .toList();
 
   int touchedIndex = 0;
+
+  Future<void> deleteExpense(int expenseId, int userId) async {
+    final response = await http.delete(Uri.parse(
+        "https://smart-money-backend.onrender.com/api/user/$userId/expenses/$expenseId"));
+    if (response.statusCode == 204) {
+      // If the server returns a 204 response, user is successfully deleted
+    }
+
+    print('delete expense');
+  }
+
+  Future promptExpense(context, data, userId) async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Center(child: const Text('Delete Expense')),
+          content: SizedBox(
+            width: 100,
+            height: 200,
+            child: Column(
+              children: [
+                Text(data.name),
+                const Text('Do you want to delete this expense?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop(false); // closes prompt
+              },
+            ),
+            TextButton(
+              child: const Text('Delete'),
+              onPressed: () async {
+                await deleteExpense(data.expenseId, userId).then((value) => {
+                      if (context.mounted) {Navigator.of(context).pop()}
+                    });
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  DataRow getDataRow(index, data) {
+    return DataRow(
+      cells: <DataCell>[
+        DataCell(Text(data.name)), //add name of your columns here
+        DataCell(Text('£${data.cost}')),
+        DataCell(
+          Icon(Icons.image_outlined, color: Colors.lightBlue[500]),
+        ),
+        DataCell(
+          Icon(Icons.delete_forever, color: Colors.lightBlue[500]),
+          onTap: () async {
+            await promptExpense(context, data, userId)
+                .then((value) => {setState(() {})});
+          },
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,81 +154,165 @@ class _BudgetPageState extends State<BudgetPage> {
           title: Center(
               child: Text("Budget", style: TextStyle(color: Colors.white))),
         ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 10, bottom: 1),
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(
-                          height: 169,
-                          child: Expanded(
-                            child: PieChart(
-                              PieChartData(
-                                pieTouchData: PieTouchData(
-                                  touchCallback: (FlTouchEvent event,
-                                      PieTouchResponse? pieTouchResponse) {
-                                    setState(() {
-                                      if (pieTouchResponse != null &&
-                                          (event is FlLongPressEnd ||
-                                              event is FlPanEndEvent)) {
-                                        touchedIndex = -1;
-                                      } else {
-                                        touchedIndex = pieTouchResponse
-                                                ?.touchedSection
-                                                ?.touchedSectionIndex ??
-                                            -1;
-                                      }
-                                    });
-                                  },
+        body: SingleChildScrollView(
+          child: Column(children: <Widget>[
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Card(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10, bottom: 1),
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(
+                              height: 169,
+                              child: Expanded(
+                                child: PieChart(
+                                  PieChartData(
+                                    pieTouchData: PieTouchData(
+                                      touchCallback: (FlTouchEvent event,
+                                          PieTouchResponse? pieTouchResponse) {
+                                        setState(() {
+                                          if (pieTouchResponse != null &&
+                                              (event is FlLongPressEnd ||
+                                                  event is FlPanEndEvent)) {
+                                            touchedIndex = -1;
+                                          } else {
+                                            touchedIndex = pieTouchResponse
+                                                    ?.touchedSection
+                                                    ?.touchedSectionIndex ??
+                                                -1;
+                                          }
+                                        });
+                                      },
+                                    ),
+                                    borderData: FlBorderData(show: false),
+                                    sectionsSpace: 0,
+                                    centerSpaceRadius: 40,
+                                    sections: getSections(touchedIndex),
+                                  ),
                                 ),
-                                borderData: FlBorderData(show: false),
-                                sectionsSpace: 0,
-                                centerSpaceRadius: 40,
-                                sections: getSections(touchedIndex),
                               ),
                             ),
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(16),
-                              child: IndicatorsWidget(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(16),
+                                  child: IndicatorsWidget(),
+                                )
+                              ],
                             )
                           ],
-                        )
-                      ],
+                        ),
+                      ),
                     ),
-                  ),
+                    Card(
+                        child: _SampleCard(
+                      cardName:
+                          'Your weekly savings are £... after unavoidable spending',
+                    )),
+                    Card(
+                        child: _SampleCard(
+                            cardName:
+                                'It will take {amount of time} to reach your savings target!')),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => EditBudgetPage()),
+                          );
+                        },
+                        child: Text("Edit Budget")),
+                  ],
                 ),
-                Card(
-                    child: _SampleCard(
-                  cardName:
-                      'Your weekly savings are £... after unavoidable spending',
-                )),
-                Card(
-                    child: _SampleCard(
-                        cardName:
-                            'It will take {amount of time} to reach your savings target!')),
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => EditBudgetPage()),
-                      );
-                    },
-                    child: Text("Edit Budget")),
-              ],
+              ),
             ),
-          ),
+            Container(
+              child: FutureBuilder(
+                  future: UserServices().getAllUserExpenses(userId),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      var results = snapshot.data as List<Expenses>;
+                      if (results.isNotEmpty) {
+                        return Center(
+                          child: Column(
+                            children: [
+                              SingleChildScrollView(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Colors.lightBlue.shade500),
+                                  ),
+                                  child: DataTable(
+                                    dataRowMaxHeight:
+                                        double.infinity, // Code to be changed.
+                                    dataRowMinHeight:
+                                        80, // Set the min required height.
+                                    dividerThickness: 1,
+                                    headingRowColor:
+                                        WidgetStateColor.resolveWith(
+                                      (states) => Colors.lightBlue.shade800,
+                                    ),
+                                    columnSpacing: 30,
+                                    columns: [
+                                      DataColumn(
+                                          label: Text(
+                                        'Name',
+                                        style: TextStyle(color: Colors.white),
+                                      )),
+                                      DataColumn(
+                                          label: Text(
+                                        'Cost',
+                                        style: TextStyle(color: Colors.white),
+                                      )),
+                                      DataColumn(
+                                          label: Text(
+                                        'Edit',
+                                        style: TextStyle(color: Colors.white),
+                                      )),
+                                      DataColumn(
+                                          label: Text(
+                                        'Delete',
+                                        style: TextStyle(color: Colors.white),
+                                      )),
+                                    ],
+                                    rows: List.generate(
+                                      results.length,
+                                      (index) => getDataRow(
+                                        index,
+                                        results[index],
+                                      ),
+                                    ),
+                                    showBottomBorder: true,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      } else {
+                        return Center(
+                          child: Text("No expenses yet!"),
+                        );
+                      }
+                    } else {
+                      return Center(
+                        child: SizedBox(
+                          // ignore: sort_child_properties_last
+                          child: CircularProgressIndicator(),
+                          width: 30,
+                          height: 30,
+                        ),
+                      );
+                    }
+                  }),
+            )
+          ]),
         ));
   }
 }
