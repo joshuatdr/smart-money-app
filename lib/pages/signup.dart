@@ -235,7 +235,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       /// nick name
                       TextFormField(
                         controller: nickNameController,
-                        obscureText: passwordVisible,
+                        obscureText: false,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.alternate_email),
                           labelText: TTexts.friendlyName,
