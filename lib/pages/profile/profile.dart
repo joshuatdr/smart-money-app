@@ -31,36 +31,50 @@ class _UserScreenState extends State<UserScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Account deletion'),
-          content: const Text('Remember this is an irreversible action'),
-          actions: <Widget>[
+                    title: Center(child:
+                    Text('Account deletion',
+                    style: TextStyle(
+                    color: Colors.lightBlue.shade600,
+                    fontWeight: FontWeight.w800, 
+                  fontSize: 20),)),
+          content:  Text('Please confirm if you would like to delete your account.'),
+            actions: <Widget>[
+                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
             TextButton(
-              child: const Text('Cancel'),
+              child: Text('Cancel'),
               onPressed: () {
                 Navigator.of(context).pop(); // closes prompt
               },
             ),
             TextButton(
-              child: const Text('Next'),
+              child: Text('Next'),
               onPressed: () {
                 Navigator.of(context).pop(); // closes prompt
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: const Text('Confirm Account Deletion'),
-                      content: const Text(
-                          'Please confirm if you would like to delete your account.'),
+                    title: Center(child:
+                    Text('Account deletion',
+                    style: TextStyle(
+                    color: Colors.lightBlue.shade600,
+                    fontWeight: FontWeight.w800, 
+                  fontSize: 20),)),
+                      content: Text('Remember this is an irreversible action'),
+                  
                       actions: <Widget>[
+                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextButton(
+                            child: Text('Cancel'),
+                            onPressed: () {
+                              Navigator.of(context).pop(); // closes prompt
+                            },
+                          ),
                         TextButton(
-                          child: const Text('No! I want my account'),
-                          onPressed: () {
-                            Navigator.of(context).pop(); // closes prompt
-                          },
-                        ),
-                        TextButton(
-                          child: const Text(
-                          'Yes! Get rid of it!',
+                          child: Text(
+                          'Yes! Delete it!',
                            style: TextStyle(
                             color: Colors.red,),),
                           onPressed: () {
@@ -71,17 +85,18 @@ class _UserScreenState extends State<UserScreen> {
                             context
                                 .read<UserProvider>()
                                 .logoutUser(); // closes prompt
-                            // deleteUser(userId);
+                            deleteUser(userId);
                           },
-                        ),
-                      ],
-                    );
+                        )]
+                      ),
+          ],
+                        );
                   },
                 );
               },
             ),
           ],
-        );
+            )]);
       },
     );
   }
