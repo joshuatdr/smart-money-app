@@ -152,7 +152,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           if (snapshot.hasData) {
             var results = snapshot.data as List<Transactions>;
             if (results.isNotEmpty) {
-              return SingleChild(
+              return SingleChildScrollView(
                 child: Center(
                   child: Column(
                     children: [
