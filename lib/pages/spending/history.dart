@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:smart_money_app/pages/transactions/add_transaction.dart';
-import 'package:smart_money_app/pages/transactions/spending.dart';
 import '../../model/transactions.dart';
 import '../../services/api.dart';
 import 'package:provider/provider.dart';
@@ -277,11 +275,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               backgroundColor: Colors.blue.shade600,
               heroTag: null,
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => AddTransactionScreen()),
-                ).then(
+                Navigator.pushNamed(context, '/addtransaction').then(
                   (value) {
                     setState(() {});
                   },
@@ -303,10 +297,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               backgroundColor: Colors.blue.shade600,
               heroTag: null,
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SpendingPage()),
-                ).then(
+                Navigator.pushNamed(context, '/spending').then(
                   (value) {
                     setState(() {});
                   },

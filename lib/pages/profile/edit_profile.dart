@@ -218,10 +218,21 @@ class _EditProfileState extends State<EditProfile> {
                           Padding(
                             padding: const EdgeInsets.all(30),
                             child: TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Text("Back to Profile")),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(30),
+                                child: FilledButton.icon(
+                                  label: Text("Back to Profile"),
+                                  icon: const Icon(Icons.arrow_back),
+                                  iconAlignment: IconAlignment.start,
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),

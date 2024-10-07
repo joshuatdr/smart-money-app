@@ -299,14 +299,25 @@ class _ChangePassState extends State<ChangePass> {
                         Padding(
                           padding: const EdgeInsets.all(30),
                           child: TextButton(
-                              onPressed: () {
-                                Navigator.pop(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => UserScreen()),
-                                );
-                              },
-                              child: const Text("Back to Profile")),
+                            onPressed: () {
+                              Navigator.pop(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => UserScreen()),
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(30),
+                              child: FilledButton.icon(
+                                label: Text("Back to Profile"),
+                                icon: const Icon(Icons.arrow_back),
+                                iconAlignment: IconAlignment.start,
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),

@@ -98,6 +98,7 @@ class _AddGoalPageState extends State<AddGoalPage> {
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: AppBar(
+            automaticallyImplyLeading: false,
             centerTitle: true,
             backgroundColor: Colors.lightBlue.shade900,
             title: Text("Add Goal", style: TextStyle(color: Colors.white)),
@@ -179,6 +180,17 @@ class _AddGoalPageState extends State<AddGoalPage> {
                                   }
                                 },
                                 child: Text('Done'))),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(30),
+                        child: FilledButton.icon(
+                          label: Text("Back"),
+                          icon: const Icon(Icons.arrow_back),
+                          iconAlignment: IconAlignment.start,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
                       ),
                     ],
                   ),

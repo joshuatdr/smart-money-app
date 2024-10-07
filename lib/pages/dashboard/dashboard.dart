@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:smart_money_app/navigation/budget_nav.dart';
+import 'package:smart_money_app/navigation/goals_nav.dart';
+import 'package:smart_money_app/navigation/profile_nav.dart';
 import 'dart:math';
-import 'package:smart_money_app/pages/transactions/spending.dart';
-import 'package:smart_money_app/pages/transactions/history.dart';
-import 'package:smart_money_app/pages/budget/budget.dart';
-import 'package:smart_money_app/pages/goals/goals.dart';
 import 'package:smart_money_app/pages/auth/login.dart';
 import 'package:smart_money_app/providers/user_provider.dart';
-import 'package:smart_money_app/pages/profile/profile.dart';
+import 'package:smart_money_app/navigation/spending_nav.dart';
 
 class Dashboard extends StatefulWidget {
   final String token;
@@ -49,29 +48,20 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     var colorScheme = Theme.of(context).colorScheme;
 
-    Widget page = Placeholder();
-    switch (selectedIndex) {
-      case 0:
-        page = HomePage();
-      case 1:
-        page = GoalsPage();
-      case 2:
-        page = BudgetPage();
-      case 3:
-        page = SpendingPage();
-      case 4:
-        page = HistoryScreen();
-      case 5:
-        page = UserScreen();
-      default:
-        throw UnimplementedError('no widget for $selectedIndex');
-    }
-
     var mainArea = ColoredBox(
       color: colorScheme.surfaceContainerHighest,
       child: AnimatedSwitcher(
         duration: Duration(milliseconds: 200),
-        child: page,
+        child: IndexedStack(
+          index: selectedIndex,
+          children: [
+            HomePage(),
+            GoalsNav(),
+            BudgetNav(),
+            SpendingNav(),
+            ProfileNav(),
+          ],
+        ),
       ),
     );
 
@@ -101,10 +91,6 @@ class _DashboardState extends State<Dashboard> {
                       BottomNavigationBarItem(
                         icon: Icon(Icons.payments),
                         label: 'Spending',
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.insights),
-                        label: 'History',
                       ),
                       BottomNavigationBarItem(
                         icon: Icon(Icons.account_circle),
@@ -143,10 +129,6 @@ class _DashboardState extends State<Dashboard> {
                       NavigationRailDestination(
                         icon: Icon(Icons.payments),
                         label: Text('Spending'),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(Icons.insights),
-                        label: Text('History'),
                       ),
                       NavigationRailDestination(
                         icon: Icon(Icons.account_circle),

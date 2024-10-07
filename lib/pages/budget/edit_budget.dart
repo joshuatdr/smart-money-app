@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:smart_money_app/pages/profile/profile.dart';
 import '../../common/styles/spacing_styles.dart';
 import '../../common/image_strings.dart';
 import '../../common/sizes.dart';
@@ -149,15 +148,11 @@ class _EditBudgetPageState extends State<EditBudgetPage> {
                           Padding(
                             padding: const EdgeInsets.all(30),
                             child: FilledButton.icon(
-                              label: Text("Back to Profile"),
+                              label: Text("Back"),
                               icon: const Icon(Icons.arrow_back),
                               iconAlignment: IconAlignment.start,
                               onPressed: () {
-                                Navigator.pop(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => UserScreen()),
-                                );
+                                Navigator.pop(context);
                               },
                             ),
                           ),
