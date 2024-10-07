@@ -52,6 +52,7 @@ class BudgetPage extends StatefulWidget {
 
 class _BudgetPageState extends State<BudgetPage> {
   late final userId = context.watch<UserProvider>().userID;
+
   List<PieChartSectionData> getSections(int touchedIndex) => PieData.data
       .asMap()
       .map<int, PieChartSectionData>((index, data) {
@@ -154,6 +155,21 @@ class _BudgetPageState extends State<BudgetPage> {
           title: Center(
               child: Text("Monthly Expenses",
                   style: TextStyle(color: Colors.white))),
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.lightBlue.shade600,
+          heroTag: null,
+          child: const Icon(Icons.add),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => EditBudgetPage()),
+            ).then(
+              (value) {
+                setState(() {});
+              },
+            );
+          },
         ),
         body: SingleChildScrollView(
           child: Column(children: [
@@ -299,15 +315,6 @@ class _BudgetPageState extends State<BudgetPage> {
                       child: _SampleCard(
                           cardName:
                               'It will take {amount of time} to reach your savings target!')),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => EditBudgetPage()),
-                        );
-                      },
-                      child: Text("Edit Budget")),
                 ],
               ),
             ),

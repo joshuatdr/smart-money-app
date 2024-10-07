@@ -64,9 +64,8 @@ class _EditBudgetPageState extends State<EditBudgetPage> {
 
   bool isChecked = false;
   final _formfield = GlobalKey<FormState>();
-  final unavoidableController = TextEditingController();
-  final disposeController = TextEditingController();
-  final saveController = TextEditingController();
+  final nameController = TextEditingController();
+  final costController = TextEditingController();
 
   var dark = false;
 
@@ -89,7 +88,7 @@ class _EditBudgetPageState extends State<EditBudgetPage> {
                       image: AssetImage(dark ? JImages.flag : JImages.flag),
                     ),
                   ),
-                  Text("What is your weekly spending amount?",
+                  Text("Add expense",
                       style: Theme.of(context).textTheme.headlineMedium),
                   const SizedBox(
                     height: JSizes.sm,
@@ -106,10 +105,10 @@ class _EditBudgetPageState extends State<EditBudgetPage> {
                   child: Column(
                     children: [
                       TextFormField(
-                        controller: unavoidableController,
+                        controller: nameController,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.money_off),
-                          labelText: "Unavoidable expenses",
+                          labelText: "Name",
                         ),
                       ),
 
@@ -117,23 +116,14 @@ class _EditBudgetPageState extends State<EditBudgetPage> {
 
                       TextFormField(
                         keyboardType: TextInputType.numberWithOptions(),
-                        controller: disposeController,
+                        controller: costController,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.money_outlined),
-                          labelText: "Disposable income",
+                          labelText: "Cost",
                         ),
                       ),
 
                       const SizedBox(height: JSizes.spaceBtwItems),
-
-                      TextFormField(
-                        controller: saveController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.savings),
-                          labelText: "Savings target",
-                        ),
-                      ),
 
                       const SizedBox(height: JSizes.spaceBtwItems),
 
@@ -144,7 +134,7 @@ class _EditBudgetPageState extends State<EditBudgetPage> {
                             width: double.infinity,
                             child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.orange,
+                                    backgroundColor: Colors.lightBlue.shade900,
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 50, vertical: 20),
                                     textStyle: TextStyle(
@@ -160,15 +150,18 @@ class _EditBudgetPageState extends State<EditBudgetPage> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(30),
-                            child: TextButton(
-                                onPressed: () {
-                                  Navigator.pop(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => UserScreen()),
-                                  );
-                                },
-                                child: const Text("Back to Profile")),
+                            child: FilledButton.icon(
+                              label: Text("Back to Profile"),
+                              icon: const Icon(Icons.arrow_back),
+                              iconAlignment: IconAlignment.start,
+                              onPressed: () {
+                                Navigator.pop(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => UserScreen()),
+                                );
+                              },
+                            ),
                           ),
                         ],
                       ),
