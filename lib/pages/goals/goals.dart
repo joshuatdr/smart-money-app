@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_money_app/model/goals.dart';
-import 'package:smart_money_app/pages/add_goal_page.dart';
+import 'package:smart_money_app/pages/goals/add_goal.dart';
 import 'package:smart_money_app/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_money_app/services/api.dart';
@@ -157,13 +157,14 @@ class _GoalsPageState extends State<GoalsPage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       gradient: LinearGradient(colors: [
-                      const Color.fromARGB(160, 18, 18, 18),
-                       Color.fromARGB(160, 54, 53, 53),
+                        const Color.fromARGB(160, 18, 18, 18),
+                        Color.fromARGB(160, 54, 53, 53),
                       ]),
                     ),
                     child: Text(results[index].name ??= "",
                         textAlign: TextAlign.center,
-                        style: style.copyWith(fontWeight: FontWeight.bold, color: Colors.white))),
+                        style: style.copyWith(
+                            fontWeight: FontWeight.bold, color: Colors.white))),
               ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -171,13 +172,14 @@ class _GoalsPageState extends State<GoalsPage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       gradient: LinearGradient(colors: [
-                      const Color.fromARGB(160, 18, 18, 18),
-                       Color.fromARGB(160, 54, 53, 53),
+                        const Color.fromARGB(160, 18, 18, 18),
+                        Color.fromARGB(160, 54, 53, 53),
                       ]),
                     ),
                     child: Text('£${(results[index].cost ??= 0).toString()}',
                         textAlign: TextAlign.center,
-                        style: style.copyWith(fontWeight: FontWeight.bold, color: Colors.white))),
+                        style: style.copyWith(
+                            fontWeight: FontWeight.bold, color: Colors.white))),
               ),
             ],
           ),

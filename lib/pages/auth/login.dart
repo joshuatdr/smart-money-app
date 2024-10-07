@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:smart_money_app/pages/signup.dart';
-import '../common/styles/spacing_styles.dart';
-import '../common/image_strings.dart';
-import '../common/sizes.dart';
-import '../common/ttexts.dart';
+import 'package:smart_money_app/pages/auth/signup.dart';
+import '../../common/styles/spacing_styles.dart';
+import '../../common/image_strings.dart';
+import '../../common/sizes.dart';
+import '../../common/ttexts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:smart_money_app/services/config.dart';
 import 'package:status_alert/status_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import './dashboard.dart';
+import '../dashboard/dashboard.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -24,14 +24,14 @@ class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   var dark = false;
   late SharedPreferences prefs;
-   bool passwordVisible=false; 
-     
-   @override 
-    void initState(){ 
-      super.initState(); 
-      passwordVisible=true; 
-          initSharedPref();
-    }
+  bool passwordVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    passwordVisible = true;
+    initSharedPref();
+  }
 
   void initSharedPref() async {
     prefs = await SharedPreferences.getInstance();
@@ -149,23 +149,23 @@ class _LoginScreenState extends State<LoginScreen> {
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.login),
                           labelText: TTexts.password,
-                          suffixIcon: IconButton( 
-                      icon: Icon(passwordVisible 
-                          ? Icons.visibility 
-                          : Icons.visibility_off), 
-                      onPressed: () { 
-                        setState( 
-                          () { 
-                            passwordVisible = !passwordVisible; 
-                          }, 
-                        ); 
-                      }, 
-                    ), 
-                    alignLabelWithHint: false, 
-                    filled: true, 
-                  ), 
-                  keyboardType: TextInputType.visiblePassword, 
-                  textInputAction: TextInputAction.done,
+                          suffixIcon: IconButton(
+                            icon: Icon(passwordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off),
+                            onPressed: () {
+                              setState(
+                                () {
+                                  passwordVisible = !passwordVisible;
+                                },
+                              );
+                            },
+                          ),
+                          alignLabelWithHint: false,
+                          filled: true,
+                        ),
+                        keyboardType: TextInputType.visiblePassword,
+                        textInputAction: TextInputAction.done,
                         validator: validatePass,
                       ),
                       const SizedBox(height: JSizes.spaceBtwItems),
@@ -191,9 +191,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           // Forgot Password
                           TextButton(
                               onPressed: () {},
-                                  child: Text(
-                                  TTexts.forgotPassword,
-                                  style: TextStyle(color: Colors.lightBlue.shade900),)),
+                              child: Text(
+                                TTexts.forgotPassword,
+                                style:
+                                    TextStyle(color: Colors.lightBlue.shade900),
+                              )),
                         ],
                       ),
                       const SizedBox(height: JSizes.spaceBtwItems),
@@ -219,7 +221,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 },
                                 child: Text(
                                   TTexts.signIn,
-                                  style: TextStyle(color: Colors.lightBlue.shade900),))),
+                                  style: TextStyle(
+                                      color: Colors.lightBlue.shade900),
+                                ))),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -244,7 +248,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 },
                                 child: Text(
                                   TTexts.signUp,
-                                  style: TextStyle(color: Colors.lightBlue.shade900),))),
+                                  style: TextStyle(
+                                      color: Colors.lightBlue.shade900),
+                                ))),
                       ),
                     ],
                   ),

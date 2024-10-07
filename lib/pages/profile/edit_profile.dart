@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:smart_money_app/pages/profile.dart';
-import '../common/styles/spacing_styles.dart';
-import '../common/image_strings.dart';
-import '../common/sizes.dart';
+import 'package:smart_money_app/pages/profile/profile.dart';
+import '../../common/styles/spacing_styles.dart';
+import '../../common/image_strings.dart';
+import '../../common/sizes.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 //import './config.dart';
 import 'package:provider/provider.dart';
 import 'package:status_alert/status_alert.dart';
-import '../providers/user_provider.dart';
+import '../../providers/user_provider.dart';
 
 class EditProfile extends StatefulWidget {
   @override
@@ -132,14 +132,14 @@ class _EditProfileState extends State<EditProfile> {
 
                       TextFormField(
                         autovalidateMode: AutovalidateMode.always,
-                          keyboardType: TextInputType.numberWithOptions(),
-                          controller: emailController,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.login),
-                            labelText: "Email",
-                          ),
-                          validator: validateEmail,
-                            ),
+                        keyboardType: TextInputType.numberWithOptions(),
+                        controller: emailController,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.login),
+                          labelText: "Email",
+                        ),
+                        validator: validateEmail,
+                      ),
 
                       const SizedBox(height: JSizes.spaceBtwItems),
 
@@ -180,30 +180,33 @@ class _EditProfileState extends State<EditProfile> {
                                         fontWeight: FontWeight.bold)),
                                 onPressed: () {
                                   final data = <String, dynamic>{};
-                                  
+
                                   if (nickNameController.text.isNotEmpty) {
-                                    data['fname'] = nickNameController.text; //add the key to the data object
-                                    context
-                                      .read<UserProvider>()
-                                      .changeFName(newFName: nickNameController.text); //update provider
+                                    data['fname'] = nickNameController
+                                        .text; //add the key to the data object
+                                    context.read<UserProvider>().changeFName(
+                                        newFName: nickNameController
+                                            .text); //update provider
                                   }
                                   if (emailController.text.isNotEmpty) {
                                     data['email'] = emailController.text;
-                                    context
-                                      .read<UserProvider>()
-                                      .changeEmail(newEmail: emailController.text);
+                                    context.read<UserProvider>().changeEmail(
+                                        newEmail: emailController.text);
                                   }
                                   if (incomeController.text.isNotEmpty) {
                                     data['income'] = incomeController.text;
-                                    context
-                                      .read<UserProvider>()
-                                      .changeIncome(newIncome: int.parse(incomeController.text));
+                                    context.read<UserProvider>().changeIncome(
+                                        newIncome:
+                                            int.parse(incomeController.text));
                                   }
                                   if (savingsController.text.isNotEmpty) {
-                                    data['savings_target'] = savingsController.text;
+                                    data['savings_target'] =
+                                        savingsController.text;
                                     context
-                                      .read<UserProvider>()
-                                      .changeSavingsTarget(newSavingsTarget: int.parse(savingsController.text));
+                                        .read<UserProvider>()
+                                        .changeSavingsTarget(
+                                            newSavingsTarget: int.parse(
+                                                savingsController.text));
                                   }
                                   updateUser(data, userID);
                                 },
@@ -216,9 +219,7 @@ class _EditProfileState extends State<EditProfile> {
                             padding: const EdgeInsets.all(30),
                             child: TextButton(
                                 onPressed: () {
-                                  Navigator.pop(
-                                    context
-                                  );
+                                  Navigator.pop(context);
                                 },
                                 child: const Text("Back to Profile")),
                           ),

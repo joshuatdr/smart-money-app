@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:smart_money_app/pages/profile.dart';
-import '../common/styles/spacing_styles.dart';
-import '../common/image_strings.dart';
-import '../common/sizes.dart';
+import 'package:smart_money_app/pages/profile/profile.dart';
+import '../../common/styles/spacing_styles.dart';
+import '../../common/image_strings.dart';
+import '../../common/sizes.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:provider/provider.dart';
-import '../providers/user_provider.dart';
+import '../../providers/user_provider.dart';
 
 class EditBudgetPage extends StatefulWidget {
   @override
