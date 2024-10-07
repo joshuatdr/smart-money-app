@@ -61,6 +61,7 @@ class _SignupScreenState extends State<SignupScreen> {
     if (response.statusCode == 201) {
       loginAfterSignup();
     } else {
+      if (!mounted) return;
       StatusAlert.show(
         context,
         duration: Duration(seconds: 2),
@@ -89,6 +90,7 @@ class _SignupScreenState extends State<SignupScreen> {
     emailController.clear();
     nickNameController.clear();
     confirmPassController.clear();
+    if (!mounted) return;
     Navigator.push(
         context,
         MaterialPageRoute(

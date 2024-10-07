@@ -5,8 +5,6 @@ import '../../common/image_strings.dart';
 import '../../common/sizes.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:provider/provider.dart';
-import '../../providers/user_provider.dart';
 
 class EditBudgetPage extends StatefulWidget {
   @override
@@ -38,6 +36,7 @@ class _EditBudgetPageState extends State<EditBudgetPage> {
     if (response.statusCode == 201) {
       print(userId.runtimeType);
       // If the server returns a 200 OK response, then the user was successfully updated.
+      if (!mounted) return;
       showDialog(
         context: context,
         builder: (BuildContext context) {
