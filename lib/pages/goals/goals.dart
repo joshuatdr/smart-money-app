@@ -39,26 +39,26 @@ class _GoalsPageState extends State<GoalsPage> {
       key: _key,
       openButtonBuilder: DefaultFloatingActionButtonBuilder(
         backgroundColor: Colors.blue.shade600,
-        child: const Icon(Icons.menu),
+        child: const Icon(Icons.menu, color: Colors.white),
       ),
       closeButtonBuilder: DefaultFloatingActionButtonBuilder(
-        backgroundColor: Colors.blue.shade600,
-        child: const Icon(Icons.close),
+        backgroundColor: Colors.blue.shade800,
+        child: const Icon(Icons.close, color: Colors.white),
       ),
       overlayStyle: ExpandableFabOverlayStyle(
-        color: Colors.white.withOpacity(0.4),
+        color: Colors.white.withOpacity(0.6),
       ),
       children: [
         FloatingActionButton.small(
           backgroundColor: Colors.blue.shade600,
           heroTag: null,
-          child: const Icon(Icons.edit),
+          child: const Icon(Icons.edit, color: Colors.white),
           onPressed: () {},
         ),
         FloatingActionButton.small(
           backgroundColor: Colors.blue.shade600,
           heroTag: null,
-          child: const Icon(Icons.add),
+          child: const Icon(Icons.add, color: Colors.white),
           onPressed: () {
             Navigator.push(
               context,
@@ -75,7 +75,7 @@ class _GoalsPageState extends State<GoalsPage> {
         FloatingActionButton.small(
           backgroundColor: Colors.blue.shade600,
           heroTag: null,
-          child: const Icon(Icons.remove),
+          child: const Icon(Icons.remove, color: Colors.white),
           onPressed: () {},
         ),
       ],

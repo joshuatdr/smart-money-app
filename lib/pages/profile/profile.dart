@@ -16,7 +16,6 @@ class UserScreen extends StatefulWidget {
 
 class _UserScreenState extends State<UserScreen> {
   bool isReadOnly = true;
-  // final userId = context.watch<UserProvider>().userID;
   Future<void> deleteUser(int userId) async {
     final response = await http.delete(
         Uri.parse("https://smart-money-backend.onrender.com/api/user/$userId"));
@@ -54,6 +53,7 @@ class _UserScreenState extends State<UserScreen> {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
+                    final userID = context.watch<UserProvider>().userID;
                     return AlertDialog(
                     title: Center(child:
                     Text('Account deletion',
@@ -78,14 +78,14 @@ class _UserScreenState extends State<UserScreen> {
                            style: TextStyle(
                             color: Colors.red,),),
                           onPressed: () {
-                            deleteUser(context.watch<UserProvider>().userID);
+                            deleteUser(userID);
                             context
                                 .read<UserProvider>()
-                                .logoutUser(); // closes prompt
+                                .logoutUser(); 
                             Navigator.of(context).pushAndRemoveUntil(
                                 MaterialPageRoute(
                                     builder: (ctx) => LoginScreen()),
-                                (route) => false);
+                                (route) => false); // route to login page, prevent browser back button
                           },
                         )]
                       ),
