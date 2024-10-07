@@ -163,7 +163,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                           controller: nameController,
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.email),
-                            labelText: 'name',
+                            labelText: 'Name',
                           ),
                           validator: validateName),
                       const SizedBox(height: JSizes.spaceBtwItems),
@@ -173,7 +173,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                           controller: costController,
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.login),
-                            labelText: 'cost',
+                            labelText: 'Cost',
                           ),
                           validator: validateCost),
                       const SizedBox(height: JSizes.spaceBtwItems),
@@ -183,7 +183,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                         controller: imgurlController,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.login),
-                          labelText: "Image Url",
+                          labelText: "Image URL",
                         ),
                         // validator: validateImg
                       ),

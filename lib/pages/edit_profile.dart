@@ -79,7 +79,7 @@ class _EditProfileState extends State<EditProfile> {
       final regex = RegExp(pattern);
 
       if (value!.isEmpty) {
-        return 'Enter a valid email address';
+        return null;
       } else {
         return value.isNotEmpty && !regex.hasMatch(value)
             ? 'Enter a valid email address'
@@ -131,15 +131,15 @@ class _EditProfileState extends State<EditProfile> {
                       const SizedBox(height: JSizes.spaceBtwItems),
 
                       TextFormField(
+                        autovalidateMode: AutovalidateMode.always,
                           keyboardType: TextInputType.numberWithOptions(),
                           controller: emailController,
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.login),
                             labelText: "Email",
                           ),
-                          validator: emailController.text.isNotEmpty
-                              ? validateEmail
-                              : null),
+                          validator: validateEmail,
+                            ),
 
                       const SizedBox(height: JSizes.spaceBtwItems),
 
@@ -170,7 +170,7 @@ class _EditProfileState extends State<EditProfile> {
                             width: double.infinity,
                             child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.orange,
+                                    backgroundColor: Colors.lightBlue.shade900,
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 50, vertical: 20),
                                     textStyle: TextStyle(
@@ -217,9 +217,7 @@ class _EditProfileState extends State<EditProfile> {
                             child: TextButton(
                                 onPressed: () {
                                   Navigator.pop(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => UserScreen()),
+                                    context
                                   );
                                 },
                                 child: const Text("Back to Profile")),
