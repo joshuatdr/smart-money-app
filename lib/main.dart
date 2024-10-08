@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_money_app/pages/auth/signup.dart';
 import 'package:smart_money_app/providers/user_provider.dart';
 import 'package:provider/provider.dart';
-import 'pages/dashboard/dashboard.dart';
+import 'pages/home/dashboard.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

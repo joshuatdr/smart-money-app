@@ -174,7 +174,20 @@ class UserServices {
     );
   }
 
-  static getAllUserExpenses(userID) async {
+
+  postExpense(data) async {
+    var userID = data['user_id'];
+    String baseUrl =
+        "https://smart-money-backend.onrender.com/api/user/$userID/expenses";
+
+    return await http.post(
+      Uri.parse(baseUrl),
+      body: jsonEncode(data),
+      headers: _setHeaders(),
+    );
+  }
+  
+ static  getAllUserExpenses(userID) async {
     String baseUrl =
         "https://smart-money-backend.onrender.com/api/user/$userID/expenses";
     List<Expenses> allExpenses = [];
@@ -196,6 +209,7 @@ class UserServices {
       throw Exception(e.toString()); // if error convert error to a string.
     }
   }
+
 
   _setHeaders() => {
         'Content-type': 'application/json',
