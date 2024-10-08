@@ -116,20 +116,30 @@ class _HistoryScreenState extends State<HistoryScreen> {
             maxLines: 2,
             softWrap: false,
           )),
-           DataCell(
-            Icon(!data.imgUrl.isEmpty ? Icons.image_outlined : Icons.image_not_supported, color: Colors.lightBlue[500])
-          ),
+          DataCell(Icon(
+              !data.imgUrl.isEmpty
+                  ? Icons.image_outlined
+                  : Icons.image_not_supported,
+              color: Colors.lightBlue[500])),
           DataCell(
             Icon(Icons.edit, color: Colors.lightBlue[500]),
             onTap: () async {
-         await Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (context) 
-                                    => EditTransaction(name:data.name, cost:data.cost, imgUrl:data.imgUrl, createdAt:data.createdAt, transactionId: data.transactionId, desc: data.desc,)),
-                              ).then((value) {
-                                print(value);
-                                setState(() {});
-                              });
+              await Navigator.of(context)
+                  .push(
+                MaterialPageRoute(
+                    builder: (context) => EditTransaction(
+                          name: data.name,
+                          cost: data.cost,
+                          imgUrl: data.imgUrl,
+                          createdAt: data.createdAt,
+                          transactionId: data.transactionId,
+                          desc: data.desc,
+                        )),
+              )
+                  .then((value) {
+                print(value);
+                setState(() {});
+              });
             },
           ),
           DataCell(
@@ -148,8 +158,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         automaticallyImplyLeading: false,
         centerTitle: true,
         backgroundColor: Colors.lightBlue.shade900,
-        title:
-            Text("Transaction History", style: TextStyle(color: Colors.white)),
+        title: Text("Spending History", style: TextStyle(color: Colors.white)),
         // actions: <Widget>[
         //   IconButton(
         //       icon: const Icon(Icons.edit),
@@ -298,13 +307,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
         ),
         Row(
           children: [
-            Text('View Data'),
+            Text('Graph View'),
             SizedBox(width: 20),
             FloatingActionButton.small(
               backgroundColor: Colors.blue.shade600,
               heroTag: null,
               onPressed: () {
-                Navigator.pushNamed(context, '/spending').then(
+                Navigator.pushNamed(context, '/graphview').then(
                   (value) {
                     setState(() {});
                   },

@@ -9,7 +9,7 @@ import 'dart:convert';
 import 'package:smart_money_app/services/config.dart';
 import 'package:status_alert/status_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smart_money_app/pages/dashboard/dashboard.dart';
+import 'package:smart_money_app/pages/home/dashboard.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
