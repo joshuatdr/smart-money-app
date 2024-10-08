@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_money_app/pages/spending/add_transaction.dart';
 import 'package:smart_money_app/pages/spending/history.dart';
-import 'package:smart_money_app/pages/spending/spending.dart';
+import 'package:smart_money_app/pages/spending/graph.dart';
 
 class SpendingNav extends StatefulWidget {
   const SpendingNav({super.key});
