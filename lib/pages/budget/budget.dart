@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:smart_money_app/providers/user_provider.dart';
 import 'package:smart_money_app/services/api.dart';
 import 'package:smart_money_app/model/expenses.dart';
-import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'dart:math' as math;
 
@@ -22,24 +21,24 @@ class _BudgetPageState extends State<BudgetPage> {
     }
   }
 
-  Map<String, double> dataMap = {};
-  bool isDataFetched = false;
-  void fetchExpensesData() async {
-    int userID = context.watch<UserProvider>().userID;
-    try {
-      List<Expenses> expenses = await UserServices.getAllUserExpenses(userID);
-      Map<String, double> fetchedDataMap = {};
-      for (var expense in expenses) {
-        fetchedDataMap[expense.name ?? 'Unknown'] =
-            expense.cost?.toDouble() ?? 0;
-      }
-      setState(() {
-        dataMap = fetchedDataMap;
-      });
-    } catch (e) {
-      print("Error fetching expenses");
-    }
-  }
+  // Map<String, double> dataMap = {};
+  // bool isDataFetched = false;
+  // void fetchExpensesData() async {
+  //   int userID = context.watch<UserProvider>().userID;
+  //   try {
+  //     List<Expenses> expenses = await UserServices.getAllUserExpenses(userID);
+  //     Map<String, double> fetchedDataMap = {};
+  //     for (var expense in expenses) {
+  //       fetchedDataMap[expense.name ?? 'Unknown'] =
+  //           expense.cost?.toDouble() ?? 0;
+  //     }
+  //     setState(() {
+  //       dataMap = fetchedDataMap;
+  //     });
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   final colorList = <Color>[
     Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
@@ -91,10 +90,6 @@ class _BudgetPageState extends State<BudgetPage> {
   Widget build(BuildContext context) {
     AsyncSnapshot.waiting();
     int userID = context.watch<UserProvider>().userID;
-    if (!isDataFetched) {
-      fetchExpensesData();
-      isDataFetched = true;
-    }
     DataRow getDataRow(index, data) {
       return DataRow(
         cells: <DataCell>[
@@ -235,37 +230,70 @@ class _BudgetPageState extends State<BudgetPage> {
                             width: 780,
                             child: Column(
                               children: [
-                                if (dataMap.isEmpty)
-                                  CircularProgressIndicator()
-                                else
-                                  PieChart(
-                                    dataMap: dataMap,
-                                    animationDuration:
-                                        const Duration(milliseconds: 3500),
-                                    chartLegendSpacing: 1,
-                                    chartRadius:
-                                        MediaQuery.of(context).size.height / 2,
-                                    colorList: colorList,
-                                    initialAngleInDegree: 90,
-                                    chartType: ChartType.disc,
-                                    legendOptions: const LegendOptions(
-                                      showLegendsInRow: false,
-                                      legendPosition: LegendPosition.right,
-                                      showLegends: true,
-                                      legendTextStyle: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    chartValuesOptions:
-                                        const ChartValuesOptions(
-                                      showChartValueBackground: true,
-                                      showChartValues: true,
-                                      showChartValuesInPercentage: true,
-                                      showChartValuesOutside: false,
-                                      decimalPlaces: 2,
-                                    ),
-                                  ),
-                                // ),
+                                FutureBuilder(
+                                  future:
+                                      UserServices.getAllUserExpenses(userID),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      var result =
+                                          snapshot.data as List<Expenses>;
+
+                                      Map<String, double> dataMap = {};
+                                      for (var expense in result) {
+                                        dataMap[expense.name ?? 'Unknown'] =
+                                            expense.cost?.toDouble() ?? 0;
+                                      }
+                                      return dataMap.isNotEmpty
+                                          ? Column(
+                                              children: [
+                                                PieChart(
+                                                  dataMap: dataMap,
+                                                  animationDuration:
+                                                      const Duration(
+                                                          milliseconds: 3500),
+                                                  chartLegendSpacing: 1,
+                                                  chartRadius:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .height /
+                                                          2,
+                                                  colorList: colorList,
+                                                  initialAngleInDegree: 90,
+                                                  chartType: ChartType.disc,
+                                                  legendOptions:
+                                                      const LegendOptions(
+                                                    showLegendsInRow: false,
+                                                    legendPosition:
+                                                        LegendPosition.right,
+                                                    showLegends: true,
+                                                    legendTextStyle: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  chartValuesOptions:
+                                                      const ChartValuesOptions(
+                                                    showChartValueBackground:
+                                                        true,
+                                                    showChartValues: true,
+                                                    showChartValuesInPercentage:
+                                                        true,
+                                                    showChartValuesOutside:
+                                                        false,
+                                                    decimalPlaces: 2,
+                                                  ),
+                                                ),
+                                                // ),
+                                              ],
+                                            )
+                                          : Container();
+                                    } else {
+                                      return CircularProgressIndicator();
+                                    }
+
+                                    //
+                                  },
+                                ),
                               ],
                             ),
                           ),
