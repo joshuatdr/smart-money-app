@@ -123,14 +123,14 @@ class UserServices {
     );
   }
 
-   patchUserTransaction(data, apiUrl) async {
+  patchUserTransaction(data, apiUrl) async {
     //var userId = data['user_id'];
     String baseUrl =
         "https://smart-money-backend.onrender.com/api/user/$apiUrl";
 
-        //"PATCH /api/user/:user_id/transactions/:transaction_id": {
+    //"PATCH /api/user/:user_id/transactions/:transaction_id": {
 
-print(baseUrl);
+    print(baseUrl);
     return await http.patch(
       Uri.parse(baseUrl),
       body: jsonEncode(data),
@@ -174,7 +174,7 @@ print(baseUrl);
     );
   }
 
-  getAllUserExpenses(userID) async {
+  static getAllUserExpenses(userID) async {
     String baseUrl =
         "https://smart-money-backend.onrender.com/api/user/$userID/expenses";
     List<Expenses> allExpenses = [];
