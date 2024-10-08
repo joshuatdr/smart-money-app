@@ -1,46 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
-import 'package:fl_chart/fl_chart.dart';
 import 'package:smart_money_app/providers/user_provider.dart';
 import 'package:smart_money_app/services/api.dart';
 import 'package:smart_money_app/model/expenses.dart';
-
-class PieData {
-  static List<Data> data = [
-    Data(name: "Rent", percent: 30, color: const Color(0xff0293ee)),
-    Data(
-        name: "utilities",
-        percent: 20,
-        color: const Color.fromARGB(255, 235, 126, 3)),
-    Data(
-        name: "travel",
-        percent: 15,
-        color: const Color.fromARGB(255, 219, 62, 222)),
-    Data(
-        name: "food",
-        percent: 20,
-        color: const Color.fromARGB(255, 10, 52, 192)),
-    Data(
-        name: "subscription",
-        percent: 8,
-        color: const Color.fromARGB(255, 222, 22, 29)),
-    Data(
-        name: "charity",
-        percent: 7,
-        color: const Color.fromARGB(255, 192, 225, 44)),
-  ];
-}
-
-class Data {
-  final String name;
-
-  final double percent;
-
-  final Color color;
-
-  Data({required this.name, required this.percent, required this.color});
-}
+import 'package:flutter/material.dart';
+import 'package:pie_chart/pie_chart.dart';
+import 'dart:math' as math;
 
 class BudgetPage extends StatefulWidget {
   @override
@@ -48,31 +14,6 @@ class BudgetPage extends StatefulWidget {
 }
 
 class _BudgetPageState extends State<BudgetPage> {
-  List<PieChartSectionData> getSections(int touchedIndex) => PieData.data
-      .asMap()
-      .map<int, PieChartSectionData>((index, data) {
-        final isTouched = index == touchedIndex;
-        final double fontSize = isTouched ? 25 : 16;
-        final double radius = isTouched ? 60 : 50;
-
-        final value = PieChartSectionData(
-            color: data.color,
-            value: data.percent,
-            title: "",
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xffffffff),
-            ));
-
-        return MapEntry(index, value);
-      })
-      .values
-      .toList();
-
-  int touchedIndex = 0;
-
   Future<void> deleteExpense(int expenseId, int userId) async {
     final response = await http.delete(Uri.parse(
         "https://smart-money-backend.onrender.com/api/user/$userId/expenses/$expenseId"));
@@ -80,6 +21,34 @@ class _BudgetPageState extends State<BudgetPage> {
       // If the server returns a 204 response, user is successfully deleted
     }
   }
+
+  Map<String, double> dataMap = {};
+  bool isDataFetched = false;
+  void fetchExpensesData() async {
+    int userID = context.watch<UserProvider>().userID;
+    try {
+      List<Expenses> expenses = await UserServices.getAllUserExpenses(userID);
+      Map<String, double> fetchedDataMap = {};
+      for (var expense in expenses) {
+        fetchedDataMap[expense.name ?? 'Unknown'] =
+            expense.cost?.toDouble() ?? 0;
+      }
+      setState(() {
+        dataMap = fetchedDataMap;
+      });
+    } catch (e) {
+      print("Error fetching expenses");
+    }
+  }
+
+  final colorList = <Color>[
+    Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
+    Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
+    Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
+    Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
+    Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
+    Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
+  ];
 
   Future promptExpense(context, data, userId) async {
     await showDialog(
@@ -122,7 +91,10 @@ class _BudgetPageState extends State<BudgetPage> {
   Widget build(BuildContext context) {
     AsyncSnapshot.waiting();
     int userID = context.watch<UserProvider>().userID;
-
+    if (!isDataFetched) {
+      fetchExpensesData();
+      isDataFetched = true;
+    }
     DataRow getDataRow(index, data) {
       return DataRow(
         cells: <DataCell>[
@@ -167,7 +139,7 @@ class _BudgetPageState extends State<BudgetPage> {
         body: SingleChildScrollView(
           child: Column(children: [
             FutureBuilder(
-                future: UserServices().getAllUserExpenses(userID),
+                future: UserServices.getAllUserExpenses(userID),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     var results = snapshot.data as List<Expenses>;
@@ -241,13 +213,14 @@ class _BudgetPageState extends State<BudgetPage> {
                       child: SizedBox(
                         // ignore: sort_child_properties_last
                         child: CircularProgressIndicator(),
-                        width: 30,
-                        height: 30,
+                        width: 300,
+                        height: 300,
                       ),
                     );
                   }
                 }),
-            Padding(
+            Container(
+              height: 1500,
               padding: const EdgeInsets.all(20),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -255,46 +228,47 @@ class _BudgetPageState extends State<BudgetPage> {
                   Card(
                     child: Padding(
                       padding: const EdgeInsets.only(top: 10, bottom: 1),
-                      child: Row(
+                      child: Column(
                         children: <Widget>[
                           SizedBox(
-                            height: 200,
-                            width: 250,
-                            child: PieChart(
-                              PieChartData(
-                                pieTouchData: PieTouchData(
-                                  touchCallback: (FlTouchEvent event,
-                                      PieTouchResponse? pieTouchResponse) {
-                                    setState(() {
-                                      if (pieTouchResponse != null &&
-                                          (event is FlLongPressEnd ||
-                                              event is FlPanEndEvent)) {
-                                        touchedIndex = -1;
-                                      } else {
-                                        touchedIndex = pieTouchResponse
-                                                ?.touchedSection
-                                                ?.touchedSectionIndex ??
-                                            -1;
-                                      }
-                                    });
-                                  },
-                                ),
-                                borderData: FlBorderData(show: false),
-                                sectionsSpace: 0,
-                                centerSpaceRadius: 40,
-                                sections: getSections(touchedIndex),
-                              ),
+                            height: MediaQuery.of(context).size.height / 1.89,
+                            width: 780,
+                            child: Column(
+                              children: [
+                                if (dataMap.isEmpty)
+                                  CircularProgressIndicator()
+                                else
+                                  PieChart(
+                                    dataMap: dataMap,
+                                    animationDuration:
+                                        const Duration(milliseconds: 3500),
+                                    chartLegendSpacing: 1,
+                                    chartRadius:
+                                        MediaQuery.of(context).size.height / 2,
+                                    colorList: colorList,
+                                    initialAngleInDegree: 90,
+                                    chartType: ChartType.disc,
+                                    legendOptions: const LegendOptions(
+                                      showLegendsInRow: false,
+                                      legendPosition: LegendPosition.right,
+                                      showLegends: true,
+                                      legendTextStyle: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    chartValuesOptions:
+                                        const ChartValuesOptions(
+                                      showChartValueBackground: true,
+                                      showChartValues: true,
+                                      showChartValuesInPercentage: true,
+                                      showChartValuesOutside: false,
+                                      decimalPlaces: 2,
+                                    ),
+                                  ),
+                                // ),
+                              ],
                             ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(16),
-                                child: IndicatorsWidget(),
-                              )
-                            ],
-                          )
                         ],
                       ),
                     ),
@@ -314,42 +288,6 @@ class _BudgetPageState extends State<BudgetPage> {
           ]),
         ));
   }
-}
-
-class IndicatorsWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: PieData.data
-            .map((data) => Container(
-                  padding: EdgeInsets.symmetric(vertical: 2),
-                  child: buildIndicator(color: data.color, text: data.name),
-                ))
-            .toList(),
-      );
-  Widget buildIndicator(
-          {required Color color,
-          required String text,
-          bool isSquare = false,
-          double size = 16,
-          Color textColor = const Color(0xff505050)}) =>
-      Row(
-        children: <Widget>[
-          Container(
-            width: size,
-            height: size,
-            decoration: BoxDecoration(
-                shape: isSquare ? BoxShape.rectangle : BoxShape.circle,
-                color: color),
-          ),
-          const SizedBox(width: 8),
-          Text(
-            text,
-            style: TextStyle(
-                fontSize: 16, fontWeight: FontWeight.bold, color: textColor),
-          )
-        ],
-      );
 }
 
 class _SampleCard extends StatelessWidget {
