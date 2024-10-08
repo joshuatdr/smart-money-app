@@ -2,72 +2,88 @@ import 'package:flutter/material.dart';
 import 'package:smart_money_app/common/sizes.dart';
 import 'package:smart_money_app/common/image_strings.dart';
 import 'package:smart_money_app/common/styles/spacing_styles.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:status_alert/status_alert.dart';
+import 'package:smart_money_app/services/api.dart';
+import 'package:smart_money_app/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
-class EditBudgetPage extends StatefulWidget {
+class AddBudget extends StatefulWidget {
   @override
-  State<EditBudgetPage> createState() => _EditBudgetPageState();
+  State<AddBudget> createState() => _AddBudgetState();
 }
 
-class _EditBudgetPageState extends State<EditBudgetPage> {
-  Future<void> updateUser(
-    int userId,
-    String fname,
-    String email,
-    String password,
-    String income,
-    String savingsTarget,
-  ) async {
-    final response = await http.patch(
-      Uri.parse("https://smart-money-backend.onrender.com/api/user/$userId"),
-      headers: <String, String>{
-        "Content-Type": "application/json; charset=UTF-8",
-      },
-      body: jsonEncode(<String, dynamic>{
-        "email": email,
-        "password": password,
-        "fname": fname,
-        "income": income,
-        "savings_target": savingsTarget
-      }),
+class _AddBudgetState extends State<AddBudget> {
+  void showSuccessAlert(BuildContext context) {
+    StatusAlert.show(
+      context,
+      duration: Duration(seconds: 2),
+      title: 'Success',
+      subtitle: 'Expense added!',
+      configuration: IconConfiguration(icon: Icons.check),
+      backgroundColor: Colors.lightBlue.shade900,
     );
-    if (response.statusCode == 201) {
-      // If the server returns a 200 OK response, then the user was successfully updated.
-      if (!mounted) return;
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text("User Updated"),
-            content: Text("user updated successfully."),
-            actions: [
-              MaterialButton(
-                child: Text("OK"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    } else {
-      // If the server did not return a 201 OK response,
-      // then throw an exception.
-      throw Exception("Failed to update user");
-    }
+    Navigator.pop(context);
+  }
+
+  void showErrorAlert(BuildContext context) {
+    StatusAlert.show(
+      context,
+      duration: Duration(seconds: 2),
+      title: 'Error',
+      subtitle: 'Something went wrong!',
+      configuration: IconConfiguration(icon: Icons.error),
+    );
   }
 
   bool isChecked = false;
+  bool successMsg = false;
   final _formfield = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final costController = TextEditingController();
+  _register(userId) async {
+    var data = {
+      'name': nameController.text,
+      'cost': costController.text,
+      'user_id': userId,
+    };
+
+    var res = await UserServices().postExpense(data);
+    var body = jsonDecode(res.body);
+
+    if (body['expense']['monthly_expense_id'] >= 1) {
+      nameController.clear();
+      costController.clear();
+
+      if (!mounted) return;
+      showSuccessAlert(context);
+    } else {
+      if (!mounted) return;
+      showErrorAlert(context);
+    }
+  }
 
   var dark = false;
 
   @override
   Widget build(BuildContext context) {
+    String? validateName(value) {
+      if (value!.isEmpty) {
+        return 'Enter a valid name';
+      } else {
+        return null;
+      }
+    }
+
+    String? validateCost(value) {
+      if (value!.isEmpty) {
+        return 'Please enter a cost';
+      } else {
+        return null;
+      }
+    }
+
+    var userId = context.watch<UserProvider>().userID;
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -107,10 +123,9 @@ class _EditBudgetPageState extends State<EditBudgetPage> {
                           prefixIcon: Icon(Icons.money_off),
                           labelText: "Name",
                         ),
+                        validator: validateName,
                       ),
-
                       const SizedBox(height: JSizes.spaceBtwItems),
-
                       TextFormField(
                         keyboardType: TextInputType.numberWithOptions(),
                         controller: costController,
@@ -118,13 +133,10 @@ class _EditBudgetPageState extends State<EditBudgetPage> {
                           prefixIcon: Icon(Icons.money_outlined),
                           labelText: "Cost",
                         ),
+                        validator: validateCost,
                       ),
-
                       const SizedBox(height: JSizes.spaceBtwItems),
-
                       const SizedBox(height: JSizes.spaceBtwItems),
-
-                      /// sign in button
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: SizedBox(
@@ -139,7 +151,12 @@ class _EditBudgetPageState extends State<EditBudgetPage> {
                                           ..color = Colors.white,
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
-                                onPressed: () {},
+                                onPressed: () {
+                                  if (_formfield.currentState!.validate()) {
+                                    // print("success");
+                                    _register(userId);
+                                  }
+                                },
                                 child: Text("Submit changes"))),
                       ),
                       Column(

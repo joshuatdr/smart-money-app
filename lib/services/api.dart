@@ -174,6 +174,18 @@ print(baseUrl);
     );
   }
 
+  postExpense(data) async {
+    var userID = data['user_id'];
+    String baseUrl =
+        "https://smart-money-backend.onrender.com/api/user/$userID/expenses";
+
+    return await http.post(
+      Uri.parse(baseUrl),
+      body: jsonEncode(data),
+      headers: _setHeaders(),
+    );
+  }
+  
   getAllUserExpenses(userID) async {
     String baseUrl =
         "https://smart-money-backend.onrender.com/api/user/$userID/expenses";
@@ -196,6 +208,7 @@ print(baseUrl);
       throw Exception(e.toString()); // if error convert error to a string.
     }
   }
+
 
   _setHeaders() => {
         'Content-type': 'application/json',
