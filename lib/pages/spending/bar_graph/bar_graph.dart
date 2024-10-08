@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:smart_money_app/pages/spending/bar_graph/bar_data.dart';
+import 'dart:math';
 
 class WeekdayBarChart extends StatelessWidget {
-  final List weeklySummary;
+  final List<double> weeklySummary;
   const WeekdayBarChart({
     super.key,
     required this.weeklySummary,
@@ -11,6 +12,7 @@ class WeekdayBarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double chartMaxHeight = weeklySummary.reduce(max);
     BarData weekdayBarData = BarData(
       sunAmount: weeklySummary[0],
       monAmount: weeklySummary[1],
@@ -25,7 +27,7 @@ class WeekdayBarChart extends StatelessWidget {
     return SizedBox(
       height: 400,
       child: BarChart(BarChartData(
-        maxY: 100,
+        maxY: chartMaxHeight,
         minY: 0,
         gridData: FlGridData(show: false),
         borderData: FlBorderData(show: false),
@@ -46,14 +48,14 @@ class WeekdayBarChart extends StatelessWidget {
                 x: data.x,
                 barRods: [
                   BarChartRodData(
-                      toY: data.y,
+                      toY: num.parse(data.y.toStringAsFixed(2)).toDouble(),
                       color: Colors.blue[900],
                       width: 25,
                       borderRadius: BorderRadius.circular(4),
                       backDrawRodData: BackgroundBarChartRodData(
                         show: true,
-                        toY: 100,
-                        color: Colors.grey[200],
+                        toY: chartMaxHeight,
+                        color: Colors.blue[100],
                       ))
                 ],
               ),
@@ -68,7 +70,7 @@ Widget getBottomTitles(double value, TitleMeta meta) {
   const style = TextStyle(
     color: Colors.blue,
     fontWeight: FontWeight.bold,
-    fontSize: 14,
+    fontSize: 12,
   );
 
   Widget text;
