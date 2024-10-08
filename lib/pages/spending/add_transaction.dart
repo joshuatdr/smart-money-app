@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:smart_money_app/services/api.dart';
-import '../../common/styles/spacing_styles.dart';
-import '../../common/sizes.dart';
+import 'package:smart_money_app/common/styles/spacing_styles.dart';
+import 'package:smart_money_app/common/sizes.dart';
 import 'package:status_alert/status_alert.dart';
 import 'package:provider/provider.dart';
-import '../../providers/user_provider.dart';
+import 'package:smart_money_app/providers/user_provider.dart';
 
 class AddTransactionScreen extends StatefulWidget {
   @override

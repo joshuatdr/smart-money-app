@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../model/transactions.dart';
-import '../../services/api.dart';
+import 'package:smart_money_app/model/transactions.dart';
+import 'package:smart_money_app/services/api.dart';
 import 'package:provider/provider.dart';
-import '../../providers/user_provider.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:http/http.dart' as http;
 import 'package:smart_money_app/pages/spending/edit_transaction.dart';
+import 'package:smart_money_app/providers/user_provider.dart';
 
 Future<void> deleteTransaction(int transactionId, int userId) async {
   final response = await http.delete(Uri.parse(

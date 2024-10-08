@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:smart_money_app/pages/auth/login.dart';
-import '../../common/styles/spacing_styles.dart';
-import '../../common/image_strings.dart';
-import '../../common/sizes.dart';
-import '../../common/ttexts.dart';
+import 'package:smart_money_app/common/ttexts.dart';
+import 'package:smart_money_app/common/sizes.dart';
+import 'package:smart_money_app/common/image_strings.dart';
+import 'package:smart_money_app/common/styles/spacing_styles.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:smart_money_app/services/config.dart';
