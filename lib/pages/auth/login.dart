@@ -64,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
         blurPower: .3,
         duration: Duration(seconds: 4),
         title: 'Error', 
-        subtitle: 'Incorrect login',
+        subtitle: 'Incorrect Login',
         configuration: IconConfiguration(
         icon: Icons.error,
         color: Colors.white,

@@ -305,7 +305,17 @@ class _ChangePassState extends State<ChangePass> {
                                       title: 'Error',
                                       subtitle: "Passwords Don't Match",
                                       configuration:
-                                          IconConfiguration(icon: Icons.error),
+                                          IconConfiguration(icon:
+                                           Icons.error,
+                                          color: Colors.white,
+                                            ),
+                                            backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
+                                            subtitleOptions: StatusAlertTextConfiguration(
+                                            style: TextStyle(color: Colors.white, fontSize: 24),
+                                            ),
+                                            titleOptions: StatusAlertTextConfiguration(
+                                            style: TextStyle(color: Colors.white, fontSize: 24),
+                                            ),
                                     );
                                   }
                                 }
