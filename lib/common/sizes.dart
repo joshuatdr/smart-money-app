@@ -4,7 +4,7 @@ class JSizes {
   static const double sm = 8.0;
 
   // AppBar Height
-  static const double appBarHeight = 56.0;
+  static const double appBarHeight = 50.0;
 
   // default spaces
   static const double defaultSpace = 24.0;

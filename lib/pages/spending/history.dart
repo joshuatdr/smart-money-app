@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../providers/user_provider.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:http/http.dart' as http;
+import 'package:smart_money_app/pages/spending/edit_transaction.dart';
 
 Future<void> deleteTransaction(int transactionId, int userId) async {
   final response = await http.delete(Uri.parse(
@@ -115,15 +116,21 @@ class _HistoryScreenState extends State<HistoryScreen> {
             maxLines: 2,
             softWrap: false,
           )),
-          DataCell(
-            Icon(Icons.image_outlined, color: Colors.lightBlue[500]),
+           DataCell(
+            Icon(!data.imgUrl.isEmpty ? Icons.image_outlined : Icons.image_not_supported, color: Colors.lightBlue[500])
           ),
           DataCell(
             Icon(Icons.edit, color: Colors.lightBlue[500]),
-            // onTap: () async {
-            //   await promptTransaction(context, data, userId)
-            //       .then((value) => {setState(() {})});
-            // },
+            onTap: () async {
+         await Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (context) 
+                                    => EditTransaction(name:data.name, cost:data.cost, imgUrl:data.imgUrl, createdAt:data.createdAt, transactionId: data.transactionId, desc: data.desc,)),
+                              ).then((value) {
+                                print(value);
+                                setState(() {});
+                              });
+            },
           ),
           DataCell(
             Icon(Icons.delete_forever, color: Colors.lightBlue[500]),
