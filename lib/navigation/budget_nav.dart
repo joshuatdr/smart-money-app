@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:smart_money_app/pages/budget/add_budget.dart';
 import 'package:smart_money_app/pages/budget/budget.dart';
-import 'package:smart_money_app/pages/budget/edit_budget.dart';
 
 class BudgetNav extends StatefulWidget {
   const BudgetNav({super.key});
@@ -21,7 +21,7 @@ class _BudgetNavState extends State<BudgetNav> {
               settings: settings,
               builder: (BuildContext context) {
                 if (settings.name == '/editbudget') {
-                  return EditBudgetPage();
+                  return AddBudget();
                 }
                 return BudgetPage();
               });
