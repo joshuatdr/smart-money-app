@@ -20,8 +20,17 @@ class _AddBudgetState extends State<AddBudget> {
       duration: Duration(seconds: 2),
       title: 'Success',
       subtitle: 'Expense added!',
-      configuration: IconConfiguration(icon: Icons.check),
-      backgroundColor: Colors.lightBlue.shade900,
+      configuration: IconConfiguration(
+        icon: Icons.check,
+        color: Colors.white,
+      ),
+      backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
+      subtitleOptions: StatusAlertTextConfiguration(
+        style: TextStyle(color: Colors.white, fontSize: 24),
+      ),
+      titleOptions: StatusAlertTextConfiguration(
+        style: TextStyle(color: Colors.white, fontSize: 24),
+      ),
     );
     Navigator.pop(context);
   }
@@ -85,12 +94,18 @@ class _AddBudgetState extends State<AddBudget> {
 
     var userId = context.watch<UserProvider>().userID;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: JSpacingStyle.paddingWithAppBarHeight,
-          child: Column(
-            children: [
-              /// Logo, Title & Sub Title
+        appBar: PreferredSize(
+            preferredSize: Size.fromHeight(50.0),
+            child: AppBar(
+              automaticallyImplyLeading: false,
+              centerTitle: true,
+              backgroundColor: Colors.lightBlue.shade900,
+              title: Text("Add Expense", style: TextStyle(color: Colors.white)),
+            )),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: JSpacingStyle.paddingWithAppBarHeight,
+            child: Column(children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -101,8 +116,8 @@ class _AddBudgetState extends State<AddBudget> {
                       image: AssetImage(dark ? JImages.flag : JImages.flag),
                     ),
                   ),
-                  Text("Add expense",
-                      style: Theme.of(context).textTheme.headlineMedium),
+                  // Text("Add expense",
+                  //     style: Theme.of(context).textTheme.headlineMedium),
                   const SizedBox(
                     height: JSizes.sm,
                   ),
@@ -159,31 +174,24 @@ class _AddBudgetState extends State<AddBudget> {
                                 },
                                 child: Text("Submit changes"))),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(30),
-                            child: FilledButton.icon(
-                              label: Text("Back"),
-                              icon: const Icon(Icons.arrow_back),
-                              iconAlignment: IconAlignment.start,
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                            ),
-                          ),
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.all(30),
+                        child: FilledButton.icon(
+                          label: Text("Back"),
+                          icon: const Icon(Icons.arrow_back),
+                          iconAlignment: IconAlignment.start,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
                       ),
                     ],
                   ),
                 ),
               ),
-              //
-            ],
+            ]),
           ),
-        ),
-      ),
-    );
+          //
+        ));
   }
 }
