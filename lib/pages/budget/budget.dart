@@ -50,8 +50,6 @@ class BudgetPage extends StatefulWidget {
 }
 
 class _BudgetPageState extends State<BudgetPage> {
-  late final userId = context.watch<UserProvider>().userID;
-
   List<PieChartSectionData> getSections(int touchedIndex) => PieData.data
       .asMap()
       .map<int, PieChartSectionData>((index, data) {
@@ -122,27 +120,30 @@ class _BudgetPageState extends State<BudgetPage> {
     );
   }
 
-  DataRow getDataRow(index, data) {
-    return DataRow(
-      cells: <DataCell>[
-        DataCell(Text(data.name)), //add name of your columns here
-        DataCell(Text('£${data.cost}')),
-        DataCell(
-          Icon(Icons.image_outlined, color: Colors.lightBlue[500]),
-        ),
-        DataCell(
-          Icon(Icons.delete_forever, color: Colors.lightBlue[500]),
-          onTap: () async {
-            await promptExpense(context, data, userId)
-                .then((value) => {setState(() {})});
-          },
-        ),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    AsyncSnapshot.waiting();
+    int userID = context.watch<UserProvider>().userID;
+
+    DataRow getDataRow(index, data) {
+      return DataRow(
+        cells: <DataCell>[
+          DataCell(Text(data.name)), //add name of your columns here
+          DataCell(Text('£${data.cost}')),
+          DataCell(
+            Icon(Icons.image_outlined, color: Colors.lightBlue[500]),
+          ),
+          DataCell(
+            Icon(Icons.delete_forever, color: Colors.lightBlue[500]),
+            onTap: () async {
+              await promptExpense(context, data, userID)
+                  .then((value) => {setState(() {})});
+            },
+          ),
+        ],
+      );
+    }
+
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -168,7 +169,7 @@ class _BudgetPageState extends State<BudgetPage> {
         body: SingleChildScrollView(
           child: Column(children: [
             FutureBuilder(
-                future: UserServices().getAllUserExpenses(userId),
+                future: UserServices().getAllUserExpenses(userID),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     var results = snapshot.data as List<Expenses>;
