@@ -23,16 +23,15 @@ class _AddGoalPageState extends State<AddGoalPage> {
       subtitle: 'Goal added!',
       configuration: IconConfiguration(
         icon: Icons.check,
-      
         color: Colors.white,
-        ),
-        backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
-        subtitleOptions: StatusAlertTextConfiguration(
+      ),
+      backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
+      subtitleOptions: StatusAlertTextConfiguration(
         style: TextStyle(color: Colors.white, fontSize: 24),
-        ),
-        titleOptions: StatusAlertTextConfiguration(
+      ),
+      titleOptions: StatusAlertTextConfiguration(
         style: TextStyle(color: Colors.white, fontSize: 24),
-        ),
+      ),
     );
     Navigator.pop(context);
   }
@@ -47,14 +46,14 @@ class _AddGoalPageState extends State<AddGoalPage> {
       configuration: IconConfiguration(
         icon: Icons.error,
         color: Colors.white,
-        ),
-        backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
-        subtitleOptions: StatusAlertTextConfiguration(
+      ),
+      backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
+      subtitleOptions: StatusAlertTextConfiguration(
         style: TextStyle(color: Colors.white, fontSize: 24),
-        ),
-        titleOptions: StatusAlertTextConfiguration(
+      ),
+      titleOptions: StatusAlertTextConfiguration(
         style: TextStyle(color: Colors.white, fontSize: 24),
-        ),
+      ),
     );
   }
 
