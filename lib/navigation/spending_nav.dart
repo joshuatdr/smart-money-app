@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_money_app/pages/spending/add_transaction.dart';
 import 'package:smart_money_app/pages/spending/history.dart';
-import 'package:smart_money_app/pages/spending/graph.dart';
+import 'package:smart_money_app/pages/spending/graph_view.dart';
 
 class SpendingNav extends StatefulWidget {
   const SpendingNav({super.key});
@@ -21,8 +21,8 @@ class _SpendingNavState extends State<SpendingNav> {
           return MaterialPageRoute(
               settings: settings,
               builder: (BuildContext context) {
-                if (settings.name == '/spending') {
-                  return SpendingPage();
+                if (settings.name == '/graphview') {
+                  return GraphView();
                 } else if (settings.name == '/addtransaction') {
                   return AddTransactionScreen();
                 }

@@ -1,22 +1,77 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:smart_money_app/pages/spending/bar_graph/bar_graph.dart';
+import 'package:smart_money_app/providers/user_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_money_app/services/api.dart';
+import 'package:smart_money_app/model/transactions.dart';
 
-class SpendingPage extends StatefulWidget {
-  const SpendingPage({super.key});
+class GraphView extends StatefulWidget {
+  const GraphView({super.key});
 
   @override
-  State<SpendingPage> createState() => _SpendingPageState();
+  State<GraphView> createState() => _GraphViewState();
 }
 
-class _SpendingPageState extends State<SpendingPage> {
+class _GraphViewState extends State<GraphView> {
   final _key = GlobalKey<ExpandableFabState>();
+
+  List<double> weeklySummary = [
+    4.40,
+    2.50,
+    42.42,
+    10.50,
+    100.20,
+    88.99,
+    90.10,
+  ];
+
   @override
   Widget build(BuildContext context) {
+    final userID = context.watch<UserProvider>().userID;
+
     return Scaffold(
-      body: Placeholder(),
+      backgroundColor: Colors.blue[100],
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        backgroundColor: Colors.lightBlue.shade900,
+        title: Text("Graph View", style: TextStyle(color: Colors.white)),
+      ),
+      body: Center(
+        child: _renderBarGraph(userID),
+      ),
       floatingActionButtonLocation: ExpandableFab.location,
       floatingActionButton: _renderFloatingActionButton(context),
     );
+  }
+
+  FutureBuilder<Object?> _renderBarGraph(int userID) {
+    return FutureBuilder(
+        future: UserServices().getAllUserTransactions(userID),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            var results = snapshot.data as List<Transactions>;
+            if (results.isNotEmpty) {
+              return WeekdayBarChart(
+                weeklySummary: weeklySummary,
+              );
+            } else {
+              return Center(
+                child: Text("No data to show!"),
+              );
+            }
+          } else {
+            return Center(
+              child: SizedBox(
+                // ignore: sort_child_properties_last
+                child: CircularProgressIndicator(),
+                width: 30,
+                height: 30,
+              ),
+            );
+          }
+        });
   }
 
   ExpandableFab _renderFloatingActionButton(BuildContext context) {
@@ -62,7 +117,7 @@ class _SpendingPageState extends State<SpendingPage> {
         ),
         Row(
           children: [
-            Text('View History'),
+            Text('Spending History'),
             SizedBox(width: 20),
             FloatingActionButton.small(
               backgroundColor: Colors.blue.shade600,

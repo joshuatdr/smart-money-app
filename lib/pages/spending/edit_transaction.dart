@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:smart_money_app/services/api.dart';
-import 'package:smart_money_app/pages/spending/history.dart';
 import 'package:smart_money_app/common/styles/spacing_styles.dart';
 import 'package:smart_money_app/common/sizes.dart';
 import 'package:provider/provider.dart';
@@ -101,6 +100,7 @@ class _EditTransactionState extends State<EditTransaction> {
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: AppBar(
+            automaticallyImplyLeading: false,
             centerTitle: true,
             backgroundColor: Colors.lightBlue.shade900,
             title:
@@ -221,15 +221,14 @@ class _EditTransactionState extends State<EditTransaction> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(30),
-                            child: TextButton(
-                                onPressed: () async {
-                                  Navigator.pop(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => HistoryScreen()),
-                                  );
-                                },
-                                child: const Text("Back to Transactions")),
+                            child: FilledButton.icon(
+                              label: Text("Back"),
+                              icon: const Icon(Icons.arrow_back),
+                              iconAlignment: IconAlignment.start,
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
                           ),
                         ],
                       ),
