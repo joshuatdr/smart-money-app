@@ -8,6 +8,7 @@ class Transactions {
   String? imgUrl;
   String? createdAt;
   int? userId;
+  String? desc;
 
   Transactions(
     {this.transactionId,
@@ -15,7 +16,8 @@ class Transactions {
     this.cost,
     this.imgUrl,
     this.createdAt,
-    this.userId}
+    this.userId,
+    this.desc}
   ); // This is the constructor
 
   Transactions.fromJson(Map<String, dynamic> json) {
@@ -30,5 +32,6 @@ class Transactions {
     imgUrl == json['img_url'];
   }
   userId = json['user_id'];
+  desc = json['description'];
   }
 }
