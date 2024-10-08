@@ -61,11 +61,22 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       StatusAlert.show(
         context,
-        duration: Duration(seconds: 2),
-        title: 'Error',
+        blurPower: .3,
+        duration: Duration(seconds: 4),
+        title: 'Error', 
         subtitle: 'Incorrect login',
-        configuration: IconConfiguration(icon: Icons.error),
-      );
+        configuration: IconConfiguration(
+        icon: Icons.error,
+        color: Colors.white,
+        ),
+        backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
+        subtitleOptions: StatusAlertTextConfiguration(
+        style: TextStyle(color: Colors.white, fontSize: 24),
+        ),
+        titleOptions: StatusAlertTextConfiguration(
+        style: TextStyle(color: Colors.white, fontSize: 24),
+        ),
+        );
     }
   }
 

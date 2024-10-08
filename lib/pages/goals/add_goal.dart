@@ -21,8 +21,18 @@ class _AddGoalPageState extends State<AddGoalPage> {
       duration: Duration(seconds: 2),
       title: 'Success',
       subtitle: 'Goal added!',
-      configuration: IconConfiguration(icon: Icons.check),
-      backgroundColor: Colors.lightBlue.shade900,
+      configuration: IconConfiguration(
+        icon: Icons.check,
+      
+        color: Colors.white,
+        ),
+        backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
+        subtitleOptions: StatusAlertTextConfiguration(
+        style: TextStyle(color: Colors.white, fontSize: 24),
+        ),
+        titleOptions: StatusAlertTextConfiguration(
+        style: TextStyle(color: Colors.white, fontSize: 24),
+        ),
     );
     Navigator.pop(context);
   }

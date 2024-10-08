@@ -20,8 +20,17 @@ class _EditProfileState extends State<EditProfile> {
       duration: Duration(seconds: 2),
       title: 'Success',
       subtitle: 'Profile Updated',
-      configuration: IconConfiguration(icon: Icons.check),
-      backgroundColor: Colors.lightBlue.shade600,
+      configuration: IconConfiguration(
+        icon: Icons.check,
+        color: Colors.white,
+        ),
+        backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
+        subtitleOptions: StatusAlertTextConfiguration(
+        style: TextStyle(color: Colors.white, fontSize: 24),
+        ),
+        titleOptions: StatusAlertTextConfiguration(
+        style: TextStyle(color: Colors.white, fontSize: 24),
+        ),
     );
     Navigator.pop(context);
   }

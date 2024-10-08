@@ -64,10 +64,22 @@ class _SignupScreenState extends State<SignupScreen> {
       if (!mounted) return;
       StatusAlert.show(
         context,
-        duration: Duration(seconds: 2),
+        blurPower: 0.3,
+        duration: Duration(seconds: 4),
         title: 'Error',
         subtitle: 'A user already exists with that email.',
-        configuration: IconConfiguration(icon: Icons.error),
+                configuration: IconConfiguration(
+        icon: Icons.error,
+        color: Colors.white,
+        ),
+        backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
+        subtitleOptions: StatusAlertTextConfiguration(
+        style: TextStyle(color: Colors.white, fontSize: 24),
+        ),
+        titleOptions: StatusAlertTextConfiguration(
+        style: TextStyle(color: Colors.white, fontSize: 24),
+      
+        ),
       );
     }
   }
