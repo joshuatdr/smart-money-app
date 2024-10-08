@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-//import 'package:smart_money_app/pages/dashboard.dart';
-//import 'package:smart_money_app/pages/edit_profile.dart';
-import '../../../model/expenses.dart';
-import '../../../services/api.dart';
-import '../../../providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:fl_chart/fl_chart.dart';
+import 'package:smart_money_app/providers/user_provider.dart';
+import 'package:smart_money_app/services/api.dart';
+import 'package:smart_money_app/model/expenses.dart';
 
 class PieData {
   static List<Data> data = [

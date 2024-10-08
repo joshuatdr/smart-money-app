@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:smart_money_app/pages/auth/signup.dart';
-import '../../common/styles/spacing_styles.dart';
-import '../../common/image_strings.dart';
-import '../../common/sizes.dart';
-import '../../common/ttexts.dart';
+import 'package:smart_money_app/common/ttexts.dart';
+import 'package:smart_money_app/common/sizes.dart';
+import 'package:smart_money_app/common/image_strings.dart';
+import 'package:smart_money_app/common/styles/spacing_styles.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:smart_money_app/services/config.dart';
 import 'package:status_alert/status_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../home/dashboard.dart';
+import 'package:smart_money_app/pages/home/dashboard.dart';
 
 class LoginScreen extends StatefulWidget {
   @override

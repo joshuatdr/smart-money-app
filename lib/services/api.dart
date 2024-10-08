@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:smart_money_app/model/goals.dart';
-import '../model/user.dart';
-import '../model/transactions.dart';
-import '../model/expenses.dart';
+import 'package:smart_money_app/model/expenses.dart';
+import 'package:smart_money_app/model/transactions.dart';
+import 'package:smart_money_app/model/user.dart';
 
 // This class sends the get request from the endpoint
 
