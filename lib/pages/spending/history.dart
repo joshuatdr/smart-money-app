@@ -158,8 +158,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         automaticallyImplyLeading: false,
         centerTitle: true,
         backgroundColor: Colors.lightBlue.shade900,
-        title:
-            Text("Transaction History", style: TextStyle(color: Colors.white)),
+        title: Text("Spending History", style: TextStyle(color: Colors.white)),
         // actions: <Widget>[
         //   IconButton(
         //       icon: const Icon(Icons.edit),
@@ -286,7 +285,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
       children: [
         Row(
           children: [
-            Text('Add Purchase'),
+            Text('Add Transaction'),
             SizedBox(width: 20),
             FloatingActionButton.small(
               backgroundColor: Colors.blue.shade600,
@@ -314,7 +313,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               backgroundColor: Colors.blue.shade600,
               heroTag: null,
               onPressed: () {
-                Navigator.pushNamed(context, '/spending').then(
+                Navigator.pushNamed(context, '/graphview').then(
                   (value) {
                     setState(() {});
                   },
