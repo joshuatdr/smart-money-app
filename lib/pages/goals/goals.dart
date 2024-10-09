@@ -39,8 +39,9 @@ class GoalsPage extends StatefulWidget {
 class _GoalsPageState extends State<GoalsPage> {
   final _key = GlobalKey<ExpandableFabState>();
   var editMode = false;
-  var deleteMode = false;
-  var isFocused = 0;
+  late var isFocused = context.watch<UserProvider>().focusGoal;
+  var data = {};
+
 
   setEditMode() {
     setState(() {
@@ -49,12 +50,20 @@ class _GoalsPageState extends State<GoalsPage> {
   }
 
   setIsFocused(goalID) {
-    if (goalID) {
+   // if (goalID) {
       setState(() {
         isFocused = goalID;
       });
-    }
   }
+
+  Future<void> _edit(data, userId) async {
+    print(data);
+    print(userId);
+
+    var res = await UserServices().patchUser(data, userId);
+    print(res.body);
+  }
+
 
   Future<void> deleteGoal(int goalId, int userId) async {
     var res = await UserServices().deleteUserGoal('$userId/goals/$goalId');
@@ -63,7 +72,6 @@ class _GoalsPageState extends State<GoalsPage> {
       if (!mounted) return;
       showSuccessAlert(context);
     } else {
-      // print('FAIL');
       if (!mounted) return;
       showErrorAlert(context);
     }
@@ -284,7 +292,24 @@ class _GoalsPageState extends State<GoalsPage> {
               child: SizedBox(
                 width: 40,
                 child: ElevatedButton(
-                    onPressed: () async {
+                   onPressed: () async {
+                      if (isFocused != results[index].goalID ){
+                
+print(isFocused);
+setIsFocused(results[index].goalID);
+context.read<UserProvider>().changeFocusGoal(newFocusGoal:isFocused);
+ data['focus_goal'] = results[index].goalID;
+ _edit(data, userId) ;
+
+                      }
+//print(context.watch<UserProvider>().changeFocusGoal);
+// //context.read<UserProvider>().changeFocusGoal(newFocusGoal: isFocused)
+// }).then(()=>{
+//   data['focus_goal'] = results[index].goalID
+// }).then(()=>{
+// _edit(data, userId) 
+// });
+                     /* print(results[index].goalID);
                       if (results[index].goalID == isFocused) {
                         setIsFocused(0).then((value) {
                           setState(() {});
@@ -293,17 +318,20 @@ class _GoalsPageState extends State<GoalsPage> {
                         setIsFocused(results[index].goalID).then((value) {
                           setState(() {});
                         });
-                      }
+                      }*/
                     },
-                    style: ElevatedButton.styleFrom(
+
+                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(0, 255, 255, 255)
                           .withOpacity(0.00),
                       padding: EdgeInsets.zero,
                     ),
+                   
                     child: Icon(Icons.remove_red_eye,
-                        color: Colors.white.withOpacity(0.1))),
+                        color: (isFocused != results[index].goalID) ? Colors.white: const Color.fromARGB(255, 204, 42, 42))),
               ),
             ),
+
             if (editMode)
               Padding(
                 padding: const EdgeInsets.all(4.0),

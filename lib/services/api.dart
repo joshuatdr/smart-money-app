@@ -162,6 +162,33 @@ class UserServices {
     }
   }
 
+  getUserGoal(userID, goalId) async {
+    String baseUrl =
+        "https://smart-money-backend.onrender.com/api/user/$userID/goals/$goalId"; // create a variable String to store the API Base URL
+    // create an asynchronous function
+   List<Goals> allGoals = [];
+    try {
+      var response = await http.get(Uri.parse(baseUrl));
+      if (response.statusCode == 200) {
+        var data = response.body;
+        var decodedData = jsonDecode(data);
+        var goals = decodedData['goals'];
+
+print(goals); 
+
+        for (var goal in goals) {
+          Goals newGoal = Goals.fromJson(goal);
+          allGoals.add(newGoal);
+        }
+        print(allGoals);
+        return allGoals;
+      }
+    } catch (e) {
+      print(e);
+      throw Exception(e.toString()); // if error convert error to a string.
+    }
+  }
+
   postUserGoal(data) async {
     var userID = data['user_id'];
     String baseUrl =
@@ -228,6 +255,21 @@ class UserServices {
       throw Exception(e.toString()); // if error convert error to a string.
     }
   }
+
+
+patchUser(data, userId) async {
+   //var userID = data['user_id'];
+    String baseUrl =
+        "https://smart-money-backend.onrender.com/api/user/$userId";
+
+    return await http.patch(
+      Uri.parse(baseUrl),
+      body: jsonEncode(data),
+      headers: _setHeaders(),
+    );
+  }
+
+
 
   _setHeaders() => {
         'Content-type': 'application/json',
