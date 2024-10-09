@@ -175,7 +175,7 @@ class HomePage extends StatelessWidget {
         children: [
           BigCard(
               greeting: context.watch<UserProvider>().newUser
-                  ? 'Welcome'
+                  ? 'Hello, nice to meet you!'
                   : greetings[Random().nextInt(greetings.length)]),
           ElevatedButton(
             onPressed: () {
