@@ -49,14 +49,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.5"
-  english_words:
-    dependency: "direct main"
-    description:
-      name: english_words
-      sha256: "6a7ef6473a97bd8571b6b641d006a6e58a7c67e65fb6f3d6d1151cb46b0e983c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.0"
   equatable:
     dependency: transitive
     description:
@@ -168,14 +160,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
-  insta_image_viewer:
-    dependency: "direct main"
-    description:
-      name: insta_image_viewer
-      sha256: "5c3150415d19945ee7eb9a986ed636219e384164e53a4854e8c6f3dbb3b3e197"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.4"
   intl:
     dependency: "direct main"
     description:

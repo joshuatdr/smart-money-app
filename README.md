@@ -36,13 +36,11 @@ To interact with this API locally you will need to carry out the following instr
 - [jwt_decoder](https://pub.dev/packages/jwt_decoder)
 - [flutter_swiper_view](https://pub.dev/packages/flutter_swiper_view)
 - [flutter_expandable_fab](https://pub.dev/packages/flutter_expandable_fab)
-- [english_words](https://pub.dev/packages/english_words)
 - [provider](https://pub.dev/packages/provider)
 - [http](https://pub.dev/packages/http)
 - [intl](https://pub.dev/packages/intl)
 - [status_alert](https://pub.dev/packages/status_alert)
 - [fl_chart](https://pub.dev/packages/fl_chart)
-- [insta_image_viewer](https://pub.dev/packages/insta_image_viewer)
 - [pie_chart](https://pub.dev/packages/pie_chart)
 
 5. to run a local version of the app navigate to main.dart in the lib folder, then type the command `flutter run`
