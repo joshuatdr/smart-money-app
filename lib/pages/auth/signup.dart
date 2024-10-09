@@ -319,21 +319,38 @@ class _SignupScreenState extends State<SignupScreen> {
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
                                 onPressed: () {
-                                  if (passController.text ==
-                                      confirmPassController.text) {
-                                    if (_formfield.currentState!.validate() &&
-                                        isChecked) {
+                                  if (_formfield.currentState!.validate() &&
+                                      isChecked) {
+                                    if (passController.text ==
+                                        confirmPassController.text) {
                                       registerUser();
+                                    } else {
+                                      StatusAlert.show(
+                                        context,
+                                        duration: Duration(seconds: 2),
+                                        title: 'Error',
+                                        subtitle: 'Passwords must match!',
+                                        configuration: IconConfiguration(
+                                          icon: Icons.error,
+                                          color: Colors.white,
+                                        ),
+                                        backgroundColor: Colors
+                                            .lightBlue.shade900
+                                            .withOpacity(.9),
+                                        subtitleOptions:
+                                            StatusAlertTextConfiguration(
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 24),
+                                        ),
+                                        titleOptions:
+                                            StatusAlertTextConfiguration(
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 24),
+                                        ),
+                                      );
                                     }
-                                  } else {
-                                    StatusAlert.show(
-                                      context,
-                                      duration: Duration(seconds: 2),
-                                      title: 'Error',
-                                      subtitle: 'Passwords must match!',
-                                      configuration:
-                                          IconConfiguration(icon: Icons.error),
-                                    );
                                   }
                                 },
                                 child: Text(
