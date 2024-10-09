@@ -134,7 +134,7 @@ class _EditProfileState extends State<EditProfile> {
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
-                          prefixIcon: Icon(Icons.email),
+                          prefixIcon: Icon(Icons.abc),
                           labelText: "Name",
                         ),
                       ),
@@ -148,7 +148,7 @@ class _EditProfileState extends State<EditProfile> {
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
-                          prefixIcon: Icon(Icons.login),
+                          prefixIcon: Icon(Icons.email),
                           labelText: "Email",
                         ),
                         validator: validateEmail,
@@ -162,7 +162,7 @@ class _EditProfileState extends State<EditProfile> {
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
-                          prefixIcon: Icon(Icons.alternate_email),
+                          prefixIcon: Icon(Icons.currency_pound),
                           labelText: "Income",
                         ),
                       ),
@@ -173,7 +173,7 @@ class _EditProfileState extends State<EditProfile> {
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
-                          prefixIcon: Icon(Icons.alternate_email),
+                          prefixIcon: Icon(Icons.balance),
                           labelText: "Savings target",
                         ),
                       ),
