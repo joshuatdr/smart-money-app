@@ -38,6 +38,7 @@ class _DashboardState extends State<Dashboard> {
           loginIncome: jwtDecodedToken['user']['income'],
           loginSavingsTarget: jwtDecodedToken['user']['savings_target'],
           loginCreatedAt: jwtDecodedToken['user']['created_at'],
+          loginFocusGoal: jwtDecodedToken['user']['focus_goal'],
           firstLogin: widget.firstLogin,
         );
   }
