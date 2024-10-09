@@ -1,11 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:smart_money_app/model/goals.dart';
 import 'package:smart_money_app/pages/goals/add_goal.dart';
+import 'package:smart_money_app/pages/goals/edit_goal.dart';
 import 'package:smart_money_app/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_money_app/services/api.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:status_alert/status_alert.dart';
+
+
+void showSuccessAlert(BuildContext context) {
+  StatusAlert.show(
+    context,
+    duration: Duration(seconds: 2),
+    title: 'Success',
+    subtitle: 'Goal Deleted',
+    configuration: IconConfiguration(icon: Icons.check),
+    backgroundColor: Colors.lightBlue.shade600,
+  );
+  Navigator.pop(context);
+}
+
+// Method to show an error alert
+void showErrorAlert(BuildContext context) {
+  StatusAlert.show(
+    context,
+    duration: Duration(seconds: 2),
+    title: 'Error',
+    subtitle: 'Something went wrong!',
+    configuration: IconConfiguration(icon: Icons.error),
+  );
+}
 
 class GoalsPage extends StatefulWidget {
   @override
@@ -14,6 +40,106 @@ class GoalsPage extends StatefulWidget {
 
 class _GoalsPageState extends State<GoalsPage> {
   final _key = GlobalKey<ExpandableFabState>();
+  var editMode = false;
+  var deleteMode = false;
+  var isFocused = 0;
+
+  setEditMode(mode) {
+    if (mode) {
+      setState(() {
+        editMode = true;
+      });
+    } else {
+      setState(() {
+        editMode = false;
+      });
+    }
+  }
+
+  setIsFocused(goalID) {
+    if (goalID) {
+      setState(() {
+        isFocused = goalID;
+      });
+    }
+  }
+
+  Future<void> deleteGoal(int goalId, int userId) async {
+    var res = await UserServices().deleteUserGoal('$userId/goals/$goalId');
+
+    if (res.statusCode == 204) {
+      if (!mounted) return;
+      showSuccessAlert(context);
+    } else {
+      print('FAIL');
+      if (!mounted) return;
+      showErrorAlert(context);
+    }
+  }
+
+  Future promptDeleteGoal(context, data, userId) async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          scrollable: true,
+          title: Center(
+            child: Text(
+              'Delete Goal',
+              style: TextStyle(
+                  color: Colors.lightBlue.shade600,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 20),
+            ),
+          ),
+          content: SizedBox(
+            child: Column(
+              children: [
+                Text(
+                  data.name,
+                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: const Text('Do you want to delete this goal?'),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              TextButton(
+                child: const Text(
+                  'Cancel',
+                  textAlign: TextAlign.left,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: const Text(
+                  'Delete',
+                  style: TextStyle(
+                    color: Colors.red,
+                  ),
+                ),
+                onPressed: () async {
+                  await deleteGoal(data.goalID, userId).then((value) => {
+                        if (context.mounted)
+                          {
+                            Navigator.of(context).pop()
+                          } 
+                      });
+                },
+              ),
+            ]),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -53,7 +179,15 @@ class _GoalsPageState extends State<GoalsPage> {
           backgroundColor: Colors.blue.shade600,
           heroTag: null,
           child: const Icon(Icons.edit, color: Colors.white),
-          onPressed: () {},
+          onPressed: () {
+            final state = _key.currentState;
+            if (state != null) {
+              state.toggle();
+            }
+            setEditMode(true).then((value) {
+              setState(() {});
+            });
+          },
         ),
         FloatingActionButton.small(
           backgroundColor: Colors.blue.shade600,
@@ -67,16 +201,11 @@ class _GoalsPageState extends State<GoalsPage> {
               setState(() {});
             });
             final state = _key.currentState;
+            print(state);
             if (state != null) {
               state.toggle();
             }
           },
-        ),
-        FloatingActionButton.small(
-          backgroundColor: Colors.blue.shade600,
-          heroTag: null,
-          child: const Icon(Icons.remove, color: Colors.white),
-          onPressed: () {},
         ),
       ],
     );
@@ -133,47 +262,155 @@ class _GoalsPageState extends State<GoalsPage> {
   }
 
   Container _goalCard(List<Goals> results, int index, TextStyle style) {
+    var userId = context.watch<UserProvider>().userID;
+
     return Container(
-        width: 400,
-        height: 400,
-        decoration: _goalCardBody(results, index),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      gradient: LinearGradient(colors: [
-                        const Color.fromARGB(160, 18, 18, 18),
-                        Color.fromARGB(160, 54, 53, 53),
-                      ]),
+      //constraints: BoxConstraints(minWidth: 0, maxWidth: 300, maxHeight: 600),
+      //padding: EdgeInsets.all(0),
+      width: 400,
+      height: 400,
+      decoration: _goalCardBody(results, index),
+      child: Column(
+        children: [
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: SizedBox(
+                width: 40,
+                child: ElevatedButton(
+                    onPressed: () async {
+                      if (results[index].goalID == isFocused) {
+                        setIsFocused(0).then((value) {
+                          setState(() {});
+                        });
+                      } else {
+                        setIsFocused(results[index].goalID).then((value) {
+                          setState(() {});
+                        });
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(0, 255, 255, 255)
+                          .withOpacity(0.00),
+                      padding: EdgeInsets.zero,
                     ),
-                    child: Text(results[index].name ??= "",
-                        textAlign: TextAlign.center,
-                        style: style.copyWith(
-                            fontWeight: FontWeight.bold, color: Colors.white))),
+                    child: Icon(Icons.remove_red_eye,
+                        color: Colors.white.withOpacity(0.1))),
               ),
+            ),
+            if (editMode)
               Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      gradient: LinearGradient(colors: [
-                        const Color.fromARGB(160, 18, 18, 18),
-                        Color.fromARGB(160, 54, 53, 53),
-                      ]),
-                    ),
-                    child: Text('£${(results[index].cost ??= 0).toString()}',
-                        textAlign: TextAlign.center,
-                        style: style.copyWith(
-                            fontWeight: FontWeight.bold, color: Colors.white))),
+                padding: const EdgeInsets.all(4.0),
+                child: SizedBox(
+                  width: 40,
+                  child: ElevatedButton(
+                      onPressed: () async {
+                        await promptDeleteGoal(context, results[index], userId)
+                            .then((value) {
+                          setState(() {});
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.orange.shade600,
+                        padding: EdgeInsets.zero,
+                      ),
+                      child: Icon(Icons.close, color: Colors.white)
+                      // child: const Text("Delete Goal"),
+                      ),
+                ),
               ),
-            ],
+          ]),
+          SizedBox(
+            height: 280,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          gradient: LinearGradient(colors: [
+                            const Color.fromARGB(160, 18, 18, 18),
+                            Color.fromARGB(160, 54, 53, 53),
+                          ]),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 8, right: 8, top: 0, bottom: 0),
+                          child: Text(results[index].name ??= "",
+                              textAlign: TextAlign.center,
+                              style: style.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white)),
+                        )),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(0.0),
+                    child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          gradient: LinearGradient(colors: [
+                            const Color.fromARGB(160, 18, 18, 18),
+                            Color.fromARGB(160, 54, 53, 53),
+                          ]),
+                        ),
+                        padding: const EdgeInsets.only(
+                            left: 8, right: 8, top: 0, bottom: 0),
+                        child: Text(
+                            '£${(results[index].cost ??= 0).toString()}',
+                            textAlign: TextAlign.center,
+                            style: style.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white))),
+                  ),
+                ],
+              ),
+            ),
           ),
-        ));
+          if (editMode)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      await Navigator.of(context)
+                          .push(
+                        MaterialPageRoute(
+                            builder: (context) => EditGoal(
+                                name: results[index].name,
+                                cost: results[index].cost,
+                                imgUrl: results[index].imgURL,
+                                desc: results[index].description,
+                                goalId: results[index].goalID)),
+                      )
+                          .then((value) {
+                        setState(() {});
+                      });
+                    },
+                    child: const Text("Edit Goal"),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: FilledButton.icon(
+                    label: Text("Exit"),
+                    icon: const Icon(Icons.edit_off_rounded),
+                    iconAlignment: IconAlignment.start,
+                    onPressed: () async {
+                      await setEditMode(false)
+                          .then((value) => {setState(() {})});
+                    },
+                  ),
+                ),
+              ],
+            ),
+        ],
+      ), //Column
+    ); //Container
   }
 
   BoxDecoration _goalCardBody(List<Goals> results, int index) {
