@@ -53,7 +53,7 @@ class _GraphViewState extends State<GraphView> {
           if (snapshot.hasData) {
             final results = snapshot.data as List<Transactions>;
             if (results.isNotEmpty) {
-              final now = new DateTime.now(); //the date right now
+              final now = DateTime.now(); //the date right now
               final now_1w =
                   now.subtract(Duration(days: 7)); //the date one week ago
 

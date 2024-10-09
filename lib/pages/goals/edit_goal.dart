@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:smart_money_app/services/api.dart';
-import 'package:smart_money_app/pages/spending/history.dart';
 import 'package:smart_money_app/common/styles/spacing_styles.dart';
 import 'package:smart_money_app/common/sizes.dart';
 import 'package:provider/provider.dart';
