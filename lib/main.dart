@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        builder: (context, child) => AccessibilityTools(child: child),
         debugShowCheckedModeBanner: false,
         title: 'Smart Money',
         theme: ThemeData(
