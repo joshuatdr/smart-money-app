@@ -99,7 +99,7 @@ class UserProvider extends ChangeNotifier {
   void changeFocusGoal({
     required int newFocusGoal,
   }) async {
-    savingsTarget = newFocusGoal;
+    focusGoal = newFocusGoal;
     notifyListeners();
   }
 }
