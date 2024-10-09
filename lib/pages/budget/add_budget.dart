@@ -149,7 +149,7 @@ class _AddBudgetState extends State<AddBudget> {
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
-                          prefixIcon: Icon(Icons.money_off),
+                          prefixIcon: Icon(Icons.abc_outlined),
                           labelText: "Name",
                         ),
                         validator: validateName,
@@ -161,7 +161,7 @@ class _AddBudgetState extends State<AddBudget> {
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
-                          prefixIcon: Icon(Icons.money_outlined),
+                          prefixIcon: Icon(Icons.currency_pound),
                           labelText: "Cost",
                         ),
                         validator: validateCost,
@@ -188,7 +188,7 @@ class _AddBudgetState extends State<AddBudget> {
                                     _register(userId);
                                   }
                                 },
-                                child: Text("Submit changes"))),
+                                child: Text("Submit Expense"))),
                       ),
                       TextButton(
                         onPressed: () {

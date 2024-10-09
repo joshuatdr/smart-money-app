@@ -175,21 +175,24 @@ class _EditTransactionState extends State<EditTransaction> {
                       ),
                       const SizedBox(height: JSizes.spaceBtwItems),
                       SizedBox(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: imgUrlController.text != ''
-                              ? Image.network(
-                                  imgUrlController.text,
-                                  width: 200,
-                                  height: 200,
-                                  fit: BoxFit.cover,
-                                )
-                              : Image.asset(
-                                  'placeholder.jpg',
-                                  width: 200,
-                                  height: 200,
-                                  fit: BoxFit.cover,
-                                ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 14.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: imgUrlController.text != ''
+                                ? Image.network(
+                                    imgUrlController.text,
+                                    width: 200,
+                                    height: 200,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.asset(
+                                    'placeholder.jpg',
+                                    width: 200,
+                                    height: 200,
+                                    fit: BoxFit.cover,
+                                  ),
+                          ),
                         ),
                       ),
                       TextFormField(
@@ -199,7 +202,7 @@ class _EditTransactionState extends State<EditTransaction> {
                           filled: true,
                           fillColor: Colors.white,
                           //  prefixIcon: Icon(Icons.alternate_email),
-                          labelText: "Image Url",
+                          labelText: "Image URL (optional)",
                         ),
                       ),
                       const SizedBox(height: JSizes.spaceBtwItems),
@@ -211,7 +214,7 @@ class _EditTransactionState extends State<EditTransaction> {
                           filled: true,
                           fillColor: Colors.white,
                           //    prefixIcon: Icon(Icons.alternate_email),
-                          labelText: 'Description',
+                          labelText: 'Description (optional)',
                         ),
                       ),
                       const SizedBox(height: JSizes.spaceBtwItems),
@@ -249,7 +252,7 @@ class _EditTransactionState extends State<EditTransaction> {
                                     _editTran(data, userID);
                                   }
                                 },
-                                child: Text("Submit changes"))),
+                                child: Text("Submit Changes"))),
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -257,7 +260,7 @@ class _EditTransactionState extends State<EditTransaction> {
                           Padding(
                             padding: const EdgeInsets.all(30),
                             child: FilledButton.icon(
-                              label: Text("Back"),
+                              label: Text("Back to Spending"),
                               icon: const Icon(Icons.arrow_back),
                               iconAlignment: IconAlignment.start,
                               onPressed: () {

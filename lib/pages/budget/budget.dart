@@ -33,42 +33,107 @@ class _BudgetPageState extends State<BudgetPage> {
     Color(0xFFD9CFBE),
   ];
 
-  Future promptExpense(context, data, userId) async {
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Center(child: const Text('Delete Expense')),
-          content: SizedBox(
-            width: 100,
-            height: 200,
-            child: Column(
-              children: [
-                Text(toBeginningOfSentenceCase(data.name)),
-                const Text('Do you want to delete this expense?'),
-              ],
-            ),
+Future promptExpense(context, data, userId) async {
+  await showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        scrollable: true,
+        title: Center(
+          child: Text(
+            'Delete Transaction',
+            style: TextStyle(
+                color: Colors.lightBlue.shade600,
+                fontWeight: FontWeight.w800,
+                fontSize: 20),
           ),
-          actions: <Widget>[
+        ),
+        content: SizedBox(
+          // width: 100,
+          // height: 200,
+          child: Column(
+            children: [
+              Text(
+                data.name,
+                style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+              ),
+              // Text(TextStyle(data.name)),
+              // Text(data.cost),
+              // Text(data.created_at),
+
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Text('Do you want to delete this transaction?'),
+              ),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             TextButton(
-              child: const Text('Cancel'),
+              child: const Text(
+                'Cancel',
+                textAlign: TextAlign.left,
+              ),
               onPressed: () {
                 Navigator.of(context).pop(false); // closes prompt
               },
             ),
             TextButton(
-              child: const Text('Delete'),
+              child: const Text(
+                'Delete',
+                style: TextStyle(
+                  color: Colors.red,
+                ),
+              ),
               onPressed: () async {
                 await deleteExpense(data.expenseId, userId).then((value) => {
-                      if (context.mounted) {Navigator.of(context).pop()}
-                    });
+                          if (context.mounted) {Navigator.of(context).pop()}
+                        });
               },
             ),
-          ],
-        );
-      },
-    );
-  }
+          ]),
+        ],
+      );
+    },
+  );
+}
+
+
+  // Future promptExpense(context, data, userId) async {
+  //   await showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Center(child: const Text('Delete Expense')),
+  //         content: SizedBox(
+  //           child: Column(
+  //             children: [
+  //               Text(toBeginningOfSentenceCase(data.name)),
+  //               const Text('Do you want to delete this expense?'),
+  //             ],
+  //           ),
+  //         ),
+  //         actions: <Widget>[
+  //           TextButton(
+  //             child: const Text('Cancel'),
+  //             onPressed: () {
+  //               Navigator.of(context).pop(false); // closes prompt
+  //             },
+  //           ),
+  //           TextButton(
+  //             child: const Text('Delete'),
+  //             onPressed: () async {
+  //               await deleteExpense(data.expenseId, userId).then((value) => {
+  //                     if (context.mounted) {Navigator.of(context).pop()}
+  //                   });
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {

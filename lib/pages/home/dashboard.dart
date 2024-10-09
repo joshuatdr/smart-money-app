@@ -9,11 +9,12 @@ import 'package:smart_money_app/pages/auth/login.dart';
 import 'package:smart_money_app/providers/user_provider.dart';
 import 'package:smart_money_app/navigation/spending_nav.dart';
 
+import '../../common/image_strings.dart';
+
 class Dashboard extends StatefulWidget {
   final String token;
   final bool firstLogin;
   const Dashboard({required this.token, required this.firstLogin, super.key});
-
   @override
   State<Dashboard> createState() => _DashboardState();
 }
@@ -180,23 +181,51 @@ class HomePage extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: 
+          [
+                   Padding(
+                     padding: const EdgeInsets.only(left: 50.0, right: 50, top: 1, bottom: 1),
+                     child: Padding(
+                       padding: const EdgeInsets.only(bottom: 30),
+                       child: Image(fit: BoxFit.cover,
+                          image: AssetImage(JImages.flag),
+                        ),
+                     ),
+                   ),
             BigCard(
                 greeting: context.watch<UserProvider>().newUser
                     ? 'Hello, nice to meet you!'
                     : greetings[Random().nextInt(greetings.length)]),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (ctx) => LoginScreen()),
-                    (route) => false);
-                context.read<UserProvider>().logoutUser();
-              },
-              child: Text('Logout'),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Container(
+                decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(10),
+    boxShadow: [
+        BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 4), // changes position of shadow
+        ),
+    ],
+),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (ctx) => LoginScreen()),
+                        (route) => false);
+                    context.read<UserProvider>().logoutUser();
+                  },
+                  child: Text('Logout'),
+                ),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
               child: Card(
+                        elevation: 20,
+                        shadowColor: Colors.black,
                   child: _SampleCard(
                 cardName:
                     'The amount you want to save this month is £${context.watch<UserProvider>().savingsTarget}.\n\nAfter subtracting this from your income of £${context.watch<UserProvider>().income}, you are left with £${context.watch<UserProvider>().income - context.watch<UserProvider>().savingsTarget} to spend on all of your expenses.\n\nAfter subtracting your mandatory expenses of £1000, you have £${context.watch<UserProvider>().income - (context.watch<UserProvider>().savingsTarget + 1000)} left to cover any additional purchases.',
@@ -205,11 +234,13 @@ class HomePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 16.0, right: 16.0),
               child: Card(
+                        elevation: 20,
+                        shadowColor: Colors.black,
                   child: _SampleCard(
                       cardName:
                           'This month you have spent £1550.\n\n${1550 > context.watch<UserProvider>().income - (context.watch<UserProvider>().savingsTarget + 1000) ? 'Although you have gone over your budget this month, try to see this as a learning opportunity. Keeping to a budget is hard and takes practice. Stick with it for the rest of the month and you will be more likely to stay on track next month.' : 'You are currently sticking to your budget! Nice work, you have £${(context.watch<UserProvider>().income - (context.watch<UserProvider>().savingsTarget + 1000)) - 800} left for the rest of the month.'}')),
             )
-          ],
+          ]
         ),
       ),
     );
@@ -233,6 +264,9 @@ class BigCard extends StatelessWidget {
 
     return Card(
       color: Colors.lightBlue.shade900,
+        elevation: 20,
+        shadowColor: Colors.black,
+
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -263,6 +297,7 @@ class _SampleCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Center(child: Text(cardName)),
+        
       ),
     );
   }

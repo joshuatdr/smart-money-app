@@ -159,13 +159,16 @@ class _EditGoalState extends State<EditGoal> {
                       const SizedBox(height: JSizes.spaceBtwItems),
                       if (imgUrlController.text.isNotEmpty)
                         SizedBox(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.network(
-                              imgUrlController.text,
-                              width: 200,
-                              height: 200,
-                              fit: BoxFit.cover,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 14.0),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.network(
+                                imgUrlController.text,
+                                width: 200,
+                                height: 200,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ),
@@ -176,7 +179,7 @@ class _EditGoalState extends State<EditGoal> {
                           filled: true,
                           fillColor: Colors.white,
                           //  prefixIcon: Icon(Icons.alternate_email),
-                          labelText: "Image Url",
+                          labelText: "Image URL",
                         ),
                       ),
                       const SizedBox(height: JSizes.spaceBtwItems),
@@ -188,7 +191,7 @@ class _EditGoalState extends State<EditGoal> {
                           filled: true,
                           fillColor: Colors.white,
                           //    prefixIcon: Icon(Icons.alternate_email),
-                          labelText: 'Description',
+                          labelText: 'Description (optional)',
                         ),
                       ),
                       const SizedBox(height: JSizes.spaceBtwItems),
@@ -226,7 +229,7 @@ class _EditGoalState extends State<EditGoal> {
                                     _edit(data, userID);
                                   }
                                 },
-                                child: Text("Submit changes"))),
+                                child: Text("Submit Changes"))),
                       ),
                       TextButton(
                         onPressed: () {
