@@ -9,7 +9,6 @@ import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:status_alert/status_alert.dart';
 
-
 void showSuccessAlert(BuildContext context) {
   StatusAlert.show(
     context,
@@ -19,7 +18,6 @@ void showSuccessAlert(BuildContext context) {
     configuration: IconConfiguration(icon: Icons.check),
     backgroundColor: Colors.lightBlue.shade600,
   );
-  Navigator.pop(context);
 }
 
 // Method to show an error alert
@@ -71,7 +69,7 @@ class _GoalsPageState extends State<GoalsPage> {
       if (!mounted) return;
       showSuccessAlert(context);
     } else {
-      print('FAIL');
+      // print('FAIL');
       if (!mounted) return;
       showErrorAlert(context);
     }
@@ -125,12 +123,9 @@ class _GoalsPageState extends State<GoalsPage> {
                   ),
                 ),
                 onPressed: () async {
-                  await deleteGoal(data.goalID, userId).then((value) => {
-                        if (context.mounted)
-                          {
-                            Navigator.of(context).pop()
-                          } 
-                      });
+                  Navigator.of(context).pop();
+                  await deleteGoal(data.goalID, userId);
+                  setState(() {});
                 },
               ),
             ]),
@@ -184,9 +179,7 @@ class _GoalsPageState extends State<GoalsPage> {
             if (state != null) {
               state.toggle();
             }
-            setEditMode(true).then((value) {
-              setState(() {});
-            });
+            setEditMode(true);
           },
         ),
         FloatingActionButton.small(
@@ -201,7 +194,7 @@ class _GoalsPageState extends State<GoalsPage> {
               setState(() {});
             });
             final state = _key.currentState;
-            print(state);
+            // print(state);
             if (state != null) {
               state.toggle();
             }
@@ -305,10 +298,8 @@ class _GoalsPageState extends State<GoalsPage> {
                   width: 40,
                   child: ElevatedButton(
                       onPressed: () async {
-                        await promptDeleteGoal(context, results[index], userId)
-                            .then((value) {
-                          setState(() {});
-                        });
+                        await promptDeleteGoal(context, results[index], userId);
+                        setState(() {});
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.orange.shade600,
@@ -401,8 +392,7 @@ class _GoalsPageState extends State<GoalsPage> {
                     icon: const Icon(Icons.edit_off_rounded),
                     iconAlignment: IconAlignment.start,
                     onPressed: () async {
-                      await setEditMode(false)
-                          .then((value) => {setState(() {})});
+                      await setEditMode(false);
                     },
                   ),
                 ),
