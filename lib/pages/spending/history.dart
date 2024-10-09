@@ -6,6 +6,7 @@ import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:http/http.dart' as http;
 import 'package:smart_money_app/pages/spending/edit_transaction.dart';
 import 'package:smart_money_app/providers/user_provider.dart';
+import 'dart:math' as math;
 
 Future<void> deleteTransaction(int transactionId, int userId) async {
   final response = await http.delete(Uri.parse(
@@ -178,7 +179,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   child: Column(
                     children: [
                       Container(
-                        width: 1000,
+                        width:
+                            math.min(MediaQuery.of(context).size.width, 1000),
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.lightBlue.shade500),
                           color: Colors.white,
@@ -191,7 +193,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           headingRowColor: WidgetStateColor.resolveWith(
                             (states) => Colors.lightBlue.shade800,
                           ),
-                          columnSpacing: 50,
+                          columnSpacing: 30,
                           columns: [
                             DataColumn(
                                 label: Text(

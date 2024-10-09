@@ -6,6 +6,7 @@ import 'package:smart_money_app/services/api.dart';
 import 'package:smart_money_app/model/expenses.dart';
 import 'package:intl/intl.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'dart:math' as math;
 
 class BudgetPage extends StatefulWidget {
   @override
@@ -141,7 +142,8 @@ class _BudgetPageState extends State<BudgetPage> {
                     child: Column(
                       children: [
                         Container(
-                          width: 1000,
+                          width:
+                              math.min(MediaQuery.of(context).size.width, 1000),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             border:
@@ -156,7 +158,7 @@ class _BudgetPageState extends State<BudgetPage> {
                             headingRowColor: WidgetStateColor.resolveWith(
                               (states) => Colors.lightBlue.shade800,
                             ),
-                            columnSpacing: 50,
+                            columnSpacing: 30,
                             columns: [
                               DataColumn(
                                   label: Text(
