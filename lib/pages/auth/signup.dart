@@ -68,23 +68,33 @@ class _SignupScreenState extends State<SignupScreen> {
         duration: Duration(seconds: 4),
         title: 'Error',
         subtitle: 'A user already exists with that email.',
-                configuration: IconConfiguration(
-        icon: Icons.error,
-        color: Colors.white,
+        configuration: IconConfiguration(
+          icon: Icons.error,
+          color: Colors.white,
         ),
         backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
         subtitleOptions: StatusAlertTextConfiguration(
-        style: TextStyle(color: Colors.white, fontSize: 24),
+          style: TextStyle(color: Colors.white, fontSize: 24),
         ),
         titleOptions: StatusAlertTextConfiguration(
-        style: TextStyle(color: Colors.white, fontSize: 24),
-      
+          style: TextStyle(color: Colors.white, fontSize: 24),
         ),
       );
     }
   }
 
   void loginAfterSignup() async {
+    showDialog(
+        //show loading circle
+        context: context,
+        builder: (context) {
+          return Center(
+            child: CircularProgressIndicator(
+              color: Colors.white,
+            ),
+          );
+        });
+
     var loginBody = {
       "email": emailController.text.toLowerCase(),
       "password": passController.text,
@@ -103,6 +113,8 @@ class _SignupScreenState extends State<SignupScreen> {
     nickNameController.clear();
     confirmPassController.clear();
     if (!mounted) return;
+    Navigator.pop(context); // remove the loading circle
+
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -338,9 +350,9 @@ class _SignupScreenState extends State<SignupScreen> {
                           Text(
                               '\u2022 A password must contain at least a number.'),
                           Text(
-                              '\u2022 A password must contain an uppercase letter'),
+                              '\u2022 A password must contain an uppercase letter.'),
                           Text(
-                              '\u2022 A password must contain a lowercase letter'),
+                              '\u2022 A password must contain a lowercase letter.'),
                           Text(
                               '\u2022 A password must contain a special character.'),
                           Padding(
