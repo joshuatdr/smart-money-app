@@ -178,6 +178,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   child: Column(
                     children: [
                       Container(
+                        width: 1000,
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.lightBlue.shade500),
                           color: Colors.white,
@@ -185,12 +186,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         child: DataTable(
                           dataRowMaxHeight:
                               double.infinity, // Code to be changed.
-                          dataRowMinHeight: 80, // Set the min required height.
+                          dataRowMinHeight: 60, // Set the min required height.
                           dividerThickness: 1,
                           headingRowColor: WidgetStateColor.resolveWith(
                             (states) => Colors.lightBlue.shade800,
                           ),
-                          columnSpacing: 30,
+                          columnSpacing: 50,
                           columns: [
                             DataColumn(
                                 label: Text(
@@ -238,7 +239,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
               );
             } else {
               return Center(
-                child: Text("No transactions yet!"),
+                child: Image.asset('logo.png',
+                    width: 200,
+                    color: Colors.lightBlue.shade900.withOpacity(0.2)),
               );
             }
           } else {

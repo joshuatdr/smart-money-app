@@ -150,97 +150,6 @@ class _GoalsPageState extends State<GoalsPage> {
     );
   }
 
-// ExpandableFab _renderFloatingActionButton(BuildContext context) {
-//     return ExpandableFab(
-//       key: _key,
-//       type: ExpandableFabType.up,
-//       childrenAnimation: ExpandableFabAnimation.none,
-//       distance: 70,
-//       childrenOffset: Offset(8, 16),
-//       openButtonBuilder: DefaultFloatingActionButtonBuilder(
-//         backgroundColor: Colors.blue.shade600,
-//         child: const Icon(Icons.menu, color: Colors.white),
-//       ),
-//       closeButtonBuilder: DefaultFloatingActionButtonBuilder(
-//         backgroundColor: Colors.blue.shade800,
-//         child: const Icon(Icons.close, color: Colors.white),
-//       ),
-//       overlayStyle: ExpandableFabOverlayStyle(
-//         color: Colors.white.withOpacity(0.6),
-//       ),
-//       children: [
-//         Row(
-//           children: [
-//             Text('Add Transaction'),
-//             SizedBox(width: 20),
-//             FloatingActionButton.small(
-//               backgroundColor: Colors.blue.shade600,
-//               heroTag: null,
-//               onPressed: () {
-//                 Navigator.pushNamed(context, '/addtransaction').then(
-//                   (value) {
-//                     setState(() {});
-//                   },
-//                 );
-//                 final state = _key.currentState;
-//                 if (state != null) {
-//                   state.toggle();
-//                 }
-//               },
-//               child: Icon(Icons.add, color: Colors.white),
-//             ),
-//           ],
-//         ),
-//         Row(
-//           children: [
-//             Text('View Data'),
-//             SizedBox(width: 20),
-//             FloatingActionButton.small(
-//               backgroundColor: Colors.blue.shade600,
-//               heroTag: null,
-//               onPressed: () {
-//                 Navigator.pushNamed(context, '/graphview').then(
-//                   (value) {
-//                     setState(() {});
-//                   },
-//                 );
-//                 final state = _key.currentState;
-//                 if (state != null) {
-//                   state.toggle();
-//                 }
-//               },
-//               child: Icon(Icons.insights, color: Colors.white),
-//             ),
-//           ],
-//         ),
-//         Row(
-//           children: [
-//             Text('Search'),
-//             SizedBox(width: 20),
-//             FloatingActionButton.small(
-//               backgroundColor: Colors.blue.shade600,
-//               heroTag: null,
-//               onPressed: null,
-//               child: Icon(Icons.search, color: Colors.white),
-//             ),
-//           ],
-//         ),
-//         Row(
-//           children: [
-//             Text('Sort'),
-//             SizedBox(width: 20),
-//             FloatingActionButton.small(
-//               backgroundColor: Colors.blue.shade600,
-//               heroTag: null,
-//               onPressed: null,
-//               child: Icon(Icons.sort, color: Colors.white),
-//             ),
-//           ],
-//         ),
-//       ],
-//     );
-//   }
-
   ExpandableFab _renderFloatingActionButton(context) {
     return ExpandableFab(
       key: _key,
@@ -334,7 +243,9 @@ class _GoalsPageState extends State<GoalsPage> {
             );
           } else {
             return Center(
-              child: Text("You haven't added any goals yet!"),
+              child: Image.asset('logo.png',
+                  width: 200,
+                  color: Colors.lightBlue.shade900.withOpacity(0.2)),
             );
           }
         } else {
