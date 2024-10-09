@@ -142,7 +142,7 @@ class _AddGoalPageState extends State<AddGoalPage> {
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
-                            prefixIcon: Icon(Icons.email),
+                            // prefixIcon: Icon(Icons.abc_rounded),
                             labelText: 'Name',
                           ),
                           validator: validateName),
@@ -154,7 +154,7 @@ class _AddGoalPageState extends State<AddGoalPage> {
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
-                            prefixIcon: Icon(Icons.login),
+                            // prefixIcon: Icon(Icons.login),
                             labelText: 'Cost',
                           ),
                           validator: validateCost),
@@ -166,8 +166,8 @@ class _AddGoalPageState extends State<AddGoalPage> {
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
-                          prefixIcon: Icon(Icons.login),
-                          labelText: "Image Url (Optional)",
+                          // prefixIcon: Icon(Icons.login),
+                          labelText: "Image URL (optional)",
                         ),
                         // validator: validateImg
                       ),
@@ -181,8 +181,8 @@ class _AddGoalPageState extends State<AddGoalPage> {
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
-                          prefixIcon: Icon(Icons.alternate_email),
-                          labelText: 'Description (Optional)',
+                          // prefixIcon: Icon(Icons.alternate_email),
+                          labelText: 'Description (optional)',
                         ),
                       ),
 

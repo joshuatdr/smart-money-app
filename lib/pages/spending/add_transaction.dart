@@ -188,7 +188,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
-                            prefixIcon: Icon(Icons.email),
+                            // prefixIcon: Icon(Icons.email),
                             labelText: 'Name',
                           ),
                           validator: validateName),
@@ -200,7 +200,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
-                            prefixIcon: Icon(Icons.login),
+                            // prefixIcon: Icon(Icons.login),
                             labelText: 'Cost',
                           ),
                           validator: validateCost),
@@ -212,8 +212,8 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
-                          prefixIcon: Icon(Icons.login),
-                          labelText: "Image URL (Optional)",
+                          // prefixIcon: Icon(Icons.login),
+                          labelText: "Image URL (optional)",
                         ),
                         // validator: validateImg
                       ),
@@ -227,8 +227,8 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
-                          prefixIcon: Icon(Icons.alternate_email),
-                          labelText: 'Description (Optional)',
+                          // prefixIcon: Icon(Icons.alternate_email),
+                          labelText: 'Description (optional)',
                         ),
                         // validator: (value) {
                         //   if (value!.isEmpty) {
