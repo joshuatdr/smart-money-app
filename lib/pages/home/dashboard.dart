@@ -169,33 +169,48 @@ class HomePage extends StatelessWidget {
       "Hello again!\n Let’s take another step toward your savings target.",
     ];
 
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          BigCard(
-              greeting: context.watch<UserProvider>().newUser
-                  ? 'Hello, nice to meet you!'
-                  : greetings[Random().nextInt(greetings.length)]),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (ctx) => LoginScreen()),
-                  (route) => false);
-              context.read<UserProvider>().logoutUser();
-            },
-            child: Text('Logout'),
-          ),
-          Card(
-              child: _SampleCard(
-            cardName:
-                'The amount you want to save this month is £${context.watch<UserProvider>().savingsTarget}.\n\n So after you subtract that from your income of £${context.watch<UserProvider>().income}, you are left with £${context.watch<UserProvider>().income - context.watch<UserProvider>().savingsTarget} to spend on all of your expenses.\n\n After subtracting your mandetory expenses of £1000, that leaves you with £${context.watch<UserProvider>().income - (context.watch<UserProvider>().savingsTarget + 1000)} to spend on any optional purchases.',
-          )),
-          Card(
-              child: _SampleCard(
-                  cardName:
-                      'This month you have spent £1550.\n\n ${1550 > context.watch<UserProvider>().income - (context.watch<UserProvider>().savingsTarget + 1000) ? 'Although you have gone over your budget this month, try to see this as a learning opertunity, sticking to a budget is hard and takes practice. Stick with it for the rest of the month and you will be more likely to stick with it next month.' : 'You are currently sticking to your budget! nice work, you have £${(context.watch<UserProvider>().income - (context.watch<UserProvider>().savingsTarget + 1000)) - 800} left for the rest of the month.'}'))
-        ],
+    return Scaffold(
+      backgroundColor: Colors.grey[300],
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        backgroundColor: Colors.lightBlue.shade900,
+        title: Text("Home", style: TextStyle(color: Colors.white)),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            BigCard(
+                greeting: context.watch<UserProvider>().newUser
+                    ? 'Hello, nice to meet you!'
+                    : greetings[Random().nextInt(greetings.length)]),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (ctx) => LoginScreen()),
+                    (route) => false);
+                context.read<UserProvider>().logoutUser();
+              },
+              child: Text('Logout'),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
+              child: Card(
+                  child: _SampleCard(
+                cardName:
+                    'The amount you want to save this month is £${context.watch<UserProvider>().savingsTarget}.\n\nAfter subtracting this from your income of £${context.watch<UserProvider>().income}, you are left with £${context.watch<UserProvider>().income - context.watch<UserProvider>().savingsTarget} to spend on all of your expenses.\n\nAfter subtracting your mandatory expenses of £1000, you have £${context.watch<UserProvider>().income - (context.watch<UserProvider>().savingsTarget + 1000)} left to cover any additional purchases.',
+              )),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+              child: Card(
+                  child: _SampleCard(
+                      cardName:
+                          'This month you have spent £1550.\n\n${1550 > context.watch<UserProvider>().income - (context.watch<UserProvider>().savingsTarget + 1000) ? 'Although you have gone over your budget this month, try to see this as a learning opportunity. Keeping to a budget is hard and takes practice. Stick with it for the rest of the month and you will be more likely to stay on track next month.' : 'You are currently sticking to your budget! Nice work, you have £${(context.watch<UserProvider>().income - (context.watch<UserProvider>().savingsTarget + 1000)) - 800} left for the rest of the month.'}')),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -245,7 +260,6 @@ class _SampleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 500,
-      height: 200,
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Center(child: Text(cardName)),
