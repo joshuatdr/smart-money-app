@@ -38,6 +38,16 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void loginUser() async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Center(
+            child: CircularProgressIndicator(
+              color: Colors.white,
+            ),
+          );
+        });
+
     var reqBody = {
       "email": emailController.text.toLowerCase(),
       "password": passController.text,
@@ -48,6 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
         body: jsonEncode(reqBody));
 
     if (!mounted) return;
+    Navigator.pop(context); // remove the loading circle
 
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
@@ -62,21 +73,21 @@ class _LoginScreenState extends State<LoginScreen> {
       StatusAlert.show(
         context,
         blurPower: .3,
-        duration: Duration(seconds: 4),
-        title: 'Error', 
+        duration: Duration(seconds: 2),
+        title: 'Error',
         subtitle: 'Incorrect Login',
         configuration: IconConfiguration(
-        icon: Icons.error,
-        color: Colors.white,
+          icon: Icons.error,
+          color: Colors.white,
         ),
         backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
         subtitleOptions: StatusAlertTextConfiguration(
-        style: TextStyle(color: Colors.white, fontSize: 24),
+          style: TextStyle(color: Colors.white, fontSize: 24),
         ),
         titleOptions: StatusAlertTextConfiguration(
-        style: TextStyle(color: Colors.white, fontSize: 24),
+          style: TextStyle(color: Colors.white, fontSize: 24),
         ),
-        );
+      );
     }
   }
 
@@ -229,8 +240,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),
                                 onPressed: () {
-                                  _formfield.currentState!.validate();
-                                  loginUser();
+                                  if (_formfield.currentState!.validate()) {
+                                    loginUser();
+                                  }
                                 },
                                 child: Text(
                                   TTexts.signIn,

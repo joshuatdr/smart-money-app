@@ -41,7 +41,17 @@ class _AddBudgetState extends State<AddBudget> {
       duration: Duration(seconds: 2),
       title: 'Error',
       subtitle: 'Something went wrong!',
-      configuration: IconConfiguration(icon: Icons.error),
+      configuration: IconConfiguration(
+        icon: Icons.error,
+        color: Colors.white,
+      ),
+      backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
+      subtitleOptions: StatusAlertTextConfiguration(
+        style: TextStyle(color: Colors.white, fontSize: 24),
+      ),
+      titleOptions: StatusAlertTextConfiguration(
+        style: TextStyle(color: Colors.white, fontSize: 24),
+      ),
     );
   }
 
