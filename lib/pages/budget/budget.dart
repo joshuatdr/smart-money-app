@@ -76,14 +76,20 @@ class _BudgetPageState extends State<BudgetPage> {
     DataRow getDataRow(index, data) {
       return DataRow(
         cells: <DataCell>[
+          DataCell(Text(
+            toBeginningOfSentenceCase(data.name),
+            maxLines: 6,
+            softWrap: true,
+          )),
           DataCell(
-            Text(toBeginningOfSentenceCase(data.name)),
+            Text(
+              '£${data.cost.toStringAsFixed(2)}',
+              maxLines: 2,
+              softWrap: false,
+            ),
           ),
           DataCell(
-            Text('£${data.cost}'),
-          ),
-          DataCell(
-            Icon(Icons.image_outlined, color: Colors.lightBlue[500]),
+            Icon(Icons.edit, color: Colors.lightBlue[500]),
           ),
           DataCell(
             Icon(Icons.delete_forever, color: Colors.lightBlue[500]),
@@ -118,17 +124,24 @@ class _BudgetPageState extends State<BudgetPage> {
           );
         },
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              FutureBuilder(
-                  future: UserServices.getAllUserExpenses(userID),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      var results = snapshot.data as List<Expenses>;
-                      if (results.isNotEmpty) {
-                        return Container(
+      body: FutureBuilder(
+          future: UserServices.getAllUserExpenses(userID),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              var results = snapshot.data as List<Expenses>;
+
+              Map<String, double> dataMap = {};
+              for (var expense in results) {
+                dataMap[toBeginningOfSentenceCase(expense.name) ?? 'Unknown'] =
+                    expense.cost?.toDouble() ?? 0;
+              }
+              if (results.isNotEmpty) {
+                return SingleChildScrollView(
+                  child: Center(
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 1000,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             border:
@@ -175,146 +188,89 @@ class _BudgetPageState extends State<BudgetPage> {
                             ),
                             showBottomBorder: true,
                           ),
-                        );
-                      } else {
-                        return Center(
-                          child: Text("No expenses yet!"),
-                        );
-                      }
-                    } else {
-                      return Center(
-                        child: SizedBox(
-                          // ignore: sort_child_properties_last
-                          child: CircularProgressIndicator(),
-                          width: 300,
-                          height: 300,
                         ),
-                      );
-                    }
-                  }),
-              Container(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Card(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 10, bottom: 1),
-                        child: Column(
-                          children: <Widget>[
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 15, bottom: 15),
-                              child: SizedBox(
-                                width: 780,
-                                child: Column(
-                                  children: [
-                                    FutureBuilder(
-                                      future: UserServices.getAllUserExpenses(
-                                          userID),
-                                      builder: (context, snapshot) {
-                                        if (snapshot.hasData) {
-                                          var result =
-                                              snapshot.data as List<Expenses>;
-
-                                          Map<String, double> dataMap = {};
-                                          for (var expense in result) {
-                                            dataMap[toBeginningOfSentenceCase(
-                                                        expense.name) ??
-                                                    'Unknown'] =
-                                                expense.cost?.toDouble() ?? 0;
-                                          }
-                                          return dataMap.isNotEmpty
-                                              ? Column(
-                                                  children: [
-                                                    PieChart(
-                                                      dataMap: dataMap,
-                                                      animationDuration:
-                                                          const Duration(
-                                                              milliseconds:
-                                                                  3500),
-                                                      chartLegendSpacing: 1,
-                                                      chartRadius:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .height /
-                                                              2,
-                                                      colorList: colorList,
-                                                      initialAngleInDegree: 90,
-                                                      chartType: ChartType.disc,
-                                                      legendOptions:
-                                                          const LegendOptions(
-                                                        showLegendsInRow: false,
-                                                        legendPosition:
-                                                            LegendPosition
-                                                                .right,
-                                                        showLegends: true,
-                                                        legendTextStyle:
-                                                            TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                      ),
-                                                      chartValuesOptions:
-                                                          const ChartValuesOptions(
-                                                        showChartValueBackground:
-                                                            true,
-                                                        showChartValues: true,
-                                                        showChartValuesInPercentage:
-                                                            true,
-                                                        showChartValuesOutside:
-                                                            false,
-                                                        decimalPlaces: 1,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                )
-                                              : Container();
-                                        } else {
-                                          return CircularProgressIndicator();
-                                        }
+                        Container(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Card(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 15, bottom: 15),
+                                  child: SizedBox(
+                                    width: 780,
+                                    child: Column(
+                                      children: [
+                                        Column(
+                                          children: [
+                                            PieChart(
+                                              dataMap: dataMap,
+                                              animationDuration: const Duration(
+                                                  milliseconds: 3500),
+                                              chartLegendSpacing: 1,
+                                              chartRadius:
+                                                  MediaQuery.of(context)
+                                                          .size
+                                                          .height /
+                                                      2,
+                                              colorList: colorList,
+                                              initialAngleInDegree: 90,
+                                              chartType: ChartType.disc,
+                                              legendOptions:
+                                                  const LegendOptions(
+                                                showLegendsInRow: false,
+                                                legendPosition:
+                                                    LegendPosition.right,
+                                                showLegends: true,
+                                                legendTextStyle: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              chartValuesOptions:
+                                                  const ChartValuesOptions(
+                                                showChartValueBackground: true,
+                                                showChartValues: true,
+                                                showChartValuesInPercentage:
+                                                    true,
+                                                showChartValuesOutside: false,
+                                                decimalPlaces: 1,
+                                              ),
+                                            ),
+                                          ],
+                                        )
 
                                         //
-                                      },
+                                      ],
                                     ),
-                                  ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                    Card(
-                        child: _SampleCard(
-                      cardName:
-                          'Your weekly savings are £... after unavoidable spending',
-                    )),
-                    Card(
-                        child: _SampleCard(
-                            cardName:
-                                'It will take {amount of time} to reach your savings target!')),
-                  ],
+                  ),
+                );
+              } else {
+                return Center(
+                  child: Image.asset('logo.png',
+                      width: 200,
+                      color: Colors.lightBlue.shade900.withOpacity(0.2)),
+                );
+              }
+            } else {
+              return Center(
+                child: SizedBox(
+                  // ignore: sort_child_properties_last
+                  child: CircularProgressIndicator(),
+                  width: 300,
+                  height: 300,
                 ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _SampleCard extends StatelessWidget {
-  const _SampleCard({required this.cardName});
-  final String cardName;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 400,
-      height: 100,
-      child: Center(child: Text(cardName)),
+              );
+            }
+          }),
     );
   }
 }
