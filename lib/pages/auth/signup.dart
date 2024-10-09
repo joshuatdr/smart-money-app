@@ -65,7 +65,7 @@ class _SignupScreenState extends State<SignupScreen> {
       StatusAlert.show(
         context,
         blurPower: 0.3,
-        duration: Duration(seconds: 4),
+        duration: Duration(seconds: 2),
         title: 'Error',
         subtitle: 'A user already exists with that email.',
         configuration: IconConfiguration(
