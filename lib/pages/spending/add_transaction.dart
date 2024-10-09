@@ -186,6 +186,8 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                       TextFormField(
                           controller: nameController,
                           decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
                             prefixIcon: Icon(Icons.email),
                             labelText: 'Name',
                           ),
@@ -196,6 +198,8 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                       TextFormField(
                           controller: costController,
                           decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
                             prefixIcon: Icon(Icons.login),
                             labelText: 'Cost',
                           ),
@@ -206,8 +210,10 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                       TextFormField(
                         controller: imgurlController,
                         decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           prefixIcon: Icon(Icons.login),
-                          labelText: "Image URL",
+                          labelText: "Image URL (Optional)",
                         ),
                         // validator: validateImg
                       ),
@@ -219,8 +225,10 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                         controller: descController,
                         obscureText: false,
                         decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           prefixIcon: Icon(Icons.alternate_email),
-                          labelText: 'Description',
+                          labelText: 'Description (Optional)',
                         ),
                         // validator: (value) {
                         //   if (value!.isEmpty) {

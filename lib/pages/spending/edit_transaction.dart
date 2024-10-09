@@ -116,6 +116,7 @@ class _EditTransactionState extends State<EditTransaction> {
     final userID = context.watch<UserProvider>().userID;
 
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: AppBar(
@@ -153,6 +154,8 @@ class _EditTransactionState extends State<EditTransaction> {
                       TextFormField(
                         controller: nameController,
                         decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           //   prefixIcon: Icon(Icons.email),
                           labelText: "Name",
                         ),
@@ -163,6 +166,8 @@ class _EditTransactionState extends State<EditTransaction> {
                         controller: costController,
                         obscureText: false,
                         decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           // prefixIcon: Icon(Icons.alternate_email),
                           labelText: "Cost",
                         ),
@@ -191,6 +196,8 @@ class _EditTransactionState extends State<EditTransaction> {
                         controller: imgUrlController,
                         obscureText: false,
                         decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           //  prefixIcon: Icon(Icons.alternate_email),
                           labelText: "Image Url",
                         ),
@@ -201,6 +208,8 @@ class _EditTransactionState extends State<EditTransaction> {
                         controller: descController,
                         obscureText: false,
                         decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           //    prefixIcon: Icon(Icons.alternate_email),
                           labelText: 'Description',
                         ),

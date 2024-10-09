@@ -132,6 +132,8 @@ class _EditProfileState extends State<EditProfile> {
                       TextFormField(
                         controller: nickNameController,
                         decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           prefixIcon: Icon(Icons.email),
                           labelText: "Name",
                         ),
@@ -144,6 +146,8 @@ class _EditProfileState extends State<EditProfile> {
                         keyboardType: TextInputType.numberWithOptions(),
                         controller: emailController,
                         decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           prefixIcon: Icon(Icons.login),
                           labelText: "Email",
                         ),
@@ -156,6 +160,8 @@ class _EditProfileState extends State<EditProfile> {
                         controller: incomeController,
                         obscureText: false,
                         decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           prefixIcon: Icon(Icons.alternate_email),
                           labelText: "Income",
                         ),
@@ -165,6 +171,8 @@ class _EditProfileState extends State<EditProfile> {
                         controller: savingsController,
                         obscureText: false,
                         decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           prefixIcon: Icon(Icons.alternate_email),
                           labelText: "Savings target",
                         ),

@@ -137,6 +137,8 @@ class _EditGoalState extends State<EditGoal> {
                       TextFormField(
                         controller: nameController,
                         decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           //   prefixIcon: Icon(Icons.email),
                           labelText: "Name",
                         ),
@@ -147,6 +149,8 @@ class _EditGoalState extends State<EditGoal> {
                         controller: costController,
                         obscureText: false,
                         decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           // prefixIcon: Icon(Icons.alternate_email),
                           labelText: "Cost",
                         ),
@@ -169,6 +173,8 @@ class _EditGoalState extends State<EditGoal> {
                         controller: imgUrlController,
                         obscureText: false,
                         decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           //  prefixIcon: Icon(Icons.alternate_email),
                           labelText: "Image Url",
                         ),
@@ -179,6 +185,8 @@ class _EditGoalState extends State<EditGoal> {
                         controller: descController,
                         obscureText: false,
                         decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           //    prefixIcon: Icon(Icons.alternate_email),
                           labelText: 'Description',
                         ),

@@ -140,6 +140,8 @@ class _AddGoalPageState extends State<AddGoalPage> {
                       TextFormField(
                           controller: nameController,
                           decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
                             prefixIcon: Icon(Icons.email),
                             labelText: 'Name',
                           ),
@@ -150,6 +152,8 @@ class _AddGoalPageState extends State<AddGoalPage> {
                       TextFormField(
                           controller: costController,
                           decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
                             prefixIcon: Icon(Icons.login),
                             labelText: 'Cost',
                           ),
@@ -160,6 +164,8 @@ class _AddGoalPageState extends State<AddGoalPage> {
                       TextFormField(
                         controller: imgurlController,
                         decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           prefixIcon: Icon(Icons.login),
                           labelText: "Image Url (Optional)",
                         ),
@@ -173,6 +179,8 @@ class _AddGoalPageState extends State<AddGoalPage> {
                         controller: descController,
                         obscureText: false,
                         decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           prefixIcon: Icon(Icons.alternate_email),
                           labelText: 'Description (Optional)',
                         ),

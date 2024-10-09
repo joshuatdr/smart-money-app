@@ -195,6 +195,8 @@ class _ChangePassState extends State<ChangePass> {
                       controller: passController,
                       obscureText: passwordVisibleCurrent,
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
                         errorMaxLines: 3,
                         prefixIcon: Icon(Icons.password),
                         labelText: "Current Password",
@@ -212,7 +214,6 @@ class _ChangePassState extends State<ChangePass> {
                           },
                         ),
                         alignLabelWithHint: false,
-                        filled: true,
                       ),
                       validator: validatePass,
                     ),
@@ -224,6 +225,8 @@ class _ChangePassState extends State<ChangePass> {
                         controller: newPassController,
                         obscureText: passwordVisible,
                         decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           errorMaxLines: 3,
                           prefixIcon: Icon(Icons.edit),
                           labelText: "New Password",
@@ -240,7 +243,6 @@ class _ChangePassState extends State<ChangePass> {
                             },
                           ),
                           alignLabelWithHint: false,
-                          filled: true,
                         ),
                         validator: validatePass),
 
@@ -251,6 +253,8 @@ class _ChangePassState extends State<ChangePass> {
                         controller: confirmPassController,
                         obscureText: passwordVisible,
                         decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           errorMaxLines: 3,
                           prefixIcon: Icon(Icons.loop),
                           labelText: "Confirm New Password",
@@ -267,7 +271,6 @@ class _ChangePassState extends State<ChangePass> {
                             },
                           ),
                           alignLabelWithHint: false,
-                          filled: true,
                         ),
                         validator: validatePass),
 

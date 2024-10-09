@@ -147,6 +147,8 @@ class _AddBudgetState extends State<AddBudget> {
                       TextFormField(
                         controller: nameController,
                         decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           prefixIcon: Icon(Icons.money_off),
                           labelText: "Name",
                         ),
@@ -157,6 +159,8 @@ class _AddBudgetState extends State<AddBudget> {
                         keyboardType: TextInputType.numberWithOptions(),
                         controller: costController,
                         decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           prefixIcon: Icon(Icons.money_outlined),
                           labelText: "Cost",
                         ),
