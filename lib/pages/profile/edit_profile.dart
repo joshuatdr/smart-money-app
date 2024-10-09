@@ -96,6 +96,7 @@ class _EditProfileState extends State<EditProfile> {
     }
 
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       body: SingleChildScrollView(
         child: Padding(
           padding: JSpacingStyle.paddingWithAppBarHeight,

@@ -143,6 +143,7 @@ class _GoalsPageState extends State<GoalsPage> {
     );
 
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,

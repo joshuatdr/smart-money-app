@@ -114,13 +114,14 @@ class _AddGoalPageState extends State<AddGoalPage> {
 
     var userId = context.watch<UserProvider>().userID;
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: AppBar(
             automaticallyImplyLeading: false,
             centerTitle: true,
             backgroundColor: Colors.lightBlue.shade900,
-            title: Text("Add Goal", style: TextStyle(color: Colors.white)),
+            title: Text("Add New Goal", style: TextStyle(color: Colors.white)),
           )),
       body: SingleChildScrollView(
         child: Padding(
@@ -160,7 +161,7 @@ class _AddGoalPageState extends State<AddGoalPage> {
                         controller: imgurlController,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.login),
-                          labelText: "Image Url",
+                          labelText: "Image Url (Optional)",
                         ),
                         // validator: validateImg
                       ),
@@ -173,7 +174,7 @@ class _AddGoalPageState extends State<AddGoalPage> {
                         obscureText: false,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.alternate_email),
-                          labelText: 'Description',
+                          labelText: 'Description (Optional)',
                         ),
                       ),
 
@@ -200,15 +201,20 @@ class _AddGoalPageState extends State<AddGoalPage> {
                                 },
                                 child: Text('Done'))),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(30),
-                        child: FilledButton.icon(
-                          label: Text("Back"),
-                          icon: const Icon(Icons.arrow_back),
-                          iconAlignment: IconAlignment.start,
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(30),
+                          child: FilledButton.icon(
+                            label: Text("Back to Goals"),
+                            icon: const Icon(Icons.arrow_back),
+                            iconAlignment: IconAlignment.start,
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
                         ),
                       ),
                     ],

@@ -58,14 +58,14 @@ class _ChangePassState extends State<ChangePass> {
       configuration: IconConfiguration(
         icon: Icons.check,
         color: Colors.white,
-        ),
-        backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
-        subtitleOptions: StatusAlertTextConfiguration(
+      ),
+      backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
+      subtitleOptions: StatusAlertTextConfiguration(
         style: TextStyle(color: Colors.white, fontSize: 24),
-        ),
-        titleOptions: StatusAlertTextConfiguration(
+      ),
+      titleOptions: StatusAlertTextConfiguration(
         style: TextStyle(color: Colors.white, fontSize: 24),
-        ),
+      ),
     );
     Navigator.pop(context);
   }
@@ -79,14 +79,14 @@ class _ChangePassState extends State<ChangePass> {
       configuration: IconConfiguration(
         icon: Icons.error,
         color: Colors.white,
-        ),
-        backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
-        subtitleOptions: StatusAlertTextConfiguration(
+      ),
+      backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
+      subtitleOptions: StatusAlertTextConfiguration(
         style: TextStyle(color: Colors.white, fontSize: 24),
-        ),
-        titleOptions: StatusAlertTextConfiguration(
+      ),
+      titleOptions: StatusAlertTextConfiguration(
         style: TextStyle(color: Colors.white, fontSize: 24),
-        ),
+      ),
     );
   }
 
@@ -159,6 +159,7 @@ class _ChangePassState extends State<ChangePass> {
     }
 
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       body: Padding(
         padding: JSpacingStyle.paddingWithAppBarHeight,
         child: Column(
@@ -304,18 +305,22 @@ class _ChangePassState extends State<ChangePass> {
                                       duration: Duration(seconds: 2),
                                       title: 'Error',
                                       subtitle: "Passwords Don't Match",
-                                      configuration:
-                                          IconConfiguration(icon:
-                                           Icons.error,
-                                          color: Colors.white,
-                                            ),
-                                            backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
-                                            subtitleOptions: StatusAlertTextConfiguration(
-                                            style: TextStyle(color: Colors.white, fontSize: 24),
-                                            ),
-                                            titleOptions: StatusAlertTextConfiguration(
-                                            style: TextStyle(color: Colors.white, fontSize: 24),
-                                            ),
+                                      configuration: IconConfiguration(
+                                        icon: Icons.error,
+                                        color: Colors.white,
+                                      ),
+                                      backgroundColor: Colors.lightBlue.shade900
+                                          .withOpacity(.9),
+                                      subtitleOptions:
+                                          StatusAlertTextConfiguration(
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 24),
+                                      ),
+                                      titleOptions:
+                                          StatusAlertTextConfiguration(
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 24),
+                                      ),
                                     );
                                   }
                                 }
