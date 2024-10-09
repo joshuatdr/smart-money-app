@@ -227,7 +227,7 @@ class _EditProfileState extends State<EditProfile> {
                                   }
                                   updateUser(data, userID);
                                 },
-                                child: Text("Submit changes"))),
+                                child: Text("Submit Changes")) ),
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
