@@ -41,12 +41,12 @@ class _BudgetPageState extends State<BudgetPage> {
   // }
 
   final colorList = <Color>[
-    Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
-    Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
-    Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
-    Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
-    Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
-    Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
+    Color(0xFFC1A38D),
+    Color(0xFF51624C),
+    Color(0xFFBD7E2F).withOpacity(1.0),
+    Color(0xFF9D4B3C).withOpacity(1.0),
+    Color(0xFF2E355D).withOpacity(1.0),
+    Color(0xFFBA641F).withOpacity(1.0),
   ];
 
   Future promptExpense(context, data, userId) async {
