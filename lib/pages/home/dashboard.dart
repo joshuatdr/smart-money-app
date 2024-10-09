@@ -186,6 +186,15 @@ class HomePage extends StatelessWidget {
             },
             child: Text('Logout'),
           ),
+          Card(
+              child: _SampleCard(
+            cardName:
+                'The amount you want to save this month is £${context.watch<UserProvider>().savingsTarget}.\n\n So after you subtract that from your income of £${context.watch<UserProvider>().income}, you are left with £${context.watch<UserProvider>().income - context.watch<UserProvider>().savingsTarget} to spend on all of your expenses.\n\n After subtracting your mandetory expenses of £1000, that leaves you with £${context.watch<UserProvider>().income - (context.watch<UserProvider>().savingsTarget + 1000)} to spend on any optional purchases.',
+          )),
+          Card(
+              child: _SampleCard(
+                  cardName:
+                      'This month you have spent £1550.\n\n ${1550 > context.watch<UserProvider>().income - (context.watch<UserProvider>().savingsTarget + 1000) ? 'Although you have gone over your budget this month, try to see this as a learning opertunity, sticking to a budget is hard and takes practice. Stick with it for the rest of the month and you will be more likely to stick with it next month.' : 'You are currently sticking to your budget! nice work, you have £${(context.watch<UserProvider>().income - (context.watch<UserProvider>().savingsTarget + 1000)) - 800} left for the rest of the month.'}'))
         ],
       ),
     );
@@ -224,6 +233,22 @@ class BigCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _SampleCard extends StatelessWidget {
+  const _SampleCard({required this.cardName});
+  final String cardName;
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 500,
+      height: 200,
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Center(child: Text(cardName)),
       ),
     );
   }
