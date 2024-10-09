@@ -38,14 +38,14 @@ class _EditTransactionState extends State<EditTransaction> {
       configuration: IconConfiguration(
         icon: Icons.check,
         color: Colors.white,
-        ),
-        backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
-        subtitleOptions: StatusAlertTextConfiguration(
+      ),
+      backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
+      subtitleOptions: StatusAlertTextConfiguration(
         style: TextStyle(color: Colors.white, fontSize: 24),
-        ),
-        titleOptions: StatusAlertTextConfiguration(
+      ),
+      titleOptions: StatusAlertTextConfiguration(
         style: TextStyle(color: Colors.white, fontSize: 24),
-        ),
+      ),
     );
     Navigator.pop(context);
   }
@@ -60,14 +60,14 @@ class _EditTransactionState extends State<EditTransaction> {
       configuration: IconConfiguration(
         icon: Icons.error,
         color: Colors.white,
-        ),
-        backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
-        subtitleOptions: StatusAlertTextConfiguration(
+      ),
+      backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
+      subtitleOptions: StatusAlertTextConfiguration(
         style: TextStyle(color: Colors.white, fontSize: 24),
-        ),
-        titleOptions: StatusAlertTextConfiguration(
+      ),
+      titleOptions: StatusAlertTextConfiguration(
         style: TextStyle(color: Colors.white, fontSize: 24),
-        ),
+      ),
     );
   }
 
@@ -82,13 +82,13 @@ class _EditTransactionState extends State<EditTransaction> {
     var res = await UserServices().patchUserTransaction(
         data, '$userId/transactions/${widget.transactionId}');
 
-    print(res.statusCode);
+    // print(res.statusCode);
 
     if (res.statusCode == 200) {
       if (!mounted) return;
       showSuccessAlert(context);
     } else {
-      print('FAIL');
+      // print('FAIL');
       if (!mounted) return;
       showErrorAlert(context);
     }
@@ -229,7 +229,7 @@ class _EditTransactionState extends State<EditTransaction> {
                                     if (descController.text.isNotEmpty) {
                                       data['description'] = descController.text;
                                     }
-                                    print(data);
+                                    // print(data);
                                     _editTran(data, userID);
                                   }
                                 },

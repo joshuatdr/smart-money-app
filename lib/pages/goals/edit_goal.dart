@@ -25,7 +25,6 @@ class EditGoal extends StatefulWidget {
   final String? createdAt;
   final String? desc;
 
-
   @override
   State<EditGoal> createState() => _EditGoalState();
 }
@@ -56,26 +55,25 @@ class _EditGoalState extends State<EditGoal> {
 
   final _formfield = GlobalKey<FormState>();
   late final nameController = TextEditingController(text: widget.name);
-  late final costController = TextEditingController(text: widget.cost.toString());
+  late final costController =
+      TextEditingController(text: widget.cost.toString());
   late final imgUrlController = TextEditingController(text: widget.imgUrl);
   late final descController = TextEditingController(text: widget.desc);
 
   _edit(data, userId) async {
+    // print(data);
+    // print(userId);
 
-    print(data);
-    print(userId);
+    var res = await UserServices()
+        .patchUserTransaction(data, '$userId/goals/${widget.goalId}');
 
-
-    var res = await UserServices().patchUserTransaction(
-           data, '$userId/goals/${widget.goalId}');
-
-    print(res.statusCode);
+    // print(res.statusCode);
 
     if (res.statusCode == 200) {
       if (!mounted) return;
       showSuccessAlert(context);
     } else {
-      print('FAIL');
+      // print('FAIL');
       if (!mounted) return;
       showErrorAlert(context);
     }
@@ -108,8 +106,7 @@ class _EditGoalState extends State<EditGoal> {
           child: AppBar(
             centerTitle: true,
             backgroundColor: Colors.lightBlue.shade900,
-            title:
-                Text("Edit Goal", style: TextStyle(color: Colors.white)),
+            title: Text("Edit Goal", style: TextStyle(color: Colors.white)),
           )),
       body: SingleChildScrollView(
         child: Padding(
@@ -156,17 +153,17 @@ class _EditGoalState extends State<EditGoal> {
                       ),
                       const SizedBox(height: JSizes.spaceBtwItems),
                       if (imgUrlController.text.isNotEmpty)
-                      SizedBox(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            imgUrlController.text,
-                            width: 200,
-                            height: 200,
-                            fit: BoxFit.cover,
+                        SizedBox(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              imgUrlController.text,
+                              width: 200,
+                              height: 200,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                      ),
                       TextFormField(
                         controller: imgUrlController,
                         obscureText: false,
@@ -226,16 +223,16 @@ class _EditGoalState extends State<EditGoal> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                        padding: const EdgeInsets.all(30),
-                        child: FilledButton.icon(
-                          label: Text("Back"),
-                          icon: const Icon(Icons.arrow_back),
-                          iconAlignment: IconAlignment.start,
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ),
+                            padding: const EdgeInsets.all(30),
+                            child: FilledButton.icon(
+                              label: Text("Back"),
+                              icon: const Icon(Icons.arrow_back),
+                              iconAlignment: IconAlignment.start,
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ),
                         ],
                       ),
                     ],
