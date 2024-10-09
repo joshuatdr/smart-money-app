@@ -23,14 +23,14 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
       configuration: IconConfiguration(
         icon: Icons.check,
         color: Colors.white,
-        ),
-        backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
-        subtitleOptions: StatusAlertTextConfiguration(
+      ),
+      backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
+      subtitleOptions: StatusAlertTextConfiguration(
         style: TextStyle(color: Colors.white, fontSize: 24),
-        ),
-        titleOptions: StatusAlertTextConfiguration(
+      ),
+      titleOptions: StatusAlertTextConfiguration(
         style: TextStyle(color: Colors.white, fontSize: 24),
-        ),
+      ),
     );
     Navigator.pop(context);
   }
@@ -45,14 +45,14 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
       configuration: IconConfiguration(
         icon: Icons.error,
         color: Colors.white,
-        ),
-        backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
-        subtitleOptions: StatusAlertTextConfiguration(
+      ),
+      backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
+      subtitleOptions: StatusAlertTextConfiguration(
         style: TextStyle(color: Colors.white, fontSize: 24),
-        ),
-        titleOptions: StatusAlertTextConfiguration(
+      ),
+      titleOptions: StatusAlertTextConfiguration(
         style: TextStyle(color: Colors.white, fontSize: 24),
-        ),
+      ),
     );
   }
 
@@ -138,14 +138,15 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
 
     var userId = context.watch<UserProvider>().userID;
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: AppBar(
             automaticallyImplyLeading: false,
             centerTitle: true,
             backgroundColor: Colors.lightBlue.shade900,
-            title:
-                Text("Add Transaction", style: TextStyle(color: Colors.white)),
+            title: Text("Add New Transaction",
+                style: TextStyle(color: Colors.white)),
           )),
       body: SingleChildScrollView(
         child: Padding(
@@ -292,15 +293,20 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                                 },
                                 child: Text('Add Transaction'))),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(30),
-                        child: FilledButton.icon(
-                          label: Text("Back"),
-                          icon: const Icon(Icons.arrow_back),
-                          iconAlignment: IconAlignment.start,
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(30),
+                          child: FilledButton.icon(
+                            label: Text("Back to Spending"),
+                            icon: const Icon(Icons.arrow_back),
+                            iconAlignment: IconAlignment.start,
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
                         ),
                       ),
                     ],

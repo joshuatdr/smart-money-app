@@ -42,16 +42,10 @@ class _GoalsPageState extends State<GoalsPage> {
   var deleteMode = false;
   var isFocused = 0;
 
-  setEditMode(mode) {
-    if (mode) {
-      setState(() {
-        editMode = true;
-      });
-    } else {
-      setState(() {
-        editMode = false;
-      });
-    }
+  setEditMode() {
+    setState(() {
+      editMode = !editMode;
+    });
   }
 
   setIsFocused(goalID) {
@@ -143,6 +137,7 @@ class _GoalsPageState extends State<GoalsPage> {
     );
 
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
@@ -155,9 +150,104 @@ class _GoalsPageState extends State<GoalsPage> {
     );
   }
 
+// ExpandableFab _renderFloatingActionButton(BuildContext context) {
+//     return ExpandableFab(
+//       key: _key,
+//       type: ExpandableFabType.up,
+//       childrenAnimation: ExpandableFabAnimation.none,
+//       distance: 70,
+//       childrenOffset: Offset(8, 16),
+//       openButtonBuilder: DefaultFloatingActionButtonBuilder(
+//         backgroundColor: Colors.blue.shade600,
+//         child: const Icon(Icons.menu, color: Colors.white),
+//       ),
+//       closeButtonBuilder: DefaultFloatingActionButtonBuilder(
+//         backgroundColor: Colors.blue.shade800,
+//         child: const Icon(Icons.close, color: Colors.white),
+//       ),
+//       overlayStyle: ExpandableFabOverlayStyle(
+//         color: Colors.white.withOpacity(0.6),
+//       ),
+//       children: [
+//         Row(
+//           children: [
+//             Text('Add Transaction'),
+//             SizedBox(width: 20),
+//             FloatingActionButton.small(
+//               backgroundColor: Colors.blue.shade600,
+//               heroTag: null,
+//               onPressed: () {
+//                 Navigator.pushNamed(context, '/addtransaction').then(
+//                   (value) {
+//                     setState(() {});
+//                   },
+//                 );
+//                 final state = _key.currentState;
+//                 if (state != null) {
+//                   state.toggle();
+//                 }
+//               },
+//               child: Icon(Icons.add, color: Colors.white),
+//             ),
+//           ],
+//         ),
+//         Row(
+//           children: [
+//             Text('View Data'),
+//             SizedBox(width: 20),
+//             FloatingActionButton.small(
+//               backgroundColor: Colors.blue.shade600,
+//               heroTag: null,
+//               onPressed: () {
+//                 Navigator.pushNamed(context, '/graphview').then(
+//                   (value) {
+//                     setState(() {});
+//                   },
+//                 );
+//                 final state = _key.currentState;
+//                 if (state != null) {
+//                   state.toggle();
+//                 }
+//               },
+//               child: Icon(Icons.insights, color: Colors.white),
+//             ),
+//           ],
+//         ),
+//         Row(
+//           children: [
+//             Text('Search'),
+//             SizedBox(width: 20),
+//             FloatingActionButton.small(
+//               backgroundColor: Colors.blue.shade600,
+//               heroTag: null,
+//               onPressed: null,
+//               child: Icon(Icons.search, color: Colors.white),
+//             ),
+//           ],
+//         ),
+//         Row(
+//           children: [
+//             Text('Sort'),
+//             SizedBox(width: 20),
+//             FloatingActionButton.small(
+//               backgroundColor: Colors.blue.shade600,
+//               heroTag: null,
+//               onPressed: null,
+//               child: Icon(Icons.sort, color: Colors.white),
+//             ),
+//           ],
+//         ),
+//       ],
+//     );
+//   }
+
   ExpandableFab _renderFloatingActionButton(context) {
     return ExpandableFab(
       key: _key,
+      type: ExpandableFabType.up,
+      childrenAnimation: ExpandableFabAnimation.none,
+      distance: 70,
+      childrenOffset: Offset(8, 16),
       openButtonBuilder: DefaultFloatingActionButtonBuilder(
         backgroundColor: Colors.blue.shade600,
         child: const Icon(Icons.menu, color: Colors.white),
@@ -170,35 +260,47 @@ class _GoalsPageState extends State<GoalsPage> {
         color: Colors.white.withOpacity(0.6),
       ),
       children: [
-        FloatingActionButton.small(
-          backgroundColor: Colors.blue.shade600,
-          heroTag: null,
-          child: const Icon(Icons.edit, color: Colors.white),
-          onPressed: () {
-            final state = _key.currentState;
-            if (state != null) {
-              state.toggle();
-            }
-            setEditMode(true);
-          },
+        Row(
+          children: [
+            Text('Add Goal'),
+            SizedBox(width: 20),
+            FloatingActionButton.small(
+              backgroundColor: Colors.blue.shade600,
+              heroTag: null,
+              child: const Icon(Icons.add, color: Colors.white),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AddGoalPage()),
+                ).then((value) {
+                  setState(() {});
+                });
+                final state = _key.currentState;
+                // print(state);
+                if (state != null) {
+                  state.toggle();
+                }
+              },
+            ),
+          ],
         ),
-        FloatingActionButton.small(
-          backgroundColor: Colors.blue.shade600,
-          heroTag: null,
-          child: const Icon(Icons.add, color: Colors.white),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AddGoalPage()),
-            ).then((value) {
-              setState(() {});
-            });
-            final state = _key.currentState;
-            // print(state);
-            if (state != null) {
-              state.toggle();
-            }
-          },
+        Row(
+          children: [
+            Text('Edit Goals'),
+            SizedBox(width: 20),
+            FloatingActionButton.small(
+              backgroundColor: Colors.blue.shade600,
+              heroTag: null,
+              child: const Icon(Icons.edit, color: Colors.white),
+              onPressed: () {
+                final state = _key.currentState;
+                if (state != null) {
+                  state.toggle();
+                }
+                setEditMode();
+              },
+            ),
+          ],
         ),
       ],
     );
@@ -392,7 +494,7 @@ class _GoalsPageState extends State<GoalsPage> {
                     icon: const Icon(Icons.edit_off_rounded),
                     iconAlignment: IconAlignment.start,
                     onPressed: () async {
-                      await setEditMode(false);
+                      await setEditMode();
                     },
                   ),
                 ),

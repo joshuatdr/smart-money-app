@@ -116,6 +116,7 @@ class _UserScreenState extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: AppBar(
@@ -148,8 +149,7 @@ class _UserScreenState extends State<UserScreen> {
                       Padding(
                         padding: const EdgeInsets.all(40),
                         child: CircleAvatar(
-                            backgroundImage:
-                                NetworkImage(data[index].avatar_url!),
+                            backgroundImage: AssetImage('user.jpg'),
                             radius: 120),
                       ),
                       Padding(
@@ -158,6 +158,8 @@ class _UserScreenState extends State<UserScreen> {
                           controller: TextEditingController()
                             ..text = '${data[index].nickName}',
                           decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
                             labelText: "Name",
                             enabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(color: Colors.grey),
@@ -176,6 +178,8 @@ class _UserScreenState extends State<UserScreen> {
                           controller: TextEditingController()
                             ..text = '${data[index].email}',
                           decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
                             labelText: "Email",
                             enabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(color: Colors.grey),
@@ -194,6 +198,8 @@ class _UserScreenState extends State<UserScreen> {
                           controller: TextEditingController()
                             ..text = '£${data[index].income}',
                           decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
                             labelText: "Income",
                             enabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(color: Colors.grey),
@@ -212,6 +218,8 @@ class _UserScreenState extends State<UserScreen> {
                           controller: TextEditingController()
                             ..text = '£${data[index].savingsTarget}',
                           decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
                             labelText: "Savings target",
                             enabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(color: Colors.grey),

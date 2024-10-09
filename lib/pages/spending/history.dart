@@ -154,6 +154,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     }
 
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
@@ -184,6 +185,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       Container(
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.lightBlue.shade500),
+                          color: Colors.white,
                         ),
                         child: DataTable(
                           dataRowMaxHeight:

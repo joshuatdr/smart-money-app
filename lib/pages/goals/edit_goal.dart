@@ -100,10 +100,12 @@ class _EditGoalState extends State<EditGoal> {
     final userID = context.watch<UserProvider>().userID;
 
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: AppBar(
             centerTitle: true,
+            automaticallyImplyLeading: false,
             backgroundColor: Colors.lightBlue.shade900,
             title: Text("Edit Goal", style: TextStyle(color: Colors.white)),
           )),
@@ -218,21 +220,21 @@ class _EditGoalState extends State<EditGoal> {
                                 },
                                 child: Text("Submit changes"))),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(30),
-                            child: FilledButton.icon(
-                              label: Text("Back"),
-                              icon: const Icon(Icons.arrow_back),
-                              iconAlignment: IconAlignment.start,
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                            ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(30),
+                          child: FilledButton.icon(
+                            label: Text("Back to Goals"),
+                            icon: const Icon(Icons.arrow_back),
+                            iconAlignment: IconAlignment.start,
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                           ),
-                        ],
+                        ),
                       ),
                     ],
                   ),
