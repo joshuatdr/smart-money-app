@@ -172,12 +172,19 @@ class _EditTransactionState extends State<EditTransaction> {
                       SizedBox(
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            imgUrlController.text,
-                            width: 200,
-                            height: 200,
-                            fit: BoxFit.cover,
-                          ),
+                          child: imgUrlController.text != ''
+                              ? Image.network(
+                                  imgUrlController.text,
+                                  width: 200,
+                                  height: 200,
+                                  fit: BoxFit.cover,
+                                )
+                              : Image.asset(
+                                  'placeholder.jpg',
+                                  width: 200,
+                                  height: 200,
+                                  fit: BoxFit.cover,
+                                ),
                         ),
                       ),
                       TextFormField(
