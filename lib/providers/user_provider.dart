@@ -9,6 +9,7 @@ class UserProvider extends ChangeNotifier {
   int income = 0;
   int savingsTarget = 0;
   String createdAt = "";
+  int focusGoal = 0;
   bool newUser = false;
 
   UserProvider({
@@ -19,6 +20,7 @@ class UserProvider extends ChangeNotifier {
     this.income = 0,
     this.savingsTarget = 0,
     this.createdAt = "",
+    this.focusGoal = 0,
     this.newUser = false,
   });
 
@@ -30,6 +32,7 @@ class UserProvider extends ChangeNotifier {
     income = 0;
     savingsTarget = 0;
     createdAt = "";
+    focusGoal = 0;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('token');
     notifyListeners();
@@ -43,6 +46,7 @@ class UserProvider extends ChangeNotifier {
     required int loginIncome,
     required int loginSavingsTarget,
     required String loginCreatedAt,
+    required int loginFocusGoal,
     required bool firstLogin,
   }) async {
     userID = loginUserID;
@@ -52,6 +56,7 @@ class UserProvider extends ChangeNotifier {
     income = loginIncome;
     savingsTarget = loginSavingsTarget;
     createdAt = loginCreatedAt;
+    focusGoal = loginFocusGoal;
     newUser = firstLogin;
     notifyListeners();
   }
@@ -88,6 +93,13 @@ class UserProvider extends ChangeNotifier {
     required int newSavingsTarget,
   }) async {
     savingsTarget = newSavingsTarget;
+    notifyListeners();
+  }
+
+  void changeFocusGoal({
+    required int newFocusGoal,
+  }) async {
+    savingsTarget = newFocusGoal;
     notifyListeners();
   }
 }

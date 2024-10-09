@@ -10,19 +10,22 @@ class User {
   String? createdAt;
   int? mandatorySpend;
   int? disposableSpend;
+  int? focusGoal;
 
-  User(
-      {this.id,
-      this.email,
-      this.password,
-      // ignore: non_constant_identifier_names
-      this.avatar_url,
-      this.nickName,
-      this.income,
-      this.savingsTarget,
-      this.createdAt,
-      this.mandatorySpend,
-      this.disposableSpend}); // This is the constructor
+  User({
+    this.id,
+    this.email,
+    this.password,
+    // ignore: non_constant_identifier_names
+    this.avatar_url,
+    this.nickName,
+    this.income,
+    this.savingsTarget,
+    this.createdAt,
+    this.mandatorySpend,
+    this.disposableSpend,
+    this.focusGoal,
+  }); // This is the constructor
 
   User.fromJson(Map<String, dynamic> json) {
     // Is used to create a Dart object from a JSON data structure using map,
@@ -39,5 +42,6 @@ class User {
     createdAt = json['created_at'];
     mandatorySpend = json['mandatory_spend'];
     disposableSpend = json['disposable_spend'];
+    focusGoal = json['focus_goal'];
   }
 }
