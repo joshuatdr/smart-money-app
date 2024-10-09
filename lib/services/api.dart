@@ -130,7 +130,7 @@ class UserServices {
 
     //"PATCH /api/user/:user_id/transactions/:transaction_id": {
 
-    print(baseUrl);
+    // print(baseUrl);
     return await http.patch(
       Uri.parse(baseUrl),
       body: jsonEncode(data),
@@ -186,16 +186,13 @@ class UserServices {
     );
   }
 
-   deleteUserGoal(apiUrl) async {
-  //  var userID = data['user_id'];
+  deleteUserGoal(apiUrl) async {
+    //  var userID = data['user_id'];
     String baseUrl =
         "https://smart-money-backend.onrender.com/api/user/$apiUrl";
 
-    return await http.delete(
-      Uri.parse(baseUrl)
-    );
+    return await http.delete(Uri.parse(baseUrl));
   }
-
 
   postExpense(data) async {
     var userID = data['user_id'];
@@ -208,8 +205,8 @@ class UserServices {
       headers: _setHeaders(),
     );
   }
-  
- static  getAllUserExpenses(userID) async {
+
+  static getAllUserExpenses(userID) async {
     String baseUrl =
         "https://smart-money-backend.onrender.com/api/user/$userID/expenses";
     List<Expenses> allExpenses = [];
@@ -231,7 +228,6 @@ class UserServices {
       throw Exception(e.toString()); // if error convert error to a string.
     }
   }
-
 
   _setHeaders() => {
         'Content-type': 'application/json',

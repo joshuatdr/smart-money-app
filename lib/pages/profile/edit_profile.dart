@@ -23,14 +23,14 @@ class _EditProfileState extends State<EditProfile> {
       configuration: IconConfiguration(
         icon: Icons.check,
         color: Colors.white,
-        ),
-        backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
-        subtitleOptions: StatusAlertTextConfiguration(
+      ),
+      backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
+      subtitleOptions: StatusAlertTextConfiguration(
         style: TextStyle(color: Colors.white, fontSize: 24),
-        ),
-        titleOptions: StatusAlertTextConfiguration(
+      ),
+      titleOptions: StatusAlertTextConfiguration(
         style: TextStyle(color: Colors.white, fontSize: 24),
-        ),
+      ),
     );
     Navigator.pop(context);
   }
@@ -49,7 +49,7 @@ class _EditProfileState extends State<EditProfile> {
       if (!mounted) return;
       showSuccessAlert(context);
     } else {
-      print('FAIL');
+      // print('FAIL');
       // If the server did not return a 201 OK response,
       // then throw an exception.
     }
