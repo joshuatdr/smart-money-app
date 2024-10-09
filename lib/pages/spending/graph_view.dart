@@ -18,13 +18,22 @@ class _GraphViewState extends State<GraphView> {
   final _key = GlobalKey<ExpandableFabState>();
 
   List<double> weeklySummary = [0, 0, 0, 0, 0, 0, 0];
+  List<String> weekdays = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
 
   @override
   Widget build(BuildContext context) {
     final userID = context.watch<UserProvider>().userID;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
@@ -35,14 +44,28 @@ class _GraphViewState extends State<GraphView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Last 7 Days'),
-            SizedBox(height: 20),
-            _renderBarGraph(userID),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Container(
+                width: 500,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4),
+                  color: Colors.white,
+                ),
+                child: _renderBarGraph(userID),
+              ),
+            ),
           ],
         ),
       ),
-      floatingActionButtonLocation: ExpandableFab.location,
-      floatingActionButton: _renderFloatingActionButton(context),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blue.shade600,
+        heroTag: null,
+        child: const Icon(Icons.receipt_long, color: Colors.white),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
     );
   }
 
@@ -55,7 +78,7 @@ class _GraphViewState extends State<GraphView> {
             if (results.isNotEmpty) {
               final now = DateTime.now(); //the date right now
               final now_1w =
-                  now.subtract(Duration(days: 7)); //the date one week ago
+                  now.subtract(Duration(days: 6)); //the date one week ago
 
               final filterResults = results
                   .where((transaction) =>
@@ -67,22 +90,39 @@ class _GraphViewState extends State<GraphView> {
                     DateFormat('EEEE').format(transaction.timestampDate)
                   ]);
 
+              int? currentDayIndex;
               for (final [cost as double, day as String] in weeklyData) {
+                currentDayIndex ??= weekdays.indexOf(day) - 1;
+
                 switch (day) {
-                  case "Sunday":
-                    weeklySummary[0] += cost;
                   case "Monday":
-                    weeklySummary[1] += cost;
+                    if (weekdays.indexOf(day) <= currentDayIndex) {
+                      weeklySummary[0] += cost;
+                    }
                   case "Tuesday":
-                    weeklySummary[2] += cost;
+                    if (weekdays.indexOf(day) <= currentDayIndex) {
+                      weeklySummary[1] += cost;
+                    }
                   case "Wednesday":
-                    weeklySummary[3] += cost;
+                    if (weekdays.indexOf(day) <= currentDayIndex) {
+                      weeklySummary[2] += cost;
+                    }
                   case "Thursday":
-                    weeklySummary[4] += cost;
+                    if (weekdays.indexOf(day) <= currentDayIndex) {
+                      weeklySummary[3] += cost;
+                    }
                   case "Friday":
-                    weeklySummary[5] += cost;
+                    if (weekdays.indexOf(day) <= currentDayIndex) {
+                      weeklySummary[4] += cost;
+                    }
                   case "Saturday":
-                    weeklySummary[6] += cost;
+                    if (weekdays.indexOf(day) <= currentDayIndex) {
+                      weeklySummary[5] += cost;
+                    }
+                  case "Sunday":
+                    if (weekdays.indexOf(day) <= currentDayIndex) {
+                      weeklySummary[6] += cost;
+                    }
                 }
               }
 
@@ -107,66 +147,66 @@ class _GraphViewState extends State<GraphView> {
         });
   }
 
-  ExpandableFab _renderFloatingActionButton(BuildContext context) {
-    return ExpandableFab(
-      key: _key,
-      type: ExpandableFabType.up,
-      childrenAnimation: ExpandableFabAnimation.none,
-      distance: 70,
-      childrenOffset: Offset(8, 16),
-      openButtonBuilder: DefaultFloatingActionButtonBuilder(
-        backgroundColor: Colors.blue.shade600,
-        child: const Icon(Icons.menu, color: Colors.white),
-      ),
-      closeButtonBuilder: DefaultFloatingActionButtonBuilder(
-        backgroundColor: Colors.blue.shade800,
-        child: const Icon(Icons.close, color: Colors.white),
-      ),
-      overlayStyle: ExpandableFabOverlayStyle(
-        color: Colors.white.withOpacity(0.6),
-      ),
-      children: [
-        Row(
-          children: [
-            Text('Add Purchase'),
-            SizedBox(width: 20),
-            FloatingActionButton.small(
-              backgroundColor: Colors.blue.shade600,
-              heroTag: null,
-              onPressed: () {
-                Navigator.pushNamed(context, '/addtransaction').then(
-                  (value) {
-                    setState(() {});
-                  },
-                );
-                final state = _key.currentState;
-                if (state != null) {
-                  state.toggle();
-                }
-              },
-              child: Icon(Icons.add, color: Colors.white),
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            Text('Spending History'),
-            SizedBox(width: 20),
-            FloatingActionButton.small(
-              backgroundColor: Colors.blue.shade600,
-              heroTag: null,
-              onPressed: () {
-                Navigator.pop(context);
-                final state = _key.currentState;
-                if (state != null) {
-                  state.toggle();
-                }
-              },
-              child: Icon(Icons.receipt_long, color: Colors.white),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
+  // ExpandableFab _renderFloatingActionButton(BuildContext context) {
+  //   return ExpandableFab(
+  //     key: _key,
+  //     type: ExpandableFabType.up,
+  //     childrenAnimation: ExpandableFabAnimation.none,
+  //     distance: 70,
+  //     childrenOffset: Offset(8, 16),
+  //     openButtonBuilder: DefaultFloatingActionButtonBuilder(
+  //       backgroundColor: Colors.blue.shade600,
+  //       child: const Icon(Icons.menu, color: Colors.white),
+  //     ),
+  //     closeButtonBuilder: DefaultFloatingActionButtonBuilder(
+  //       backgroundColor: Colors.blue.shade800,
+  //       child: const Icon(Icons.close, color: Colors.white),
+  //     ),
+  //     overlayStyle: ExpandableFabOverlayStyle(
+  //       color: Colors.white.withOpacity(0.6),
+  //     ),
+  //     children: [
+  //       Row(
+  //         children: [
+  //           Text('Add Purchase'),
+  //           SizedBox(width: 20),
+  //           FloatingActionButton.small(
+  //             backgroundColor: Colors.blue.shade600,
+  //             heroTag: null,
+  //             onPressed: () {
+  //               Navigator.pushNamed(context, '/addtransaction').then(
+  //                 (value) {
+  //                   setState(() {});
+  //                 },
+  //               );
+  //               final state = _key.currentState;
+  //               if (state != null) {
+  //                 state.toggle();
+  //               }
+  //             },
+  //             child: Icon(Icons.add, color: Colors.white),
+  //           ),
+  //         ],
+  //       ),
+  //       Row(
+  //         children: [
+  //           Text('Spending History'),
+  //           SizedBox(width: 20),
+  //           FloatingActionButton.small(
+  //             backgroundColor: Colors.blue.shade600,
+  //             heroTag: null,
+  //             onPressed: () {
+  //               Navigator.pop(context);
+  //               final state = _key.currentState;
+  //               if (state != null) {
+  //                 state.toggle();
+  //               }
+  //             },
+  //             child: Icon(Icons.receipt_long, color: Colors.white),
+  //           ),
+  //         ],
+  //       ),
+  //     ],
+  //   );
+  // }
 }
