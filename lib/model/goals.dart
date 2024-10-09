@@ -12,6 +12,7 @@ class Goals {
     this.cost,
     this.imgURL,
     this.createdAt,
+    this.description,
   });
 
   Goals.fromJson(Map<String, dynamic> json) {
@@ -21,5 +22,6 @@ class Goals {
     imgURL = json['img_url'];
     createdAt = json['created_at'];
     imgURL == null ? "" : json['img_url'];
+    description == null ? "" : json['description'];
   }
 }

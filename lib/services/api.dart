@@ -174,6 +174,28 @@ class UserServices {
     );
   }
 
+  patchUserGoal(data, apiUrl) async {
+    //var userID = data['user_id'];
+    String baseUrl =
+        "https://smart-money-backend.onrender.com/api/user/$apiUrl";
+
+    return await http.patch(
+      Uri.parse(baseUrl),
+      body: jsonEncode(data),
+      headers: _setHeaders(),
+    );
+  }
+
+   deleteUserGoal(apiUrl) async {
+  //  var userID = data['user_id'];
+    String baseUrl =
+        "https://smart-money-backend.onrender.com/api/user/$apiUrl";
+
+    return await http.delete(
+      Uri.parse(baseUrl)
+    );
+  }
+
 
   postExpense(data) async {
     var userID = data['user_id'];
