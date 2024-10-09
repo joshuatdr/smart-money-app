@@ -30,7 +30,7 @@ class _UserScreenState extends State<UserScreen> {
         return AlertDialog(
             title: Center(
                 child: Text(
-              'Account deletion',
+              'Account Deletion',
               style: TextStyle(
                   color: Colors.lightBlue.shade600,
                   fontWeight: FontWeight.w800,
@@ -59,7 +59,7 @@ class _UserScreenState extends State<UserScreen> {
                           return AlertDialog(
                             title: Center(
                                 child: Text(
-                              'Account deletion',
+                              'Account Deletion',
                               style: TextStyle(
                                   color: Colors.lightBlue.shade600,
                                   fontWeight: FontWeight.w800,

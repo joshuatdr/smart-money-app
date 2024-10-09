@@ -5,6 +5,7 @@ import 'package:smart_money_app/pages/auth/signup.dart';
 import 'package:smart_money_app/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'pages/home/dashboard.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Smart Money',
         theme: ThemeData(
+          fontFamily: GoogleFonts.lato().fontFamily,
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(
               //change this to change the general theme of the app
