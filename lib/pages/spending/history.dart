@@ -116,11 +116,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
             maxLines: 2,
             softWrap: false,
           )),
-          DataCell(Icon(
-              !data.imgUrl.isEmpty
-                  ? Icons.image_outlined
-                  : Icons.image_not_supported,
-              color: Colors.lightBlue[500])),
           DataCell(
             Icon(Icons.edit, color: Colors.lightBlue[500]),
             onTap: () async {
@@ -210,11 +205,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             DataColumn(
                                 label: Text(
                               'Date',
-                              style: TextStyle(color: Colors.white),
-                            )),
-                            DataColumn(
-                                label: Text(
-                              'Image',
                               style: TextStyle(color: Colors.white),
                             )),
                             DataColumn(
