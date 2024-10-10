@@ -35,8 +35,17 @@ class _EditGoalState extends State<EditGoal> {
       duration: Duration(seconds: 2),
       title: 'Success',
       subtitle: 'Goal Updated',
-      configuration: IconConfiguration(icon: Icons.check),
-      backgroundColor: Colors.lightBlue.shade600,
+     configuration: IconConfiguration(
+        icon: Icons.check,
+        color: Colors.white,
+      ),
+      backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
+      subtitleOptions: StatusAlertTextConfiguration(
+        style: TextStyle(color: Colors.white, fontSize: 24),
+      ),
+      titleOptions: StatusAlertTextConfiguration(
+        style: TextStyle(color: Colors.white, fontSize: 24),
+      ),
     );
     Navigator.pop(context);
   }
@@ -48,7 +57,16 @@ class _EditGoalState extends State<EditGoal> {
       duration: Duration(seconds: 2),
       title: 'Error',
       subtitle: 'Something went wrong!',
-      configuration: IconConfiguration(icon: Icons.error),
+      configuration: IconConfiguration(icon: Icons.error,
+        color: Colors.white,
+      ),
+      backgroundColor: Colors.lightBlue.shade900.withOpacity(.9),
+      subtitleOptions: StatusAlertTextConfiguration(
+        style: TextStyle(color: Colors.white, fontSize: 24),
+      ),
+      titleOptions: StatusAlertTextConfiguration(
+        style: TextStyle(color: Colors.white, fontSize: 24),
+      ),
     );
   }
 

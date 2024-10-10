@@ -200,7 +200,7 @@ class _UserScreenState extends State<UserScreen> {
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
-                            labelText: "Income",
+                            labelText: "Income (per month, after tax)",
                             enabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(color: Colors.grey),
                               borderRadius: BorderRadius.circular(10),
@@ -220,7 +220,7 @@ class _UserScreenState extends State<UserScreen> {
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
-                            labelText: "Savings target",
+                            labelText: "Savings target (per month)",
                             enabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(color: Colors.grey),
                               borderRadius: BorderRadius.circular(10),
