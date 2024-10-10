@@ -249,7 +249,7 @@ class _UserScreenState extends State<UserScreen> {
                                 setState(() {});
                               });
                             },
-                            child: Text("Edit")),
+                            child: Text("Edit")), 
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),

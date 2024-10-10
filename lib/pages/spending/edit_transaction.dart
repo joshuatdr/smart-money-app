@@ -167,7 +167,7 @@ class _EditTransactionState extends State<EditTransaction> {
                         obscureText: false,
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: Colors.white,
+                          fillColor: Colors.white, 
                           // prefixIcon: Icon(Icons.alternate_email),
                           labelText: "Cost",
                         ),

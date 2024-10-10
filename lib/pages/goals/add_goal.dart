@@ -220,7 +220,7 @@ class _AddGoalPageState extends State<AddGoalPage> {
                             icon: const Icon(Icons.arrow_back),
                             iconAlignment: IconAlignment.start,
                             onPressed: () {
-                              Navigator.pop(context);
+                              Navigator.pop(context); 
                             },
                           ),
                         ),

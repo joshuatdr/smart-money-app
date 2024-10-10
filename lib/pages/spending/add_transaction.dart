@@ -19,7 +19,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
       context,
       duration: Duration(seconds: 2),
       title: 'Success',
-      subtitle: 'Transaction Saved!',
+      subtitle: 'Transaction Saved!', 
       configuration: IconConfiguration(
         icon: Icons.check,
         color: Colors.white,

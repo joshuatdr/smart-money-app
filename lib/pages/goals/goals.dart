@@ -327,7 +327,7 @@ context.read<UserProvider>().changeFocusGoal(newFocusGoal:isFocused);
                       padding: EdgeInsets.zero,
                     ),
                    
-                    child: Icon(Icons.star,
+                    child: Icon(Icons.star, 
                         color: (isFocused != results[index].goalID) ? Colors.white: const Color.fromARGB(255, 235, 205, 14))),
               ),
             ),

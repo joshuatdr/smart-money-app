@@ -56,7 +56,7 @@ class _EditGoalState extends State<EditGoal> {
       context,
       duration: Duration(seconds: 2),
       title: 'Error',
-      subtitle: 'Something went wrong!',
+      subtitle: 'Something went wrong!', 
       configuration: IconConfiguration(icon: Icons.error,
         color: Colors.white,
       ),
