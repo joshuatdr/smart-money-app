@@ -129,11 +129,7 @@ class _SignupScreenState extends State<SignupScreen> {
       final regex = RegExp(patternPass);
 
       if (value!.isEmpty) {
-        return 'A password must be at least 8 characters long.'
-            ' must contain an uppercase'
-            'lowercase letter'
-            'A number'
-            'A special character';
+        return 'You must enter a password!';
       } else {
         return value.isNotEmpty && !regex.hasMatch(value)
             ? 'A password must be at least 8 characters long, must contain an uppercase, lowercase letter, a number and a special character'
@@ -211,6 +207,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           controller: passController,
                           obscureText: passwordVisible,
                           decoration: InputDecoration(
+                            errorMaxLines: 3,
                             prefixIcon: Icon(Icons.login),
                             labelText: TTexts.password,
                             suffixIcon: IconButton(
@@ -237,6 +234,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           controller: confirmPassController,
                           obscureText: passwordVisible,
                           decoration: InputDecoration(
+                            errorMaxLines: 3,
                             prefixIcon: Icon(Icons.login),
                             labelText: "Confirm Password",
                             suffixIcon: IconButton(
@@ -362,16 +360,16 @@ class _SignupScreenState extends State<SignupScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                              '\u2022 A password must be at least 8 characters long.'),
-                          Text(
-                              '\u2022 A password must contain at least a number.'),
-                          Text(
-                              '\u2022 A password must contain an uppercase letter.'),
-                          Text(
-                              '\u2022 A password must contain a lowercase letter.'),
-                          Text(
-                              '\u2022 A password must contain a special character.'),
+                          // Text(
+                          //     '\u2022 A password must be at least 8 characters long.'),
+                          // Text(
+                          //     '\u2022 A password must contain at least a number.'),
+                          // Text(
+                          //     '\u2022 A password must contain an uppercase letter.'),
+                          // Text(
+                          //     '\u2022 A password must contain a lowercase letter.'),
+                          // Text(
+                          //     '\u2022 A password must contain a special character.'),
                           Padding(
                             padding: const EdgeInsets.all(60),
                             child: TextButton(
