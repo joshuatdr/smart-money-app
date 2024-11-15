@@ -18,7 +18,7 @@ The purpose of this application is to make saving money easier. It achieves this
 
 To access this API online click on the following link: [smartmoneyapp](POPULATE WITH CORRECT LINK)
 
-For a tutorial on how to navigate through the app please click on the following link (YOUTUBE LINK)
+For a tutorial on how to navigate through the app, and to see what the app can do please click on the following [link](https://youtu.be/zg74qv8YIL0)
 
 ### Set up
 
