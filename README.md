@@ -12,11 +12,11 @@ The purpose of this application is to make saving money easier. It achieves this
 - Trello
 - Figma
 - Morning standup meetings
-- Hosting using Firebase
+- Hosting via Netifly and the [Netlify Flutter Build Plugin](https://github.com/bencevans/netlify-plugin-flutter)
 
 ### Access online
 
-To access this API online click on the following link: [smartmoneyapp](POPULATE WITH CORRECT LINK)
+To access this API online click on the following link: [smartmoneyapp](https://smartmoney1234.netlify.app/)
 
 For a tutorial on how to navigate through the app, and to see what the app can do please click on the following [link](https://youtu.be/zg74qv8YIL0)
 
