@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "netlify-plugin-flutter": "^1.2.0"
+  }
+}
